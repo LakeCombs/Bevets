@@ -1,0 +1,373 @@
+import React, { useState } from "react";
+import Header from "../components/header";
+import { Button, Carousel, Input } from "antd";
+import { Link } from "react-router-dom";
+import CardByCategories from "../components/cardByCategories";
+import BasicEssentialCard from "../components/basicEssentialCard";
+import Footer from "../components/footer";
+
+const HomeScreen = () => {
+	const [email, setEmail] = useState("");
+	const [phone, setPhone] = useState("");
+	const [search, setSearch] = useState("");
+
+	const onSubscribe = (e) => {
+		e.preventDefault();
+		console.log("subscribing");
+	};
+
+	const submit = () => {};
+
+	return (
+		<div className="min-h-screen md:bg-background bg-primary-blue">
+			<Header />
+			<div className="w-full md:hidden flex bg-app-orange h-[100px] mt-[50px] justify-center items-center">
+				<form
+					className="items-center justify-between flex mt-[30px]   md:flex w-3/4 bg-white rounded-3xl"
+					type={submit}>
+					<input
+						onChange={(e) => setSearch(e.target.value)}
+						value={search}
+						className="md:h-[30px] h-[30px] w-full rounded-2xl px-3 border-none outline-none bg-white"
+						placeholder="Search products and categories"
+					/>
+					<button
+						className="  bg-bright-blue rounded-2xl h-[30px] md:h-[30px] md:px-[30px] px-[20px] text-white font-bold"
+						type="submit">
+						Search
+					</button>
+				</form>
+			</div>
+			<div className="md:px-[50px] px-[20px]  min-h-full md:pt-[100px] pt-[40px]">
+				{/* Carousel session */}
+				<div className="hidden md:flex h-[230px] ">
+					<Carousel autoplay={true}>
+						<div className="h-[230px] bg-blue-400 rounded-xl">
+							<img
+								alt=""
+								className="h-full w-full rounded-lg"
+								src={
+									"/images/Save up to 20% This Christmas on items Purchased from our shophero.png"
+								}
+							/>
+						</div>
+						<div className="h-[230px] bg-blue-400  rounded-xl">Two</div>
+						<div className="h-[230px] bg-blue-400  rounded-xl"> three </div>
+					</Carousel>
+				</div>
+
+				<div className="md:hidden flex h-[230px]  mt-[-18px]">
+					<div className="rounded-2xl bg-bright-blue w-[100%]">the content</div>
+				</div>
+
+				{/* Shop by categories */}
+				<div className="w-full md:flex hidden justify-between mt-[20px] mb-[20px] text-[20px]">
+					<h2 className=" font-[700] ">
+						Shop <span className="text-app-orange">by Categories</span>
+					</h2>
+
+					<Link className="text-app-orange font-[700]">See all</Link>
+				</div>
+
+				{/* Horizontal list of items */}
+
+				<div className=" flex flex-row md:mt-[0px] mt-[10px]  overflow-x-auto whitespace-no-wrap">
+					<CardByCategories
+						image={
+							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+						}
+						name="Alcoholic Drinks"
+					/>
+
+					<CardByCategories
+						image={
+							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+						}
+						name="Alcoholic Drinks"
+					/>
+
+					<CardByCategories
+						image={
+							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+						}
+						name="Alcoholic Drinks"
+					/>
+
+					<CardByCategories
+						image={
+							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+						}
+						name="Alcoholic Drinks"
+					/>
+
+					<CardByCategories
+						image={
+							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+						}
+						name="Alcoholic Drinks"
+					/>
+
+					<CardByCategories
+						image={
+							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+						}
+						name="Alcoholic Drinks"
+					/>
+				</div>
+
+				{/* Top Selling */}
+				<div className="w-full flex justify-between mt-[20px] mb-[30px]  text-[20px] font-[700]">
+					<h2 className=" font-inter ">
+						Basic <span className="text-app-orange">Essentials</span>
+					</h2>
+
+					<Link className="text-app-orange ">{/* See all */}</Link>
+				</div>
+
+				<div className="w-full justify-between  flex-col lg:flex-row flex  ">
+					<div className="bg-white bg:bg-transparent rounded-3xl p-[10px]">
+						<div className="flex flex-row justify-between items-center">
+							<h2 className="md:text-[20px] text-[15px] font-[700] font-inter mb-[20px]">
+								Top <span className="text-app-orange">Selling</span>
+							</h2>
+							<h3 className="md:hidden flex text-app-orange font-[600] ">
+								See all \%>
+							</h3>
+						</div>
+
+						<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"nice stuff"}
+								image={
+									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+								}
+								price={"C 20"}
+								name={"milo"}
+								addToFav={() => {}}
+							/>
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"nice stuff"}
+								image={
+									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+								}
+								price={"C 20"}
+								name={"milo"}
+								addToFav={() => {}}
+							/>
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"nice stuff"}
+								image={
+									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+								}
+								price={"C 20"}
+								name={"milo"}
+								addToFav={() => {}}
+							/>
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"nice stuff"}
+								image={
+									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+								}
+								price={"C 20"}
+								name={"milo"}
+								addToFav={() => {}}
+							/>
+						</div>
+					</div>
+					<div className="bg-white bg:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
+						{/* <div className="bg-white bg:bg-transparent rounded-3xl p-[10px] mt-[20px] mb-[20px] md:mt-0 "> */}
+						<div className="bg-white md:bg-transparent">
+							<h2 className="md:text-[20px] text-[15px] font-[700] font-inter mb-[20px]">
+								Trending <span className="text-app-orange ">Products</span>
+							</h2>
+							<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
+								<BasicEssentialCard
+									addToCart={() => {}}
+									description={"nice stuff"}
+									image={
+										"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									}
+									price={"C 20"}
+									name={"milo"}
+									addToFav={() => {}}
+								/>
+
+								<BasicEssentialCard
+									addToCart={() => {}}
+									description={"nice stuff"}
+									image={
+										"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									}
+									price={"C 20"}
+									name={"milo"}
+									addToFav={() => {}}
+								/>
+
+								<BasicEssentialCard
+									addToCart={() => {}}
+									description={"nice stuff"}
+									image={
+										"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									}
+									price={"C 20"}
+									name={"milo"}
+									addToFav={() => {}}
+								/>
+
+								<BasicEssentialCard
+									addToCart={() => {}}
+									description={"nice stuff"}
+									image={
+										"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									}
+									price={"C 20"}
+									name={"milo"}
+									addToFav={() => {}}
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div className="bg-white bg:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
+						<h2 className="text-[20px] font-[700] font-inter mb-[20px]">
+							Basic <span className="text-app-orange  ">Essentials</span>
+						</h2>
+						<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"nice stuff"}
+								image={
+									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+								}
+								price={"C 20"}
+								name={"milo"}
+								addToFav={() => {}}
+							/>
+
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"nice stuff"}
+								image={
+									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+								}
+								price={"C 20"}
+								name={"milo"}
+								addToFav={() => {}}
+							/>
+
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"nice stuff"}
+								image={
+									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+								}
+								price={"C 20"}
+								name={"milo"}
+								addToFav={() => {}}
+							/>
+
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"nice stuff"}
+								image={
+									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+								}
+								price={"C 20"}
+								name={"milo"}
+								addToFav={() => {}}
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div className="rounded-2xl mt-[30px] w-full bg-bright-blue px-[10px]  py-[20px]">
+					<div className="w-full flex flex-col justify-center items-center ">
+						<h2 className="md:text-[40px] text-[20px]  text-white mr-0 md:mr-[200px]  family-poppins font-bold">
+							Stay home and get your{" "}
+						</h2>
+						<h2 className="text-white md:text-[40px] text-[20px] mb-[10px] family-poppins font-bold">
+							daily needs from our shop
+						</h2>
+						<h5 className="text-white">
+							Start you daily shopping with
+							<span className="text-app-orange fammily-poppins font-light">
+								{" "}
+								Bevets
+							</span>
+						</h5>
+					</div>
+					<div className="md:flex md:justify-between md:mt-[-20px]  md:flex-row flex-col justify-center items-center mt-[30px] h-auto hidden">
+						<img
+							src={"/images/Delivery-pana.png"}
+							alt="delivery"
+							className="
+							lg:h-[350px] lg:w-[400px] h-[210px] w-[220px]
+							"
+						/>
+
+						<form
+							onSubmit={onSubscribe}
+							className="md:w-[30%] w-[70%] md:mt-[20px] mt-[0] family-poppins">
+							<Input
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								placeholder="Enter your Email address"
+								className="rounded-2xl outline-none  border-none px-5 py-[3px] "
+							/>
+							<Input
+								value={phone}
+								onChange={(e) => setPhone(e.target.value)}
+								placeholder="Enter you phone number"
+								className="mt-[15px] mb-[15px] rounded-2xl outline-none border-none px-5 py-[3px]"
+							/>
+							<Button
+								className=" w-full bg-dark-blue shadow-md text-bold hover:cursor-pointer text-white rounded-2xl outline-none border-none"
+								onClick={onSubscribe}>
+								Subscribe
+							</Button>
+						</form>
+
+						<img
+							src={"/images/Take Away-pana.png"}
+							alt="take away "
+							className=" lg:h-[400px] lg:w-[400px]  h-[220px] w-[250px] "
+						/>
+					</div>
+				</div>
+			</div>
+			<div className="mt-[30px] w-full bg-app-dark py-[40px] px-[30px]  flex flex-row items-center">
+				<img
+					alt="bevets"
+					src={"/images/logo.png"}
+					className="hidden md:block h-[60px]"
+				/>
+
+				<div className=" w-full ml-0 md:ml-[50px]">
+					<h2 className="text-white text-[20px] font-bold md:text-[30px] family-poppins">
+						GET LATEST UPDATES FROM US
+					</h2>
+					<h3 className="text-white text-[15px] family-poppins">
+						Subscribe to our newsletter to get updated on latest offers!
+					</h3>
+
+					<div className="flex flex-row mt-[30px]">
+						<Input
+							className="md:w-[40%] w-[75%] mr-[10px] rounded-3xl"
+							placeholder="Enter your email address"
+						/>{" "}
+						<button className="shadow-md hover:cursor-pointer rounded-3xl bg-bright-blue outline-none border-none py-[5px] px-[15px] text-[15px] md:text-[20px] text-white">
+							Subscribe
+						</button>
+					</div>
+				</div>
+			</div>
+			<Footer />
+		</div>
+	);
+};
+
+export default HomeScreen;
