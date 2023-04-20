@@ -9,6 +9,8 @@ import Account from "./screens/account";
 import OtpScreen from "./screens/otpScreen";
 import RequestAccess from "./screens/requestAccess";
 import PersonalDetailScreen from "./screens/personalDetailScreen";
+import CategoryScreen from "./screens/categoryScreen";
+import ProductByIdScreen from "./screens/productByIdScreen";
 
 function App() {
 	return (
@@ -23,6 +25,8 @@ function App() {
 				<Route path="/otp" element={<OtpScreen />} />
 				<Route path="/requestaccess" element={<RequestAccess />} />
 				<Route path="/personaldetails" element={<PersonalDetailScreen />} />
+				<Route path="/categories" element={<CategoryScreen />} />
+				<Route path="/categories/:id" element={<ProductByIdScreen />} />
 			</Routes>
 		</Router>
 	);

@@ -1,42 +1,52 @@
 import React from "react";
 import { BiEdit } from "react-icons/bi";
+import WideButton from "../components/wideButton";
 
 const RequestAccess = () => {
 	return (
-		<div className="w-full md:bg-transparent bg-primary-blue h-screen md:justify-center flex-col flex items-center ">
+		<div className="w-full md:bg-transparent bg-primary-blue h-screen  flex-col flex items-center md:p-[80px] p-[40px] ">
 			<img
 				alt="bevets"
 				src={"/images/logo.png"}
-				className="w-[120px] md:mt-0 mt-[100px]"
+				className="w-[120px] md:mt-0 "
 			/>
 
-			<h1 className="mt-[20px] font-extrabold text-[25px] family-inter">
+			<h1 className="mt-[20px] font-extrabold md:text-[20px] text-[15px] family-inter">
 				Bevets is requesting access to:
 			</h1>
-			<p className=" text-center  w-[40%] text-[18px] family-inter">
+			<p className=" text-center  w-[40%] text-[15px] family-inter mt-[5px]">
 				Your name, profile picture and email
 			</p>
 
-			<p className="flex mt-[25px] flex-row text-[20px] items-center text-bright-blue family-inter">
+			<p className="flex mt-[25px] flex-row text-[15px] items-center text-bright-blue family-inter">
 				<BiEdit className="mr-[7px]" />
 				Edit access
 			</p>
 
 			<br />
-			<br />
 			<div className="mt-[30px] md:w-[30%] sm:w-[50%] w-[80%]">
-				<button
+				{/* <button
 					className="md:mt-[15px] mt-[6px] shadow-md w-full md:py-[10px] py-[5px] text-[15px] md:text-[20px] font-semibold border-none outline-none bg-bright-blue family-inter rounded-2xl text-white"
 					type="submit">
 					Continue as Paul
-				</button>
+				</button> */}
+
+				<WideButton
+					onClick={() => {}}
+					text={"Continue as paul"}
+					style={
+						"md:mt-[10px] mt-[6px] w-full md:py-[5px] py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none bg-bright-blue family-inter rounded-2xl text-white"
+					}
+				/>
 				<br />
 
-				<button
-					className="md:mt-[15px] shadow-md mt-[6px] w-full md:py-[10px] py-[5px] text-[15px] md:text-[20px] font-semibold border-none outline-none bg-[#A4A4A4] family-inter rounded-2xl text-white"
-					type="submit">
-					Cancel
-				</button>
+				<WideButton
+					onClick={() => {}}
+					text={"Cancel"}
+					style={
+						"md:mt-[10px] mt-[6px] w-full md:py-[5px] py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none bg-[#A4A4A4] family-inter rounded-2xl text-white"
+					}
+				/>
 			</div>
 
 			<div className="text-[10px]  flex-col justify-center items-center flex font-light w-[60%] text-clip text-center bottom-[40px] fixed">

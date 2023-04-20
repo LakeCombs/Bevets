@@ -29,9 +29,9 @@ module.exports = {
 			},
 
 			fontFamily: {
-				mont: ["sans-serif", "Montserrat", "Inter"],
-				poppins: ["sans-serif", "Poppins"],
-				inter: ["sans-serif", "Inter"],
+				mont: ["Montserrat", "Inter"],
+				poppins: ["Poppins"],
+				inter: ["Inter"],
 			},
 		},
 	},
