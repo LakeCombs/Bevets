@@ -10,6 +10,7 @@ module.exports = {
 				"dark-blue": "#151E44",
 				"app-white": "#FFFFFF",
 				"app-orange": "#FF8A00",
+				"app-orange-pale": "#FF8A0033",
 				"app-dark": "#565656",
 				"app-gray": "#D9D9D9",
 			},

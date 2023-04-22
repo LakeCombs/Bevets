@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import WideButton from "../components/wideButton";
-import { Checkbox, DatePicker, Switch } from "antd";
+import { Checkbox, DatePicker } from "antd";
 
 const PersonalDetailScreen = () => {
 	const [gender, setGender] = useState("");

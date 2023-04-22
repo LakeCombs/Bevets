@@ -8,7 +8,7 @@ const CategoryScreen = () => {
 		<div className="bg-background">
 			<Header />
 			<ScreenWithPadding>
-				<div className="pt-[20px] h-screen">
+				<div className=" h-screen">
 					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full">
 						<h3 className="font-bold family-poppins">
 							Home > Categories > Alcoholic Drinks
@@ -20,7 +20,7 @@ const CategoryScreen = () => {
 						<hr />
 					</div>
 
-					<div className="flex justify-between flex-wrap">
+					<div className="flex justify-around flex-wrap">
 						<StandardProductCard
 							addToCart={() => {}}
 							addToFav={() => {}}
