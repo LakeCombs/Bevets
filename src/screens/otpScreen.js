@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdMail } from "react-icons/io";

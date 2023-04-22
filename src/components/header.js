@@ -4,9 +4,11 @@ import { AiFillInfoCircle } from "react-icons/ai";
 import { HiShoppingCart } from "react-icons/hi";
 import { BsFillCollectionFill } from "react-icons/bs";
 import { Dropdown, Badge } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 	const [search, setSearch] = useState("");
+	const navigate = useNavigate();
 
 	const submit = (e) => {
 		e.preventDefault();
@@ -38,8 +40,14 @@ const Header = () => {
 		},
 	];
 	return (
-		<div className="py-[15px] flex items-center md:px-[70px] px-[30px] justify-between bg-app-blue  bg-primary-blue fixed top-0 z-10 mb-[100px] w-full">
-			<img alt="bevets" src={"/images/logo.png"} />
+		<div className="py-[15px] flex items-center md:px-[70px] px-[30px] justify-between bg-app-blue  bg-primary-blue fixed top-0 z-10 mb-[100px] w-full shadow-sm">
+			<img
+				alt="bevets"
+				src={"/images/logo.png"}
+				onClick={() => {
+					navigate("/");
+				}}
+			/>
 
 			<form
 				className="items-center justify-between hidden   md:flex w-5/12 bg-white rounded-3xl"
@@ -76,7 +84,11 @@ const Header = () => {
 					Help
 				</p>
 
-				<p className="items-center  flex flex-row font-bold hover:cursor-pointer">
+				<p
+					className="items-center  flex flex-row font-bold hover:cursor-pointer"
+					onClick={() => {
+						navigate("/cart");
+					}}>
 					<span className="mr-2 text-black  text-[20px]">
 						<Badge count={5} color={"FF8A00"} size="small">
 							<HiShoppingCart className="text-[20px]" />

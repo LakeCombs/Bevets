@@ -10,7 +10,7 @@ const StandardProductCard = ({
 	addToFav,
 }) => {
 	return (
-		<div className="flex rounded-3xl flex-col items-center justify-between bg-primary-blue font-mont  h-[200px] w-[170px] m-[5px] ">
+		<div className="flex rounded-3xl flex-col items-center justify-between bg-primary-blue font-mont  h-[200px] w-[170px]  m-[5px] hover:cursor-pointer ">
 			<span onClick={addToFav} className="flex  self-end mr-[10px] mt-[15px]">
 				<BsFillSuitHeartFill className=" outline-white text-white text-[15px] " />
 			</span>
@@ -20,7 +20,7 @@ const StandardProductCard = ({
 				alt={name}
 			/>
 			<div className="flex flex-col mt-[5px] py-[8px]  items-center justify-center">
-				<hr className="" />
+				<hr />
 				<h2 className="font-bold text-[12px]  ">{name}</h2>
 
 				<p className="text-[12px] mb-1 font-semibold text-app-black mt-1 ">

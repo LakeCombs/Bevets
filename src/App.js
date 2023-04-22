@@ -11,6 +11,7 @@ import RequestAccess from "./screens/requestAccess";
 import PersonalDetailScreen from "./screens/personalDetailScreen";
 import CategoryScreen from "./screens/categoryScreen";
 import ProductByIdScreen from "./screens/productByIdScreen";
+import CartScreen from "./screens/cartScreen";
 
 function App() {
 	return (
@@ -27,6 +28,7 @@ function App() {
 				<Route path="/personaldetails" element={<PersonalDetailScreen />} />
 				<Route path="/categories" element={<CategoryScreen />} />
 				<Route path="/categories/:id" element={<ProductByIdScreen />} />
+				<Route path="/cart" element={<CartScreen />} />
 			</Routes>
 		</Router>
 	);
