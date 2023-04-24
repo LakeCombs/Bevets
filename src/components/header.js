@@ -69,15 +69,15 @@ const Header = () => {
 					menu={{ items }}
 					trigger={["click"]}
 					overlayClassName={{ hover: "blue" }}>
-					<p className="items-center flex-row  flex  hover:cursor-pointer">
-						<span className="mr-2 text-black text-[20px]">
+					<p className="items-center flex-row h3 flex  hover:cursor-pointer">
+						<span className="mr-2 text-black ">
 							<FaUserAlt />
 						</span>
 						Profile
 					</p>
 				</Dropdown>
 
-				<p className="items-center flex-row  flex hover:cursor-pointer">
+				<p className="items-center  flex-row h3 flex hover:cursor-pointer">
 					<span className="mr-2 text-black text-[20px] ">
 						<AiFillInfoCircle />
 					</span>
@@ -85,7 +85,7 @@ const Header = () => {
 				</p>
 
 				<p
-					className="items-center  flex flex-row font-bold hover:cursor-pointer"
+					className="items-center h3 flex flex-row  hover:cursor-pointer"
 					onClick={() => {
 						navigate("/cart");
 					}}>

@@ -30,7 +30,7 @@ module.exports = {
 			},
 
 			fontFamily: {
-				mont: ["Montserrat", "Inter"],
+				mont: ["Montserrat"],
 				poppins: ["Poppins"],
 				inter: ["Inter"],
 			},

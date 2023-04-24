@@ -20,20 +20,16 @@ const BasicEssentialCard = ({
 				alt={name}
 			/>
 			<div className="flex flex-col sm:justify-between py-[20px] ml-0 sm:ml-[7px] items-center justify-center">
-				<h2 className="font-bold sm:text-[20px] text-[12px] sm:mb-3 mt-[-15px] ">
-					{name}
-				</h2>
+				<h2 className="title sm:mb-3 mt-[-15px] ">{name}</h2>
 				<p className="font-light text-app-dark text-[17px] sm:flex hidden">
 					{description}
 				</p>
 
-				<p className="text-[16px] font-semibold text-app-black sm:mt-3 mt-0 ">
-					{price}
-				</p>
+				<p className=" title  text-black sm:mt-3 mt-0 ">{price}</p>
 
 				<button
 					onClick={addToCart}
-					className="rounded-sm bg-dark-blue text-app-white px-[10px] font-semibold py-[5px] mt-0 sm:mt-3">
+					className="rounded-lg h3 hover:shadow bg-dark-blue text-app-white px-[10px] flex justify-center items-center font-semibold py-[5px] mt-0 sm:mt-3">
 					Add to Cart
 				</button>
 			</div>

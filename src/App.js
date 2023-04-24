@@ -12,6 +12,9 @@ import PersonalDetailScreen from "./screens/personalDetailScreen";
 import CategoryScreen from "./screens/categoryScreen";
 import ProductByIdScreen from "./screens/productByIdScreen";
 import CartScreen from "./screens/cartScreen";
+import VerificationForPhoneNumberScreen from "./screens/verificationForPhoneNumberScreen";
+import AddressBookScreen from "./screens/addressBookScreen";
+import AddressDetails from "./screens/addressDetails";
 
 function App() {
 	return (
@@ -29,6 +32,12 @@ function App() {
 				<Route path="/categories" element={<CategoryScreen />} />
 				<Route path="/categories/:id" element={<ProductByIdScreen />} />
 				<Route path="/cart" element={<CartScreen />} />
+				<Route
+					path="/verification"
+					element={<VerificationForPhoneNumberScreen />}
+				/>
+				<Route path="/addressbook" element={<AddressBookScreen />} />
+				<Route path="/addressdetails" element={<AddressDetails />} />
 			</Routes>
 		</Router>
 	);
