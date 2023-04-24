@@ -35,8 +35,8 @@ const DeliverySelfScreen = () => {
 			<ScreenWithPadding>
 				<div className="flex mt-[-90px] p-[10px] px-[20px] flex-col ">
 					{flip ? (
-						<div className="flex justify-between w-full">
-							<div className="w-8/12 flex flex-col p-[10px] mr-[10px]">
+						<div className="flex md:flex-row flex-col justify-between w-full ">
+							<div className="md:w-8/12 w-full flex flex-col  md:mr-[10px] mr-0">
 								<div className="bg-white rounded-2xl shadow-md pb-[15px]">
 									<div className="flex justify-between mx-[15px] items-center">
 										<h2 className="font-bold  text-[12px] md:text-[15px] my-[10px]">
@@ -157,9 +157,9 @@ const DeliverySelfScreen = () => {
 									</button>
 								</div>
 							</div>
-							<div className="w-4/12 bg-white rounded-2xl shadow-md p-[10px]  flex flex-col">
+							<div className="md:w-4/12 w-full bg-white rounded-2xl shadow-md p-[10px] md:mt-0 mt-[20px] flex flex-col">
 								{" "}
-								<h2 className="font-bold ml-[15px] text-[12px] md:text-[15px] my-[10px]">
+								<h2 className="font-bold ml-[15px] text-[12px] md:text-[15px] my-[5px] ">
 									YOUR ORDER (1 items)
 								</h2>
 								<hr />
