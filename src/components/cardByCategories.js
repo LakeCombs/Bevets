@@ -9,7 +9,7 @@ const CardByCategories = ({ image, name }) => {
 				className="h-[150px] w-[140px] object-cover mb-[5px] "
 			/>
 
-			<p className="font-bold text-app-black font-poppins mb-[10px]"> {name}</p>
+			<p className="h3 text-black font-poppins mb-[10px]"> {name}</p>
 		</div>
 	);
 };

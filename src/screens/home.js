@@ -61,12 +61,15 @@ const HomeScreen = () => {
 				</div>
 
 				{/* Shop by categories */}
-				<div className="w-full md:flex hidden justify-between mt-[20px] mb-[20px] text-[20px]">
-					<h2 className=" font-[700] ">
-						Shop <span className="text-app-orange">by Categories</span>
+				<div className="w-full md:flex hidden justify-between mt-[20px] mb-[20px]  session-header">
+					<h2 className=" ">
+						Shop{" "}
+						<span className="text-app-orange session-header">
+							by Categories
+						</span>
 					</h2>
 
-					<Link className="text-app-orange font-[700]">See all</Link>
+					<Link className="text-app-orange session-header">See all</Link>
 				</div>
 
 				{/* Horizontal list of items */}
@@ -116,8 +119,8 @@ const HomeScreen = () => {
 				</div>
 
 				{/* Top Selling */}
-				<div className="w-full flex justify-between mt-[20px] mb-[30px]  text-[20px] font-[700]">
-					<h2 className=" font-inter ">
+				<div className="w-full flex justify-between mt-[20px] mb-[30px]">
+					<h2 className=" font-inter session-header ">
 						Basic <span className="text-app-orange">Essentials</span>
 					</h2>
 
@@ -127,7 +130,7 @@ const HomeScreen = () => {
 				<div className="w-full justify-between  flex-col lg:flex-row flex  ">
 					<div className="bg-white bg:bg-transparent rounded-3xl p-[10px]">
 						<div className="flex flex-row justify-between items-center">
-							<h2 className="md:text-[20px] text-[15px] font-[700] font-inter mb-[20px]">
+							<h2 className="session-header font-[700] font-inter mb-[20px]">
 								Top <span className="text-app-orange">Selling</span>
 							</h2>
 							<h3 className="md:hidden flex text-app-orange font-[600] ">
@@ -178,10 +181,10 @@ const HomeScreen = () => {
 							/>
 						</div>
 					</div>
-					<div className="bg-white bg:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
+					<div className=" bg-white md:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
 						{/* <div className="bg-white bg:bg-transparent rounded-3xl p-[10px] mt-[20px] mb-[20px] md:mt-0 "> */}
 						<div className="bg-white md:bg-transparent">
-							<h2 className="md:text-[20px] text-[15px] font-[700] font-inter mb-[20px]">
+							<h2 className="session-header font-inter mb-[20px]">
 								Trending <span className="text-app-orange ">Products</span>
 							</h2>
 							<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
@@ -232,8 +235,8 @@ const HomeScreen = () => {
 						</div>
 					</div>
 
-					<div className="bg-white bg:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
-						<h2 className="text-[20px] font-[700] font-inter mb-[20px]">
+					<div className="md:bg-transparent bg-white  rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
+						<h2 className=" session-header font-inter mb-[20px]">
 							Basic <span className="text-app-orange  ">Essentials</span>
 						</h2>
 						<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
@@ -286,13 +289,13 @@ const HomeScreen = () => {
 
 				<div className="rounded-2xl mt-[30px] w-full bg-bright-blue px-[10px]  py-[20px]">
 					<div className="w-full flex flex-col justify-center items-center ">
-						<h2 className="md:text-[40px] text-[20px]  text-white mr-0 md:mr-[200px]  family-poppins font-bold">
+						<h2 className="h1 text-white mr-0 md:mr-[200px]  family-poppins font-bold">
 							Stay home and get your{" "}
 						</h2>
-						<h2 className="text-white md:text-[40px] text-[20px] mb-[10px] family-poppins font-bold">
+						<h2 className="text-white h1 mb-[10px] family-poppins font-bold">
 							daily needs from our shop
 						</h2>
-						<h5 className="text-white">
+						<h5 className="text-white h3">
 							Start you daily shopping with
 							<span className="text-app-orange fammily-poppins font-light">
 								{" "}
