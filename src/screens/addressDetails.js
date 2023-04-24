@@ -13,11 +13,11 @@ const AddressDetails = () => {
 		<div className="bg-background h-screen">
 			<Header />
 			<div className="flex title bg-white w-full pt-[100px] py-[15px] px-[50px]">
-				<h3>ADDRESS DETAILS</h3>
+				<h3> ADDRESS DETAILS</h3>
 			</div>
 			<ScreenWithPadding>
 				<div className="flex mt-[-80px] bg-white p-[10px] px-[20px] flex-col ">
-					<div className="pt-[10px] w-full">
+					<div className="pt-[10px]  w-full">
 						<Form layout="vertical">
 							<h2 className="font-bold md:text-[15px] text-[12px] ">
 								Personal Details

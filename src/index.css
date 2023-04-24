@@ -28,7 +28,7 @@ code {
 }
 
 .title {
-	@apply font-semibold sm:text-[20px] text-[15px];
+	@apply font-semibold md:text-[20px] text-[15px];
 }
 
 .h1 {
