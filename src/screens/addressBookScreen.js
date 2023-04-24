@@ -32,7 +32,7 @@ const AddressBookScreen = () => {
 								<h3 className="font-semibold">Micheal Owen </h3>{" "}
 								<h3 className="text-app-orange hover:cursor-pointer">Edit</h3>
 							</div>
-							<div className="p-[10px] mt-[10px] text-[13px] text-gray-400 ">
+							<div className="p-[10px]  text-[13px] text-gray-400 ">
 								<p> House No. B13/40, Tontahrnish, Great Accra</p>
 								<p>GG-738-6806</p>
 								<p>+233 50 159 6121</p>
@@ -47,7 +47,7 @@ const AddressBookScreen = () => {
 								<h3 className="font-semibold">Micheal Owen </h3>{" "}
 								<h3 className="text-app-orange hover:cursor-pointer">Edit</h3>
 							</div>
-							<div className="p-[10px] mt-[10px] text-[13px] text-gray-400 ">
+							<div className="p-[10px] text-[13px] text-gray-400 ">
 								<p> House No. B13/40, Tontahrnish, Great Accra</p>
 								<p>GG-738-6806</p>
 								<p>+233 50 159 6121</p>

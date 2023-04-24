@@ -64,7 +64,7 @@ const Header = () => {
 					Search
 				</button>
 			</form>
-			<div className="flex  justify-between md:w-[20%] w-[70%]  ml-[10%] items-center">
+			<div className="flex  justify-between md:w-[25%] w-[70%]  ml-[10%] items-center">
 				<Dropdown
 					menu={{ items }}
 					trigger={["click"]}

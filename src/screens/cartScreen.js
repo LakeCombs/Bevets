@@ -136,7 +136,7 @@ const CartScreen = () => {
 								</div>
 							</div>
 						</div>
-						<div className="md:w-2/5 w-full flex justify-center flex-col bg-white rounded-lg md:ml-[10px] pb-[20px]">
+						<div className="md:w-2/5 w-full flex flex-col bg-white rounded-lg md:ml-[10px] pb-[20px]">
 							<h2 className="font-bold ml-[15px] text-[12px] md:text-[15px] my-[10px]">
 								CART SUMMARY
 							</h2>
