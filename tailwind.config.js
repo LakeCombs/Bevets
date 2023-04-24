@@ -13,6 +13,7 @@ module.exports = {
 				"app-orange-pale": "#FF8A0033",
 				"app-dark": "#565656",
 				"app-gray": "#D9D9D9",
+				"text-gray": "#00000066",
 			},
 			screens: {
 				sm: { min: "640px" },
