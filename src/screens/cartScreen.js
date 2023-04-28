@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React from "react";
 import Header from "../components/header";
 import ScreenWithPadding from "../components/ScreenWithPadding";
@@ -5,12 +6,17 @@ import { Link } from "react-router-dom";
 import StandardProductCard from "../components/standardProductCard";
 import Footer from "../components/footer";
 import { MdDeleteOutline } from "react-icons/md";
+import SearchComponent from "../components/searchComponent";
+import WideButton from "../components/wideButton";
 
 const CartScreen = () => {
-	const cart = [1, 2, 3];
+	const cart = [1, 2];
 	return (
-		<div className="bg-background h-screen">
+		<div className="min-h-screen md:bg-background bg-primary-blue">
 			<Header />
+			<div className="flex md:hidden">
+				<SearchComponent />
+			</div>
 			<ScreenWithPadding>
 				{!cart?.length ? (
 					<div className="w-full bg-white shadow-md rounded-2xl pt-[15px] pb-[15px]">
@@ -30,8 +36,8 @@ const CartScreen = () => {
 						</div>
 					</div>
 				) : (
-					<div className="w-full flex md:flex-row flex-col justify-between">
-						<div className="md:w-3/5 w-full bg-white rounded-lg">
+					<div className="flex flex-col-reverse justify-between w-full md:flex-row">
+						<div className="md:mt-0 mt-[20px] w-full bg-white rounded-lg md:w-3/5">
 							<h2 className="font-bold ml-[15px] text-[12px] md:text-[15px] my-[10px]">
 								CART
 							</h2>
@@ -40,12 +46,15 @@ const CartScreen = () => {
 							{/* Cart Object */}
 
 							<div className="flex justify-between px-[20px] py-[20px] border-y">
-								<div>
+								<div className="w-full ">
 									<div className="flex flex-row justify-start">
 										<img className="h-[50px] w-[50px]" alt={""} src={""} />
 
 										<div className="ml-[10px]">
 											<h3>Baileys Original Irish Cream</h3>
+											<p className="flex md:hidden text-app-orange">
+												GhC 100.00
+											</p>
 											<p className="text-[#00000066] text-[10px]">
 												Enter Description
 											</p>
@@ -54,68 +63,29 @@ const CartScreen = () => {
 											</p>
 										</div>
 									</div>
-
-									<p
-										className="text-app-orange flex flex-row mt-[15px] hover:cursor-pointer"
-										onClick={() => {
-											console.log("deleting item from cart");
-										}}>
-										<MdDeleteOutline className="mr-[3px] text-[18px]" />
-										REMOVE
-									</p>
-								</div>
-
-								<div className="flex  flex-col">
-									<div className="flex justify-end flex-col items-end">
-										<h1 className="font-semibold">GHc 100.00</h1>
-										<p>
-											<span className="font-light mr-[3px]">GHc 110.00 </span>
-											<span className="bg-app-orange-pale py-[3px] px-[4px] text-[10px] rounded-lg text-app-orange">
-												-10%
-											</span>
+									<div className="flex justify-between w-full">
+										<p
+											className="text-app-orange flex flex-row mt-[15px] hover:cursor-pointer"
+											onClick={() => {
+												console.log("deleting item from cart");
+											}}>
+											<MdDeleteOutline className="mr-[3px] text-[18px]" />
+											REMOVE
 										</p>
-									</div>
-									<div className="flex justify-end w-auto mt-[20px]">
-										<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
-											-
-										</span>{" "}
-										<span className="mx-[10px]">1</span>
-										<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
-											+
-										</span>
-									</div>
-								</div>
-							</div>
-
-							{/* The second itme in cart */}
-							<div className="flex justify-between px-[20px] py-[20px] border-y">
-								<div>
-									<div className="flex flex-row justify-start">
-										<img className="h-[50px] w-[50px]" alt={""} src={""} />
-
-										<div className="ml-[10px]">
-											<h3>Baileys Original Irish Cream</h3>
-											<p className="text-[#00000066] text-[10px]">
-												Enter Description
-											</p>
-											<p className="text-[#00000066] text-[10px]">
-												Enter Description
-											</p>
+										<div className=" md:hidden flex justify-end w-auto mt-[20px]">
+											<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
+												-
+											</span>{" "}
+											<span className="mx-[10px]">1</span>
+											<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
+												+
+											</span>
 										</div>
 									</div>
-
-									<p
-										className="text-app-orange flex flex-row mt-[15px] hover:cursor-pointer"
-										onClick={() => {
-											console.log("deleting item from cart");
-										}}>
-										<MdDeleteOutline className="mr-[3px] text-[18px]" />
-										REMOVE
-									</p>
 								</div>
 
-								<div className="flex  flex-col">
-									<div className="flex justify-end flex-col items-end">
+								<div className="flex-col hidden md:flex">
+									<div className="flex flex-col items-end justify-end">
 										<h1 className="font-semibold">GHc 100.00</h1>
 										<p>
 											<span className="font-light mr-[3px]">GHc 110.00 </span>
@@ -151,14 +121,27 @@ const CartScreen = () => {
 								</div>
 								<h1 className="font-bold text-[15px]">GHc 200</h1>
 							</div>
-							<hr />
+							<hr className="hidden md:flex" />
 
-							<button className="w-[50%] rounded-lg bg-bright-blue py-[5px] text-white font-semibold  mt-[20px] self-center hover:shadow-md ">
+							<button className=" md:flex hidden w-[50%] justify-center align-center rounded-lg bg-bright-blue py-[5px] text-white font-semibold  mt-[20px] self-center hover:shadow-md ">
 								CHECKOUT
 							</button>
 						</div>
 					</div>
 				)}
+				<div className="flex md:hidden mt-[30px] flex-col w-full">
+					<WideButton
+						onClick={() => {}}
+						style={"bg-app-orange rounded-lg hover:shadow-md"}
+						text={"CONTINUE SHOPPING"}
+					/>
+
+					<WideButton
+						onClick={() => {}}
+						style={"bg-bright-blue rounded-lg mt-[8px] hover:shadow-md"}
+						text={"CHECKOUT"}
+					/>
+				</div>
 				<div className="mt-[35px] rounded-2xl w-full bg-white shadow-md">
 					<div className="flex flex-row justify-between px-[15px] py-[10px] ">
 						<h2 className="text-[12px] md:text-[15px] font-bold">

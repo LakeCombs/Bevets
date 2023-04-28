@@ -14,12 +14,13 @@ module.exports = {
 				"app-dark": "#565656",
 				"app-gray": "#D9D9D9",
 				"text-gray": "#00000066",
+				"footer-bg": "#06222D"
 			},
 			screens: {
 				sm: { min: "640px" },
 				md: { min: "768px" },
 				lg: { min: "1024px" },
-				xl: { min: "1280px" },
+				xl: { min: "1280px" }
 			},
 
 			fontSize: {
@@ -27,15 +28,15 @@ module.exports = {
 				"3xl": "1.875rem",
 				"4xl": "2.25rem",
 				"5xl": "3rem",
-				"6xl": "4rem",
+				"6xl": "4rem"
 			},
 
 			fontFamily: {
 				mont: ["Montserrat"],
 				poppins: ["Poppins"],
-				inter: ["Inter"],
-			},
-		},
+				inter: ["Inter"]
+			}
+		}
 	},
-	plugins: [],
+	plugins: []
 };

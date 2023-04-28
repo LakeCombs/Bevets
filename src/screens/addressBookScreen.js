@@ -4,7 +4,7 @@ import ScreenWithPadding from "../components/ScreenWithPadding";
 
 const AddressBookScreen = () => {
 	return (
-		<div className="bg-background h-screen">
+		<div className="h-screen bg-background">
 			<Header />
 
 			<div className="flex bg-white w-full pt-[100px] py-[15px] px-[50px]">
@@ -12,9 +12,9 @@ const AddressBookScreen = () => {
 			</div>
 			<ScreenWithPadding>
 				<div className="flex flex-col md:flex-row mt-[-80px]">
-					<div className="flex md:w-2/5  w-full flex-col ">
+					<div className="flex flex-col w-full md:w-2/5 ">
 						<div className="p-[10px] bg-white rounded-2xl shadow">
-							<div className="flex w-full justify-between">
+							<div className="flex justify-between w-full">
 								<h3 className="font-semibold">Micheal Owen </h3>{" "}
 								<h3 className="text-app-orange hover:cursor-pointer">Edit</h3>
 							</div>

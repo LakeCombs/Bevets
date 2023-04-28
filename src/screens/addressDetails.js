@@ -1,29 +1,42 @@
+/* eslint-disable react/style-prop-object */
 import React from "react";
 import Header from "../components/header";
 import ScreenWithPadding from "../components/ScreenWithPadding";
-import { Form, Input } from "antd";
+import { Form, Input, Radio } from "antd";
 import WideButton from "../components/wideButton";
+import { useNavigate } from "react-router-dom";
+import Footer from "../components/footer";
 
 const AddressDetails = () => {
-	const Next = (e) => {
+	const navigate = useNavigate();
+	const Next = e => {
 		e.preventDefault();
 		console.log("you have clicked the next");
 	};
 	return (
-		<div className="bg-background h-screen">
-			<Header />
-			<div className="flex title bg-white w-full pt-[100px] py-[15px] px-[50px]">
+		<div className="min-h-screen md:bg-background bg-primary-blue ">
+			<div className="hidden md:flex">
+				<Header />
+			</div>
+			<div className="bg-white w-full md:hidden justify-items-center flex px-[40px] py-[20px] justify-between ">
+				<p className="font-bold text-[20px]" onClick={() => navigate(-1)}>
+					X
+				</p>
+				<p className="font-bold text-[20px]">Add a New Address</p>
+				<p></p>
+			</div>
+			<div className="flex title md:bg-white bg-primary-blue w-full md:pt-[100px] py-[15px] px-[50px]">
 				<h3> ADDRESS DETAILS</h3>
 			</div>
 			<ScreenWithPadding>
-				<div className="flex mt-[-80px] bg-white p-[10px] px-[20px] flex-col ">
-					<div className="pt-[10px]  w-full">
+				<div className="flex md:mt-[-80px] md:bg-white  p-[10px] px-[20px] flex-col ">
+					<div className="md:pt-[10px]  w-full md:bg-transparent bg-white rounded-lg p-[10px]">
 						<Form layout="vertical">
 							<h2 className="font-bold md:text-[15px] text-[12px] ">
 								Personal Details
 							</h2>
-							<hr className="mt-[5px] mb-[20px]" />
-							<div className="w-full flex md:flex-row flex-col justify-between">
+							<hr className="mt-[5px] mb-[20px] md:flex hidden" />
+							<div className="flex flex-col justify-between w-full md:flex-row">
 								<Form.Item
 									className="w-full"
 									label="First Name"
@@ -44,7 +57,7 @@ const AddressDetails = () => {
 									<Input placeholder="last name" />
 								</Form.Item>
 							</div>
-							<div className="w-full flex md:flex-row flex-col justify-between">
+							<div className="flex flex-col justify-between w-full md:flex-row">
 								<Form.Item
 									className="md:mr-[5px]  w-full"
 									label="Contact Number"
@@ -63,11 +76,11 @@ const AddressDetails = () => {
 								</Form.Item>
 							</div>
 
-							<h2 className="font-bold md:text-[15px] text-[12px] ">
+							<h2 className="font-bold md:text-[15px] text-[12px] md:flex hidden ">
 								Delivery Details
 							</h2>
-							<hr className="mt-[5px] mb-[20px]" />
-							<div className="w-full flex md:flex-row flex-col justify-between">
+							<hr className="mt-[5px] mb-[20px] md:flex hidden" />
+							<div className="flex flex-col justify-between w-full md:flex-row">
 								<Form.Item
 									className="md:mr-[5px]  w-full"
 									label="Address"
@@ -85,10 +98,10 @@ const AddressDetails = () => {
 									<Input placeholder="" />
 								</Form.Item>
 							</div>
-							<Form.Item className="  w-full" label="Street address Line 2">
+							<Form.Item className="w-full " label="Street address Line 2">
 								<Input placeholder="" />
 							</Form.Item>
-							<div className="w-full flex md:flex-row flex-col justify-between">
+							<div className="flex flex-col justify-between w-full md:flex-row">
 								<Form.Item
 									className="md:mr-[5px]  w-full"
 									label="City"
@@ -106,19 +119,34 @@ const AddressDetails = () => {
 									<Input placeholder="" />
 								</Form.Item>
 							</div>
-							<Form.Item className="  w-full" label="Postal/Zip Code">
+							<Form.Item className="w-full " label="Postal/Zip Code">
 								<Input placeholder="" />
 							</Form.Item>
-							<br />
+							<br className="hidden md:flex" />
 							<WideButton
 								onClick={Next}
 								text={"Next"}
-								style={"bg-bright-blue text-white hover:shadow-md"}
+								style={
+									"bg-bright-blue w-[200px] justify-center items-center text-white hover:shadow-md md:flex hidden self-center"
+								}
 							/>
 						</Form>
 					</div>
+
+					<div className="flex flex-row md:hidden mt-[15px]">
+						<Radio></Radio> Set as default address
+					</div>
+					<WideButton
+						onClick={() => {}}
+						style={
+							"align-center w-[80%] flex justify-center mt-[10px] mb-[40px] item-center rounded-md hover:shadow-md md:hidden flex bg-app-orange"
+						}
+						text={"Save Changes"}
+						key={"Save changes"}
+					/>
 				</div>
 			</ScreenWithPadding>
+			<Footer />
 		</div>
 	);
 };
