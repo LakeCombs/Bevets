@@ -16,6 +16,7 @@ import VerificationForPhoneNumberScreen from "./screens/verificationForPhoneNumb
 import AddressBookScreen from "./screens/addressBookScreen";
 import AddressDetails from "./screens/addressDetails";
 import DeliverySelfScreen from "./screens/deliverySelfScreen";
+import AddRecipientScreen from "./screens/addRecipientScreen";
 
 function App() {
 	return (
@@ -40,6 +41,7 @@ function App() {
 				<Route path="/addressbook" element={<AddressBookScreen />} />
 				<Route path="/addressdetails" element={<AddressDetails />} />
 				<Route path="/delivery" element={<DeliverySelfScreen />} />
+				<Route path="/addressrecepient" element={<AddRecipientScreen />} />
 			</Routes>
 		</Router>
 	);

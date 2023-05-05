@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
 	return (
-		<div className="w-full h-auto  py-[50px] bg-footer-bg md:bg-app-dark mt-[20px] flex  justify-center items-center">
+		<div className="  w-full h-auto py-[20px] md:py-[50px] bg-footer-bg md:bg-app-dark mt-[20px] flex  justify-center items-center bottom-0">
 			<div className=" w-[80%] md:w-[60%] md:flex hidden justify-between flex-row text-white family-poppins">
 				<div>
 					<h2 className="font-bold underline">INFORMATION</h2>

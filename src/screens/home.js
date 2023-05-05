@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Header from "../components/header";
 import { Button, Carousel, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CardByCategories from "../components/cardByCategories";
 import BasicEssentialCard from "../components/basicEssentialCard";
 import Footer from "../components/footer";
 
 const HomeScreen = () => {
+	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [search, setSearch] = useState("");
@@ -40,28 +41,57 @@ const HomeScreen = () => {
 			</div>
 			<div className="md:px-[50px] px-[20px]  min-h-full md:pt-[100px] pt-[40px]">
 				{/* Carousel session */}
-				<div className="hidden md:flex h-[230px] ">
-					<Carousel autoplay={true}>
-						<div className="h-[230px] bg-blue-400 rounded-xl">
+				<div className="flex h-[300px] w-full bg-green-500">
+					{/* <Carousel autoplay={true}> */}
+					<div className=" h-full md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col">
+						<div className="w-full flex items-start justify-between ">
 							<img
+								src={"/images/left-hanger.svg"}
 								alt=""
-								className="h-full w-full rounded-lg"
-								src={
-									"/images/Save up to 20% This Christmas on items Purchased from our shophero.png"
-								}
+								className="top-0 left w-3/6"
+							/>
+							<img
+								src={"/images/right-hanger.svg"}
+								alt=""
+								className="top-0 right  h-[170px] "
 							/>
 						</div>
-						<div className="h-[230px] bg-blue-400  rounded-xl">Two</div>
-						<div className="h-[230px] bg-blue-400  rounded-xl"> three </div>
-					</Carousel>
+						<div className="flex justify-center w-full flex-row mt-[-100px] md:mt-[-160px] ml-0  md:ml-[120px]  ">
+							<img
+								src={"/images/gift.svg"}
+								alt=""
+								className="md:w-[200px] w-[100px] ml-[50px] hidden md:flex"
+							/>
+							<div className="ml-[30px] w-3/4 mt-0 mt:mt-[40px]">
+								<h3 className="text-[20px] font-bold family-poppins">
+									Save up to 20% <br />
+									<span className="text-white">This</span> Christmas{" "}
+									<span className="text-white">on</span> items
+									<br />
+									Purchased <span className="text-white">from our shop</span>
+								</h3>
+								<p className="text-white text-[8px] family-poppins">
+									Start your Christmas shopping with{" "}
+									<span className="text-black">Bevet</span>
+								</p>
+
+								<button className="rounded-lg w-[120px] py-[8px] mt-[20px] shadow-md bg-black text-white">
+									Order Now
+								</button>
+							</div>
+						</div>
+					</div>
+					{/* <div className="h-[230px] bg-blue-400  rounded-xl">Two</div> */}
+					{/* <div className="h-[230px] bg-blue-400  rounded-xl"> three </div> */}
+					{/* </Carousel> */}
 				</div>
 
-				<div className="md:hidden flex h-[230px]  mt-[-18px]">
+				{/* <div className="md:hidden flex h-[230px]  mt-[-18px]">
 					<div className="rounded-2xl bg-bright-blue w-[100%]">the content</div>
-				</div>
+				</div> */}
 
 				{/* Shop by categories */}
-				<div className="w-full md:flex hidden justify-between mt-[20px] mb-[20px]  session-header">
+				<div className="w-full md:flex hidden justify-between mt-[130px] mb-[20px]  session-header">
 					<h2 className=" ">
 						Shop{" "}
 						<span className="text-app-orange session-header">
@@ -74,47 +104,50 @@ const HomeScreen = () => {
 
 				{/* Horizontal list of items */}
 
-				<div className=" flex flex-row md:mt-[0px] mt-[10px]  overflow-x-auto whitespace-no-wrap">
+				<div className=" flex flex-row md:mt-[0px] mt-[10px] w-full scroll-m-8 scroll-auto snap-x overflow-x-auto whitespace-no-wrap">
 					<CardByCategories
 						image={
 							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
 						}
 						name="Alcoholic Drinks"
+						onClick={() => {
+							navigate("/categories");
+						}}
 					/>
 
 					<CardByCategories
 						image={
-							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+							"https://media.istockphoto.com/id/168277558/photo/large-diamond-on-reflective-surface.jpg?s=612x612&w=0&k=20&c=OjULqGPkC6DqPTrGyzDpTXbEECfaBrxgswIueUF_mRs="
 						}
-						name="Alcoholic Drinks"
+						name="Jewelries"
 					/>
 
 					<CardByCategories
 						image={
-							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+							"https://media.istockphoto.com/id/1404603483/photo/female-autumn-clothes-on-hangers-in-white-room.jpg?b=1&s=170667a&w=0&k=20&c=H5oDGZDgKtTieO4OwU_HZlGMjtt--RuiHdxCswZOKvU="
 						}
-						name="Alcoholic Drinks"
+						name="Clothing"
 					/>
 
 					<CardByCategories
 						image={
-							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+							"https://media.istockphoto.com/id/173880248/photo/ciruit.jpg?s=612x612&w=0&k=20&c=fFwJ1TmkRzYyMQyL5RBAXzN6ZSiqRXkelUxvCGUW5Zk="
 						}
-						name="Alcoholic Drinks"
+						name="Electronics"
 					/>
 
 					<CardByCategories
 						image={
-							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+							"https://media.istockphoto.com/id/507143336/photo/red-wine.jpg?s=612x612&w=0&k=20&c=E4dDQlwkGe0A7URC4J6rfUXtcCiDmMHi2pVPfj6PnAs="
 						}
-						name="Alcoholic Drinks"
+						name="House items"
 					/>
 
 					<CardByCategories
 						image={
-							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
+							"https://media.istockphoto.com/id/1411029939/photo/top-view-on-colorful-stacked-books-education-and-learning-concept-background.jpg?s=612x612&w=0&k=20&c=9X5M5RI_aAXvRv4r1OZUSBYSVKx0HK0Sg2dLUN8oQwQ="
 						}
-						name="Alcoholic Drinks"
+						name="Books"
 					/>
 				</div>
 
@@ -128,13 +161,13 @@ const HomeScreen = () => {
 				</div>
 
 				<div className="w-full justify-between  flex-col lg:flex-row flex  ">
-					<div className="bg-white bg:bg-transparent rounded-3xl p-[10px]">
+					<div className="bg-white md:bg-transparent rounded-3xl p-[10px]">
 						<div className="flex flex-row justify-between items-center">
 							<h2 className="session-header font-[700] font-inter mb-[20px]">
 								Top <span className="text-app-orange">Selling</span>
 							</h2>
 							<h3 className="md:hidden flex text-app-orange font-[600] ">
-								See all \%>
+								See all >
 							</h3>
 						</div>
 
