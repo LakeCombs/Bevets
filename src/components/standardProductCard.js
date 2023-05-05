@@ -11,12 +11,14 @@ const StandardProductCard = ({
 	onClick
 }) => {
 	return (
-		<div className="flex rounded-3xl flex-col items-center justify-between bg-primary-blue font-mont  h-[200px] w-[170px]  m-[5px] hover:cursor-pointer ">
-			<span onClick={addToFav} className="flex  self-end mr-[10px] mt-[15px]">
+		<div className="flex md:rounded-2xl rounded-lg flex-col items-center justify-between bg-primary-blue font-mont  h-[200px] md:w-[170px] w-[140px]  m-[5px] hover:cursor-pointer ">
+			<span
+				onClick={addToFav}
+				className="flex  self-end mr-[10px] mt-[10px] z-10">
 				<BsFillSuitHeartFill className=" outline-white text-white text-[15px] " />
 			</span>
 			<img
-				className="w-[190px] sm:w-[100px] h-[120px] mt-[-23px] object-cover"
+				className="w-[100px] sm:w-[100px] h-[120px] mt-[-21px] object-cover"
 				src={image}
 				alt={name}
 				onClick={onClick}

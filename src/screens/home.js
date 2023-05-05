@@ -174,42 +174,42 @@ const HomeScreen = () => {
 						<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
 							<BasicEssentialCard
 								addToCart={() => {}}
-								description={"nice stuff"}
+								description={"Soft wood"}
 								image={
-									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									"https://media.istockphoto.com/id/1405039658/photo/stack-of-various-construction-sample-wood-boards.jpg?b=1&s=170667a&w=0&k=20&c=uRk4qMBvhMBOYB6djQ4iZ3gJPTQw2n2fkAg-5al0EoY="
 								}
-								price={"C 20"}
-								name={"milo"}
+								price={"C 150"}
+								name={"Soft wood"}
+								addToFav={() => {}}
+							/>
+							<BasicEssentialCard
+								addToCart={() => {}}
+								description={"Light bulb"}
+								image={
+									"https://images.unsplash.com/photo-1529310399831-ed472b81d589?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+								}
+								price={"C 300"}
+								name={"Light bulb"}
 								addToFav={() => {}}
 							/>
 							<BasicEssentialCard
 								addToCart={() => {}}
 								description={"nice stuff"}
 								image={
-									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									"https://plus.unsplash.com/premium_photo-1681666713728-9ed75e148617?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
 								}
-								price={"C 20"}
-								name={"milo"}
+								price={"C 23,000"}
+								name={"Mac 2023 "}
 								addToFav={() => {}}
 							/>
 							<BasicEssentialCard
 								addToCart={() => {}}
 								description={"nice stuff"}
 								image={
-									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									"https://images.unsplash.com/photo-1652450852307-53646a5a5e19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZmFuY3klMjBjdXB8ZW58MHx8MHx8&auto=format&fit=crop&w=700&q=60"
 								}
 								price={"C 20"}
-								name={"milo"}
-								addToFav={() => {}}
-							/>
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"nice stuff"}
-								image={
-									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
-								}
-								price={"C 20"}
-								name={"milo"}
+								name={"Tea Cup"}
 								addToFav={() => {}}
 							/>
 						</div>
@@ -225,10 +225,10 @@ const HomeScreen = () => {
 									addToCart={() => {}}
 									description={"nice stuff"}
 									image={
-										"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+										"https://media.istockphoto.com/id/157587362/photo/detailed-close-up-of-sliced-grain-bread-on-white-background.jpg?s=612x612&w=0&k=20&c=nr5f0Mb3Dx9RP_LmKKwlo6IlzDebfIdCbnERsnoSG94="
 									}
-									price={"C 20"}
-									name={"milo"}
+									price={"C 40"}
+									name={"Wheat Bread"}
 									addToFav={() => {}}
 								/>
 
@@ -236,10 +236,10 @@ const HomeScreen = () => {
 									addToCart={() => {}}
 									description={"nice stuff"}
 									image={
-										"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+										"https://media.istockphoto.com/id/1168380232/photo/peanut-butter-scattered-on-a-slice-of-bread.jpg?b=1&s=170667a&w=0&k=20&c=4lWzj9utiIYU-hGWuLATQt3ZoFt0jAeKNXI7zb6Jot8="
 									}
-									price={"C 20"}
-									name={"milo"}
+									price={"C 50"}
+									name={"Peanuts Spread"}
 									addToFav={() => {}}
 								/>
 
@@ -247,10 +247,10 @@ const HomeScreen = () => {
 									addToCart={() => {}}
 									description={"nice stuff"}
 									image={
-										"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+										"https://media.istockphoto.com/id/1400656321/photo/homemade-cheese-smash-burger.jpg?b=1&s=170667a&w=0&k=20&c=8fjw6SEeNqKQg1fn4X0xRDiQET4slAjVrqGYBEnPDIo="
 									}
-									price={"C 20"}
-									name={"milo"}
+									price={"C 60"}
+									name={"Burger"}
 									addToFav={() => {}}
 								/>
 
@@ -277,10 +277,10 @@ const HomeScreen = () => {
 								addToCart={() => {}}
 								description={"nice stuff"}
 								image={
-									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									"https://media.istockphoto.com/id/1258142863/photo/tomatoes-isolate-on-white-background-tomato-half-isolated-tomatoes-side-view-whole-cut-slice.jpg?b=1&s=170667a&w=0&k=20&c=hFvgq7wOVkoxHR7O2KE3DDbO127FJT4Ub_NZJ6FQCTQ="
 								}
-								price={"C 20"}
-								name={"milo"}
+								price={"C 100"}
+								name={"Tomatoes"}
 								addToFav={() => {}}
 							/>
 
@@ -288,10 +288,10 @@ const HomeScreen = () => {
 								addToCart={() => {}}
 								description={"nice stuff"}
 								image={
-									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									"https://media.istockphoto.com/id/1388403435/photo/fresh-carrots-isolated-on-white-background.jpg?b=1&s=170667a&w=0&k=20&c=PJAHETwd9svcjPbrmnmnEmLsTFHLmxjpLpFfKiRzm-4="
 								}
 								price={"C 20"}
-								name={"milo"}
+								name={"Carrot"}
 								addToFav={() => {}}
 							/>
 
@@ -299,10 +299,10 @@ const HomeScreen = () => {
 								addToCart={() => {}}
 								description={"nice stuff"}
 								image={
-									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									"https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmFnfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
 								}
-								price={"C 20"}
-								name={"milo"}
+								price={"C 2,300"}
+								name={"Chenel Bag"}
 								addToFav={() => {}}
 							/>
 
@@ -310,10 +310,10 @@ const HomeScreen = () => {
 								addToCart={() => {}}
 								description={"nice stuff"}
 								image={
-									"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
+									"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8YmFnfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
 								}
 								price={"C 20"}
-								name={"milo"}
+								name={"Gucci bag"}
 								addToFav={() => {}}
 							/>
 						</div>

@@ -3,6 +3,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { HiShoppingCart } from "react-icons/hi";
 import { BsFillCollectionFill } from "react-icons/bs";
+import { MdFavorite } from "react-icons/md";
 import { Dropdown, Badge } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +11,7 @@ const Header = () => {
 	const [search, setSearch] = useState("");
 	const navigate = useNavigate();
 
-	const submit = e => {
+	const submit = (e) => {
 		e.preventDefault();
 
 		console.log("the search value is ", search);
@@ -18,7 +19,7 @@ const Header = () => {
 	const items = [
 		{
 			label: (
-				<p className="items-center w-full md:flex hover:cursor-pointer hover:bg-bright-blue">
+				<p className="items-center w-full md:flex hover:cursor-pointer ">
 					<span className="mr-2 text-black">
 						<FaUserAlt />
 					</span>
@@ -29,7 +30,7 @@ const Header = () => {
 		},
 		{
 			label: (
-				<p className="items-center px-3 md:flex hover:cursor-pointer">
+				<p className="items-center w-full  md:flex hover:cursor-pointer">
 					<span className="mr-2 text-black">
 						<BsFillCollectionFill />
 					</span>
@@ -37,6 +38,17 @@ const Header = () => {
 				</p>
 			),
 			key: "1"
+		},
+		{
+			label: (
+				<p className="items-center w-full  justify-start md:flex hover:cursor-pointer">
+					<span className="mr-2 text-black">
+						<MdFavorite />
+					</span>
+					Saved Items
+				</p>
+			),
+			key: "2"
 		}
 	];
 	return (
@@ -53,7 +65,7 @@ const Header = () => {
 				className="items-center justify-between hidden w-5/12 bg-white md:flex rounded-3xl"
 				type={submit}>
 				<input
-					onChange={e => setSearch(e.target.value)}
+					onChange={(e) => setSearch(e.target.value)}
 					value={search}
 					className="md:h-[30px] h-[30px] w-full rounded-2xl px-3 border-none outline-none"
 					placeholder="Search products and categories"
