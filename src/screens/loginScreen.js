@@ -11,7 +11,7 @@ const LoginScreen = () => {
 		e.preventDefault();
 	};
 	return (
-		<div className="w-full md:bg-transparent bg-primary-blue h-screen md:justify-center flex-col flex items-center md:pt-[25px] pt-[40px] ">
+		<div className="flex pt-[50px] flex-col bg-background h-screen items-center w-full">
 			<img
 				alt="bevets"
 				src={"/images/logo.png"}
@@ -63,6 +63,15 @@ const LoginScreen = () => {
 					Login with Facebook
 				</button> */}
 			</div>
+			<p className="mt-[20px] text-[12px] md:text-[15px] family-poppins">
+				Don't have an account?{" "}
+				<a
+					className="text-app-orange"
+					href="/signup"
+					onClick={() => navigate("/signup")}>
+					Sign up
+				</a>
+			</p>
 
 			<p className="text-app-orange mt-[20px] text-[12px] md:text-[15px] family-poppins cursor-pointer">
 				Forgot your password

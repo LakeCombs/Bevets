@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import { Input } from "antd";
 import React, { useState } from "react";
 import WideButton from "../components/wideButton";
@@ -50,7 +51,7 @@ const RegisterScreen = () => {
 
 				<WideButton
 					text="Continue"
-					bg="bright-blue"
+					style="bg-bright-blue"
 					onClick={() => {
 						navigate("/personaldetails");
 					}}

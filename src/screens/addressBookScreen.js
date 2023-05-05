@@ -10,7 +10,7 @@ import Footer from "../components/footer";
 const AddressBookScreen = () => {
 	const navigate = useNavigate();
 	return (
-		<div className="min-h-screen md:bg-background bg-primary-blue ">
+		<div className="h-screen md:bg-background bg-primary-blue ">
 			<div className="hidden md:flex">
 				<Header />
 			</div>
@@ -27,7 +27,7 @@ const AddressBookScreen = () => {
 				<h3> ADDRESS BOOK</h3>
 			</div>
 			<ScreenWithPadding>
-				<div className="md:flex hidden md:mt-[-80px] md:bg-white  p-[10px] px-[20px] flex-col ">
+				<div className="md:flex md:flex-row hidden md:mt-[-80px] md:bg-white  p-[10px] px-[20px] flex-col ">
 					<div className="flex flex-col w-full md:w-2/5 ">
 						<div className="p-[10px] bg-white rounded-2xl shadow">
 							<div className="flex justify-between w-full">
@@ -84,7 +84,7 @@ const AddressBookScreen = () => {
 				</div>
 
 				<div className="md:hidden flex flex-col">
-					<div className="w-full flex py-[10px] bg-white justify-center items-center text-app-orange rounded-md shadow-md ">
+					<div className="w-full flex md:py-[10px] py-[8px] bg-white justify-center items-center text-app-orange rounded-md shadow-md ">
 						<p className="font-semibold">ADDRESS A NEW ADDRESS</p>
 					</div>
 					<p className="text-text-gray my-[10px] font-semibold">YOUR ADDRESS</p>
@@ -114,7 +114,7 @@ const AddressBookScreen = () => {
 					</div>
 
 					<div className="flex bg-white  rounded-md shadow-md justify-center items-center my-[20px] w-full">
-						<p className=" py-[10px] font-bold hover:cursor-pointer text-app-orange">
+						<p className=" md:py-[10px] py-[8px] font-bold hover:cursor-pointer text-app-orange">
 							ADDRESS A NEW ADDRESS
 						</p>
 					</div>
@@ -127,6 +127,7 @@ const AddressBookScreen = () => {
 					/>
 				</div>
 			</ScreenWithPadding>
+
 			<Footer />
 		</div>
 	);

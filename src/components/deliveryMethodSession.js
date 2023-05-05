@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Checkbox } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryMethodSession = () => {
+	const navigate = useNavigate();
 	const [pickup, setPickup] = useState(false);
 
 	return (
@@ -113,7 +115,11 @@ const DeliveryMethodSession = () => {
 						</div>
 					</div>
 
-					<button className="w-[55%] text-white bg-bright-blue py-[5px] mt-[15px] self-center rounded-lg hover:shadow-md">
+					<button
+						className="w-[55%] text-white bg-bright-blue py-[5px] mt-[15px] self-center rounded-lg hover:shadow-md"
+						onClick={() => {
+							navigate("/addressbook");
+						}}>
 						{" "}
 						NEXT
 					</button>
@@ -126,7 +132,13 @@ const DeliveryMethodSession = () => {
 				</h2>
 				<hr />
 				<div className="flex mt-[15px] px-[20px] mb-[20px]  items-start ">
-					<img alt={""} className="h-[100px] w-[100px]" />
+					<img
+						alt={""}
+						src={
+							"https://media.istockphoto.com/id/1396897706/photo/vanilla-soft-serve-ice-cream-cone.jpg?b=1&s=170667a&w=0&k=20&c=S6oypYSoesaaKrndBk1POlIVhojg4WIv3Br0eplLuoA="
+						}
+						className="h-[100px] w-[100px]"
+					/>
 
 					<div className="ml-[20px]">
 						<p>Baileys Original Irish Cream - 1L</p>
@@ -152,7 +164,9 @@ const DeliveryMethodSession = () => {
 					<p className="font-bold">Total</p>
 					<p className="text-app-orange font-bold">GHC 15.00</p>
 				</div>
-				<button className="self-center w-[40%] py-[5px] text-white rounded-lg mt-[20px] mb-[10px] bg-bright-blue">
+				<button
+					className="self-center w-[40%] py-[5px] text-white rounded-lg mt-[20px] mb-[10px] bg-bright-blue"
+					onClick={() => navigate("/cart")}>
 					Modify Cart
 				</button>
 			</div>

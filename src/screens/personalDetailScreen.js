@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import WideButton from "../components/wideButton";
 import { Checkbox, DatePicker } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const PersonalDetailScreen = () => {
+	const navigate = useNavigate();
 	const [gender, setGender] = useState("");
 	const [date, setDate] = useState("");
 	const [ready, setReady] = useState(false);
@@ -50,10 +52,14 @@ const PersonalDetailScreen = () => {
 
 				<WideButton
 					text="Continue"
-					bg={ready ? "bright-blue" : "#D9D9D9"}
-					style={`shadow-md`}
+					style={
+						ready ? "bg-bright-blue shadow-md" : "bg-primary-blue shadow-md"
+					}
+					// style={`shadow-md`}
 					color={"white"}
-					onClick={() => {}}
+					onClick={() => {
+						navigate("/");
+					}}
 				/>
 			</form>
 

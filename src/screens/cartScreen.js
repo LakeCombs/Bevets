@@ -2,7 +2,7 @@
 import React from "react";
 import Header from "../components/header";
 import ScreenWithPadding from "../components/ScreenWithPadding";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StandardProductCard from "../components/standardProductCard";
 import Footer from "../components/footer";
 import { MdDeleteOutline } from "react-icons/md";
@@ -10,6 +10,7 @@ import SearchComponent from "../components/searchComponent";
 import WideButton from "../components/wideButton";
 
 const CartScreen = () => {
+	const navigate = useNavigate();
 	const cart = [1, 2];
 	return (
 		<div className="min-h-screen md:bg-background bg-primary-blue">
@@ -123,7 +124,11 @@ const CartScreen = () => {
 							</div>
 							<hr className="hidden md:flex" />
 
-							<button className=" md:flex hidden w-[50%] justify-center align-center rounded-lg bg-bright-blue py-[5px] text-white font-semibold  mt-[20px] self-center hover:shadow-md ">
+							<button
+								className=" md:flex hidden w-[50%] justify-center align-center rounded-lg bg-bright-blue py-[5px] text-white font-semibold  mt-[20px] self-center hover:shadow-md "
+								onClick={() => {
+									navigate("/delivery");
+								}}>
 								CHECKOUT
 							</button>
 						</div>
@@ -137,7 +142,9 @@ const CartScreen = () => {
 					/>
 
 					<WideButton
-						onClick={() => {}}
+						onClick={() => {
+							navigate("/delivery");
+						}}
 						style={"bg-bright-blue rounded-lg mt-[8px] hover:shadow-md"}
 						text={"CHECKOUT"}
 					/>
@@ -157,8 +164,33 @@ const CartScreen = () => {
 							addToCart={() => {}}
 							addToFav={() => {}}
 							description={""}
-							image={""}
-							name={"Savanna"}
+							image={
+								"https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
+							}
+							name={"Strawberry Drink"}
+							price={"100.00"}
+							key={Math.random() * 1000}
+							onClick={() => navigate("/categories/drinkl")}
+						/>
+						<StandardProductCard
+							addToCart={() => {}}
+							addToFav={() => {}}
+							description={""}
+							image={
+								"https://images.unsplash.com/photo-1551782450-3939704166fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"Savanna blue"}
+							price={"200.00"}
+							key={Math.random() * 1000}
+						/>{" "}
+						<StandardProductCard
+							addToCart={() => {}}
+							addToFav={() => {}}
+							description={""}
+							image={
+								"https://images.unsplash.com/photo-1556881286-fc6915169721?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"Curt"}
 							price={"100.00"}
 							key={Math.random() * 1000}
 						/>{" "}
@@ -166,8 +198,10 @@ const CartScreen = () => {
 							addToCart={() => {}}
 							addToFav={() => {}}
 							description={""}
-							image={""}
-							name={"Savanna"}
+							image={
+								"https://images.unsplash.com/photo-1612078902883-77b82ae10aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEwfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"Lemon Street Juice"}
 							price={"100.00"}
 							key={Math.random() * 1000}
 						/>{" "}
@@ -175,8 +209,10 @@ const CartScreen = () => {
 							addToCart={() => {}}
 							addToFav={() => {}}
 							description={""}
-							image={""}
-							name={"Savanna"}
+							image={
+								"https://images.unsplash.com/photo-1498772776855-2248a3e740f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"Family ripe"}
 							price={"100.00"}
 							key={Math.random() * 1000}
 						/>{" "}
@@ -184,17 +220,10 @@ const CartScreen = () => {
 							addToCart={() => {}}
 							addToFav={() => {}}
 							description={""}
-							image={""}
-							name={"Savanna"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={""}
-							name={"Savanna"}
+							image={
+								"https://images.unsplash.com/photo-1576541720773-870ee9c61b6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"orange dry"}
 							price={"100.00"}
 							key={Math.random() * 1000}
 						/>{" "}
@@ -218,8 +247,33 @@ const CartScreen = () => {
 							addToCart={() => {}}
 							addToFav={() => {}}
 							description={""}
-							image={""}
-							name={"Savanna"}
+							image={
+								"https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
+							}
+							name={"Strawberry Drink"}
+							price={"100.00"}
+							key={Math.random() * 1000}
+							onClick={() => navigate("/categories/drinkl")}
+						/>
+						<StandardProductCard
+							addToCart={() => {}}
+							addToFav={() => {}}
+							description={""}
+							image={
+								"https://images.unsplash.com/photo-1551782450-3939704166fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"Savanna blue"}
+							price={"200.00"}
+							key={Math.random() * 1000}
+						/>{" "}
+						<StandardProductCard
+							addToCart={() => {}}
+							addToFav={() => {}}
+							description={""}
+							image={
+								"https://images.unsplash.com/photo-1556881286-fc6915169721?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"Curt"}
 							price={"100.00"}
 							key={Math.random() * 1000}
 						/>{" "}
@@ -227,8 +281,10 @@ const CartScreen = () => {
 							addToCart={() => {}}
 							addToFav={() => {}}
 							description={""}
-							image={""}
-							name={"Savanna"}
+							image={
+								"https://images.unsplash.com/photo-1612078902883-77b82ae10aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEwfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"Lemon Street Juice"}
 							price={"100.00"}
 							key={Math.random() * 1000}
 						/>{" "}
@@ -236,8 +292,10 @@ const CartScreen = () => {
 							addToCart={() => {}}
 							addToFav={() => {}}
 							description={""}
-							image={""}
-							name={"Savanna"}
+							image={
+								"https://images.unsplash.com/photo-1498772776855-2248a3e740f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"Family ripe"}
 							price={"100.00"}
 							key={Math.random() * 1000}
 						/>{" "}
@@ -245,11 +303,13 @@ const CartScreen = () => {
 							addToCart={() => {}}
 							addToFav={() => {}}
 							description={""}
-							image={""}
-							name={"Savanna"}
+							image={
+								"https://images.unsplash.com/photo-1576541720773-870ee9c61b6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
+							}
+							name={"orange dry"}
 							price={"100.00"}
 							key={Math.random() * 1000}
-						/>{" "}
+						/>
 					</div>
 				</div>
 

@@ -12,7 +12,7 @@ const DeliverySelfScreen = () => {
 	return (
 		<div className="bg-background min-h-screen">
 			<Header />
-			<div className="flex justify-center title bg-white w-full pt-[85px] py-[10px] px-[50px]">
+			<div className="flex justify-center  title bg-white w-full pt-[85px] py-[10px] px-[50px]">
 				<button
 					className={`px-[40px] py-[8px] ${
 						flip ? bg1 : bg2
@@ -33,7 +33,7 @@ const DeliverySelfScreen = () => {
 				</button>
 			</div>
 			<ScreenWithPadding>
-				<div className="flex mt-[-90px] p-[10px] px-[20px] flex-col ">
+				<div className="flex md:mt-[-90px] p-[10px] px-[20px] flex-col  ">
 					{flip ? <DeliveryMethodSession /> : <PaymentMethodSession />}
 				</div>
 			</ScreenWithPadding>
