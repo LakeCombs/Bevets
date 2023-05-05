@@ -44,7 +44,8 @@ const LoginScreen = () => {
 
 				<button
 					className="md:mt-[15px] mt-[6px] w-full md:py-[5px] py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none bg-app-orange family-inter rounded-2xl text-white hover:shadow-md"
-					type="submit">
+					type="submit"
+					onClick={() => navigate("/")}>
 					Login
 				</button>
 			</form>
@@ -55,12 +56,12 @@ const LoginScreen = () => {
 					onClick={() => navigate("/loginphone")}>
 					Login with phone number
 				</button>
-				<button className="md:mt-[15px] mt-[10px] mb-[10px] w-full md:py-[5px] py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none bg-dark-blue family-inter text-white rounded-2xl">
+				{/* <button className="md:mt-[15px] mt-[10px] mb-[10px] w-full md:py-[5px] py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none bg-dark-blue family-inter text-white rounded-2xl">
 					Login with Gmail{" "}
 				</button>
 				<button className="md:mt-[5px] mt-[5px] w-full py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none text-white bg-bright-blue family-inter rounded-2xl">
 					Login with Facebook
-				</button>
+				</button> */}
 			</div>
 
 			<p className="text-app-orange mt-[20px] text-[12px] md:text-[15px] family-poppins cursor-pointer">

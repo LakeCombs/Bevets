@@ -20,20 +20,20 @@ const ProductScreen = () => {
 
 			<div className="mt-[100px]   md:px-[50px] px-[20px] md:flex-row flex flex-col ">
 				<div className="h-full">
-					<div className="bg-primary-blue rounded-2xl p-[20px]   md:pb-[40px] md:h-[220px] w-full md:w-[250px]">
+					<div className="bg-primary-blue rounded-2xl p-[20px]   md:pb-[40px] md:h-[300px] w-full md:w-[230px]">
 						<h1 className="font-bold text-[20px]">Categories</h1>
 						<br className="md:flex hidden" />
-						<div className="md:flex hidden">
+						<div className="md:flex hidden flex-col">
 							{productList?.map((cat) => {
 								return (
-									<p key={cat} className="text-[10px] mb-[1px]">
+									<p key={cat} className="text-[13px] mb-[1px]">
 										{" "}
 										{cat}
 									</p>
 								);
 							})}
 						</div>
-						<select className="w-full rounded-md py-1 outline-none mt-2">
+						<select className="w-full md:hidden flex rounded-md py-1 outline-none mt-2 ">
 							{productList?.map((cat) => {
 								return (
 									<option
@@ -48,7 +48,7 @@ const ProductScreen = () => {
 					</div>
 				</div>
 
-				<div className="w-full flex flex-wrap justify-around">
+				<div className="w-full flex flex-wrap justify-around md:mt-0 mt-5">
 					<StandardProductCard
 						addToCart={() => {}}
 						description={"nice stuff"}

@@ -19,7 +19,11 @@ const Header = () => {
 	const items = [
 		{
 			label: (
-				<p className="items-center w-full md:flex hover:cursor-pointer ">
+				<p
+					className="items-center w-full md:flex hover:cursor-pointer "
+					onClick={() => {
+						navigate("/login");
+					}}>
 					<span className="mr-2 text-black">
 						<FaUserAlt />
 					</span>

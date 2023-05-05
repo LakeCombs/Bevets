@@ -75,7 +75,9 @@ const HomeScreen = () => {
 									<span className="text-black">Bevet</span>
 								</p>
 
-								<button className="rounded-lg w-[120px] py-[8px] mt-[20px] shadow-md bg-black text-white">
+								<button
+									className="rounded-lg w-[120px] py-[8px] mt-[20px] shadow-md bg-black text-white"
+									onClick={() => navigate("/productscreen")}>
 									Order Now
 								</button>
 							</div>
@@ -99,7 +101,9 @@ const HomeScreen = () => {
 						</span>
 					</h2>
 
-					<Link className="text-app-orange session-header">See all</Link>
+					<Link className="text-app-orange session-header" to="/productscreen">
+						See all
+					</Link>
 				</div>
 
 				{/* Horizontal list of items */}
