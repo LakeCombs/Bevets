@@ -59,7 +59,7 @@ const Header = () => {
 		<div className="py-[15px] flex items-center md:px-[70px] px-[30px] justify-between bg-app-blue  bg-primary-blue fixed top-0 z-40 mb-[100px] w-full shadow-sm">
 			<img
 				alt="bevets"
-				src={"/images/logo.png"}
+				src={"/assets/logo.png"}
 				onClick={() => {
 					navigate("/");
 				}}

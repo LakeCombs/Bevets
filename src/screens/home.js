@@ -41,24 +41,24 @@ const HomeScreen = () => {
 			</div>
 			<div className="md:px-[50px] px-[20px]  min-h-full md:pt-[100px] pt-[40px]">
 				{/* Carousel session */}
-				<div className="flex h-[300px] w-full bg-green-500">
+				<div className="flex h-[300px] w-full ">
 					{/* <Carousel autoplay={true}> */}
 					<div className=" h-full md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col">
 						<div className="w-full flex items-start justify-between ">
 							<img
-								src={"/images/left-hanger.svg"}
+								src={"/assets/left-hanger.svg"}
 								alt=""
 								className="top-0 left w-3/6"
 							/>
 							<img
-								src={"/images/right-hanger.svg"}
+								src={"/assets/right-hanger.svg"}
 								alt=""
 								className="top-0 right  h-[170px] "
 							/>
 						</div>
 						<div className="flex justify-center w-full flex-row mt-[-100px] md:mt-[-160px] ml-0  md:ml-[120px]  ">
 							<img
-								src={"/images/gift.svg"}
+								src={"/assets/gift.svg"}
 								alt=""
 								className="md:w-[200px] w-[100px] ml-[50px] hidden md:flex"
 							/>
@@ -342,7 +342,7 @@ const HomeScreen = () => {
 					</div>
 					<div className="md:flex md:justify-between md:mt-[-20px]  md:flex-row flex-col justify-center items-center mt-[30px] h-auto hidden">
 						<img
-							src={"/images/Delivery-pana.png"}
+							src={"/assets/Delivery-pana.png"}
 							alt="delivery"
 							className="
 							lg:h-[350px] lg:w-[400px] h-[210px] w-[220px]
@@ -372,7 +372,7 @@ const HomeScreen = () => {
 						</form>
 
 						<img
-							src={"/images/Take Away-pana.png"}
+							src={"/assets/Take Away-pana.png"}
 							alt="take away "
 							className=" lg:h-[400px] lg:w-[400px]  h-[220px] w-[250px] "
 						/>
@@ -382,7 +382,7 @@ const HomeScreen = () => {
 			<div className="mt-[30px] w-full bg-app-dark py-[40px] px-[30px]  flex flex-row items-center">
 				<img
 					alt="bevets"
-					src={"/images/logo.png"}
+					src={"/assets/logo.png"}
 					className="hidden md:block h-[60px]"
 				/>
 
