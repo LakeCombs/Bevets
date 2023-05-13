@@ -1,5 +1,6 @@
 import React from "react";
 import { Chart } from "react-charts/dist/react-charts.development";
+import { AiOutlineQuestion } from "react-icons/ai";
 import { BiTrendingDown } from "react-icons/bi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { IoIosPeople, IoIosTrendingUp } from "react-icons/io";
@@ -7,13 +8,13 @@ import { RxCounterClockwiseClock } from "react-icons/rx";
 import { TbCurrencyCent, TbTruckDelivery } from "react-icons/tb";
 
 const DashboardComp = () => {
-	const NotificationPane = ({ icon, bg, text, value }) => {
+	const NotificationPane = ({ icon, bg, text, value, textcolor }) => {
 		return (
-			<div className="flex flex-row">
+			<div className="flex flex-row mb-[10px] border-b pb-[5px]">
 				<div className={`rounded-full p-[4px] bg-${bg} `}>{icon}</div>
 				<p className="flex flex-row items-center ml-[5px] text-[10px]">
 					{text}{" "}
-					{value && <span className={`ml-[2px] text-${bg} `}>{value}</span>}
+					{value && <span className={`ml-[2px] ${textcolor}`}>{value}</span>}
 				</p>
 			</div>
 		);
@@ -219,16 +220,54 @@ const DashboardComp = () => {
 					<h2 className="font-bold">Notification</h2>
 
 					<div>
-						<p className="font-semibold text-[15px] my-[12px]">Today</p>
+						<p className="font-semibold text-[14px] my-[12px]">Today</p>
 						<NotificationPane
 							bg={"green-300"}
-							icon={<TbCurrencyCent className="text-green-500" />}
+							textcolor={"text-green-500"}
+							icon={<TbCurrencyCent className="text-green-500 text-[12px]" />}
 							text={"Richard Jones has placed an order for"}
 							value={"C342"}
 						/>
+
+						<NotificationPane
+							bg={"blue-300"}
+							textcolor={"text-blue-500"}
+							icon={<AiOutlineQuestion className="text-blue-500 text-[12px]" />}
+							text={"Richard Jones has placed an order for"}
+						/>
+
+						<NotificationPane
+							bg={"orange-300"}
+							textcolor={"text-orange-500"}
+							icon={<TbTruckDelivery className="text-orange-500 text-[12px]" />}
+							text={"Mabel Owen’s goods was delivered"}
+						/>
 					</div>
 
-					<div>Second</div>
+					<div className="pl-[30px]">
+						<p className="font-semibold text-[14px] my-[12px]">Yesterday</p>
+						<NotificationPane
+							bg={"green-300"}
+							textcolor={"text-green-500"}
+							icon={<TbCurrencyCent className="text-green-500 text-[12px]" />}
+							text={"Richard Jones has placed an order for"}
+							value={"C342"}
+						/>
+
+						<NotificationPane
+							bg={"blue-300"}
+							textcolor={"text-blue-500"}
+							icon={<AiOutlineQuestion className="text-blue-500 text-[12px]" />}
+							text={"Richard Jones has placed an order for"}
+						/>
+
+						<NotificationPane
+							bg={"orange-300"}
+							textcolor={"text-orange-500"}
+							icon={<TbTruckDelivery className="text-orange-500 text-[12px]" />}
+							text={"Mabel Owen’s goods was delivered"}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
