@@ -18,6 +18,7 @@ import AddressDetails from "./screens/addressDetails";
 import DeliverySelfScreen from "./screens/deliverySelfScreen";
 import AddRecipientScreen from "./screens/addRecipientScreen";
 import RecentlyViewedScreen from "./screens/RecentlyViewedScreen";
+import Dashboard from "./screens/Dashboard";
 
 function App() {
 	return (
@@ -44,6 +45,7 @@ function App() {
 				<Route path="/delivery" element={<DeliverySelfScreen />} />
 				<Route path="/addressrecepient" element={<AddRecipientScreen />} />
 				<Route path="/recently_viewed" element={<RecentlyViewedScreen />} />
+				<Route path="/dashboard" element={<Dashboard />} />
 			</Routes>
 		</Router>
 	);
