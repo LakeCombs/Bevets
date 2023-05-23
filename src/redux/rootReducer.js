@@ -16,6 +16,13 @@ import {
 	productByIdReducer,
 	updateProductReducer
 } from "./reducers/product.slice";
+import {
+	allCategoryReducer,
+	categoryByIdReducer,
+	createCategoryReducer,
+	deleteCategoryReducer,
+	updateCategoryReducer
+} from "./reducers/categories.slice";
 
 const rootReducer = combineReducers({
 	//user reducers
@@ -33,7 +40,14 @@ const rootReducer = combineReducers({
 	productById: productByIdReducer,
 	allProduct: getAllProductReducer,
 	updateProduct: updateProductReducer,
-	deleteProduct: deleteProductReducer
+	deleteProduct: deleteProductReducer,
+
+	//category reducers
+	createCategory: createCategoryReducer,
+	allCategory: allCategoryReducer,
+	categoryById: categoryByIdReducer,
+	updateCategory: updateCategoryReducer,
+	deleteCategory: deleteCategoryReducer
 });
 
 export default rootReducer;

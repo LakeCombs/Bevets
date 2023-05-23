@@ -73,7 +73,13 @@ const DashboardProductPage = () => {
 				<div className="flex flex-row ">
 					<button
 						className="bg-bright-blue w-[100px] rounded-xl  py-[8px] text-white"
-						onClick={() => setPage("create")}>
+						onClick={() => {
+							if (page === "categories") {
+								return setPage("createCategory");
+							} else {
+								return setPage("create");
+							}
+						}}>
 						{" "}
 						+ Add New
 					</button>
@@ -311,6 +317,7 @@ const DashboardProductPage = () => {
 					</div>
 				</div>
 			)}
+			{page === "createCategory" && <div>create Category</div>}
 		</div>
 	);
 };

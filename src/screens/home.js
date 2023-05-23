@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/header";
 import { Button, Carousel, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import CardByCategories from "../components/cardByCategories";
 import BasicEssentialCard from "../components/basicEssentialCard";
 import Footer from "../components/footer";
+import { useDispatch, useSelector } from "react-redux";
+import { allCategoryAction } from "../redux/actions/category.action";
 
 const HomeScreen = () => {
-	const navigate = useNavigate();
+	const navigate = useNavigate;
+	const dispatch = useDispatch();
+	// const {} = useSelector(state => state.)
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [search, setSearch] = useState("");
@@ -18,6 +22,10 @@ const HomeScreen = () => {
 	};
 
 	const submit = () => {};
+
+	useEffect(() => {
+		dispatch(allCategoryAction());
+	}, [dispatch]);
 
 	return (
 		<div className="min-h-screen md:bg-background bg-primary-blue">
