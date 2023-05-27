@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/header";
-import { Button, Carousel, Input } from "antd";
+import { Button, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import CardByCategories from "../components/cardByCategories";
 import BasicEssentialCard from "../components/basicEssentialCard";
@@ -11,10 +11,12 @@ import { allCategoryAction } from "../redux/actions/category.action";
 const HomeScreen = () => {
 	const navigate = useNavigate;
 	const dispatch = useDispatch();
-	// const {} = useSelector(state => state.)
+	const { categories } = useSelector((state) => state.allCategory);
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [search, setSearch] = useState("");
+
+	console.log("the categories are ", categories);
 
 	const onSubscribe = (e) => {
 		e.preventDefault();

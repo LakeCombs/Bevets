@@ -1,3 +1,4 @@
+import axios from "axios";
 import { api } from "../../utils/apiInstance";
 import { RequestError } from "../../utils/error";
 import { headerConfig } from "../../utils/headerConfig";
@@ -45,6 +46,7 @@ export const allCategoryAction = () => async (dispatch, getState) => {
 	try {
 		dispatch(allCategoryRequest());
 		const { data } = await api.get("/categories");
+
 		dispatch(allCategorySuccess(data));
 	} catch (error) {
 		dispatch(allCategoryFailed(RequestError(error)));
