@@ -1,4 +1,4 @@
-import { Checkbox, Input, Rate } from "antd";
+import { Input, Table, Spin } from "antd";
 import Dragger from "antd/es/upload/Dragger";
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
@@ -7,10 +7,57 @@ import { MdDelete, MdOutlineDeleteOutline } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { message } from "antd";
 import { FiUpload } from "react-icons/fi";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	getAllProductAction,
+	createProductAction
+} from "../redux/actions/product.action";
+import { allCategoryAction } from "../redux/actions/category.action";
 
 const DashboardProductPage = () => {
+	const dispatch = useDispatch();
+	const { products } = useSelector((state) => state.allProduct);
+	const { categories } = useSelector((state) => state.allCategory);
+	const {
+		product,
+		loading: productLoading,
+		error: errorLoading
+	} = useSelector((state) => state.createProduct);
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState("all");
+	const [name, setName] = useState("");
+	const [cat, setCat] = useState("");
+	const [itemNumber, setItemNumber] = useState();
+	const [brand, setBrand] = useState();
+	const [price, setPrice] = useState();
+	const [expire, setExpire] = useState();
+	const [quantity, setQuantity] = useState();
+	const [description, setDescription] = useState("");
+	const [images, setImages] = useState([]);
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+	const onSelectChange = (newSelectedRowKeys) => {
+		console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+		setSelectedRowKeys(newSelectedRowKeys);
+	};
+
+	console.log("the categories is ", categories);
+
+	const CreateProduct = () => {
+		dispatch(
+			createProductAction({
+				name,
+				category: cat,
+				price,
+				expire,
+				description,
+				images,
+				quantity,
+				code: itemNumber,
+				brand
+			})
+		);
+	};
 
 	const props = {
 		name: "file",
@@ -44,6 +91,80 @@ const DashboardProductPage = () => {
 			</div>
 		);
 	};
+
+	const rowSelection = {
+		selectedRowKeys,
+		onChange: onSelectChange,
+		selections: []
+	};
+
+	const columns = [
+		{
+			title: "Item No",
+			dataIndex: "item No"
+		},
+		{
+			title: "Image",
+			dataIndex: "Image"
+		},
+		{
+			title: "Name",
+			dataIndex: "name"
+		},
+		{
+			title: "Price",
+			dataIndex: "price"
+		},
+		{
+			title: "Category",
+			dataIndex: "category"
+		},
+		{
+			title: "Reviews",
+			dataIndex: "reviews"
+		},
+		{
+			title: "Status",
+			dataIndex: "status"
+		},
+		{
+			title: "Action",
+			dataIndex: "action"
+		}
+	];
+
+	const data = [];
+	for (let index = 0; index < products?.length; index++) {
+		data.push({
+			key: products[index]?._id,
+			name: products[index]?.name,
+			image: (
+				<img
+					alt=""
+					className="h-[50px] w-[50px]"
+					src={products[index]?.images[0]}
+				/>
+			),
+			price: products[index]?.price,
+			category: products[index]?.category?.name,
+			reviews: products[index]?.reviews,
+			status: products[index]?.status,
+			action: (
+				<div className="flex flex-row justify-center">
+					<p className=" p-[10px] bg-green-500 hover:cursor-pointer rounded-full text-[12px] text-white mr-[4px]">
+						<BsPencil />
+					</p>
+					<p className=" p-[10px] bg-[#E77D00]  hover:cursor-pointer rounded-full text-[12px] text-white">
+						<MdOutlineDeleteOutline />
+					</p>
+				</div>
+			)
+		});
+	}
+	useEffect(() => {
+		dispatch(getAllProductAction());
+		dispatch(allCategoryAction());
+	}, [dispatch]);
 
 	return (
 		<div className="rounded-lg p-2">
@@ -80,8 +201,7 @@ const DashboardProductPage = () => {
 								return setPage("create");
 							}
 						}}>
-						{" "}
-						+ Add New
+						{page !== "categories" ? "+ Add New" : "+ Add New Categories"}
 					</button>
 					<button className="bg-red-400 w-[100px] rounded-xl text-white ml-[4px] flex flex-row justify-center items-center">
 						<RiDeleteBin5Line /> <span className="ml-[3px]">Delete</span>
@@ -99,105 +219,23 @@ const DashboardProductPage = () => {
 			{page === "all" && (
 				<div className="mt-[10px] bg-background">
 					<div className="border-b  p-[8px]">Manage Products</div>
-					<table className="w-full">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Item No</th>
-								<th>Image</th>
-								<th>Name</th>
-								<th>Price</th>
-								<th>Category</th>
-								<th>Reviews</th>
-								<th>Status</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr className="font-light">
-								<th>
-									<Checkbox
-										onChange={(e) => {
-											console.log("clicked");
-										}}></Checkbox>
-								</th>
-								<th className="font-light">#009893</th>
-								<th>
-									<img
-										alt=""
-										className="h-[50px] w-[50px]"
-										src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-									/>
-								</th>
-								<th className="font-light">Fruit Juice</th>
-								<th className="font-light">C 2390 </th>
-								<th className="font-light">Alcholic drink</th>
-								<th>
-									<Rate allowHalf defaultValue={4} className="text-[12px]" />
-								</th>
-								<th>
-									<span className="bg-green-300 rounded-lg font-light p-[2px] ">
-										In Stock
-									</span>
-								</th>
-								<th>
-									<div className="flex flex-row justify-center">
-										<p className=" p-[10px] bg-green-500 hover:cursor-pointer rounded-full text-[12px] text-white mr-[4px]">
-											<BsPencil />
-										</p>
-										<p className=" p-[10px] bg-[#E77D00]  hover:cursor-pointer rounded-full text-[12px] text-white">
-											<MdOutlineDeleteOutline />
-										</p>
-									</div>
-								</th>
-							</tr>
-						</tbody>
-					</table>
+					<Table
+						rowSelection={rowSelection}
+						columns={columns}
+						dataSource={data}
+					/>
 				</div>
 			)}{" "}
 			{page === "categories" && (
 				<div className="  flex-wrap justify-start mt-[10px] grid grid-cols-4 gap-3">
-					<CategoryCard
-						name={"Alcoholic Drinks"}
-						count={20}
-						src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-					/>
-					<CategoryCard
-						name={"Non-Alcoholic Drinks"}
-						count={30}
-						src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-					/>
-					<CategoryCard
-						name={"Personal Care"}
-						count={24}
-						src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-					/>
-					<CategoryCard
-						name={"Canned Foods"}
-						count={23}
-						src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-					/>
-					<CategoryCard
-						name={"Alcoholic Drinks"}
-						count={20}
-						src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-					/>
-					<CategoryCard
-						name={"Non-Alcoholic Drinks"}
-						count={30}
-						src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-					/>
-					<CategoryCard
-						name={"Detergent"}
-						count={24}
-						src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-					/>
-					<CategoryCard
-						name={"Grains and Cereals"}
-						count={23}
-						src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-					/>
+					{categories?.map((cat) => {
+						<CategoryCard
+							name={cat?.name}
+							key={cat?._id}
+							count={cat?.description.splice(0, 20)}
+							src={cat?.image[0]}
+						/>;
+					})}
 				</div>
 			)}
 			{page === "create" && (
@@ -274,44 +312,87 @@ const DashboardProductPage = () => {
 					<div className=" w-[50%] ml-[10px] flex flex-col">
 						<div className=" w-full  p-[20px] rounded-lg border flex flex-col">
 							<label>Product Name</label>
-							<input className=" border rounded-lg outline-none mt-[4px]" />
+							<input
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+								className="px-[5px] border rounded-lg outline-none mt-[4px]"
+							/>
 							<label className="mt-[15px]">Category Name</label>
-							<input className=" border rounded-lg outline-none mt-[4px]" />
+
+							<select
+								value={cat}
+								className="px-[5px] border rounded-lg outline-none mt-[4px]"
+								onChange={(e) => setCat(e.target.value)}>
+								{categories?.map((cate) => {
+									return <option value={cate?.name}>{cate?.name}</option>;
+								})}
+							</select>
+							{/* <input
+								value={cat}
+								onChange={(e) => setCat(e.target.value)}
+							/> */}
 							<div className="flex flex-row w-full justify-between mt-[15px]">
 								<div className="w-[50%] mr-[3px] flex flex-col">
 									<label>Item Number</label>
-									<input className=" border rounded-lg outline-none mt-[4px]" />
+									<input
+										value={itemNumber}
+										onChange={(e) => setItemNumber(e.target.value)}
+										className="px-[5px] border rounded-lg outline-none mt-[4px]"
+									/>
 								</div>
 								<div className="w-[50%] ml-[3px] flex flex-col">
 									<label>Brand</label>
-									<input className=" border rounded-lg outline-none mt-[4px]" />
+									<input
+										value={brand}
+										onChange={(e) => setBrand(e.target.value)}
+										className="px-[5px] border rounded-lg outline-none mt-[4px]"
+									/>
 								</div>
 							</div>
 
 							<div className="flex flex-row w-[100%] justify-between mt-[15px]">
 								<div className="w-[30%] mr-[3px] flex flex-col">
 									<label>Price</label>
-									<input className=" border rounded-lg outline-none mt-[4px]" />
+									<input
+										value={price}
+										onChange={(e) => setPrice(e.target.value)}
+										className="px-[5px] border rounded-lg outline-none mt-[4px]"
+									/>
 								</div>
 
 								<div className="w-[30%] mx-[3px] flex flex-col">
 									<label>Expiry</label>
-									<input className=" border rounded-lg outline-none mt-[4px]" />
+									<input
+										value={expire}
+										onChange={(e) => setExpire(e.target.value)}
+										className="px-[5px] border rounded-lg outline-none mt-[4px]"
+									/>
 								</div>
 
 								<div className="w-[30%] ml-[3px] flex flex-col">
 									<label>Quantity</label>
-									<input className=" border rounded-lg outline-none mt-[4px]" />
+
+									<input
+										value={quantity}
+										onChange={(e) => setQuantity(e.target.value)}
+										className=" border rounded-lg outline-none mt-[4px]"
+									/>
 								</div>
 							</div>
 
 							<label className="mt-[15px]">Description</label>
-							<textarea className=" border rounded-lg outline-none mt-[4px]" />
+							<textarea
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								className=" border rounded-lg outline-none mt-[4px]"
+							/>
 						</div>
 
 						<div className="flex justify-end w-full mt-[20px] rounded-lg">
-							<button className="bg-bright-blue w-[120px] py-[4px] text-white">
-								Add Item
+							<button
+								onClick={CreateProduct}
+								className="bg-bright-blue w-[120px] py-[4px] text-white">
+								Add Item {errorLoading && <Spin size="small" />}
 							</button>
 						</div>
 					</div>

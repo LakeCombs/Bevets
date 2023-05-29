@@ -1,22 +1,34 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/header";
-import { Button, Input } from "antd";
+import { Button, Input, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import CardByCategories from "../components/cardByCategories";
 import BasicEssentialCard from "../components/basicEssentialCard";
 import Footer from "../components/footer";
 import { useDispatch, useSelector } from "react-redux";
 import { allCategoryAction } from "../redux/actions/category.action";
+import {
+	AddToCartAction,
+	getAllProductAction
+} from "../redux/actions/product.action";
 
 const HomeScreen = () => {
 	const navigate = useNavigate;
 	const dispatch = useDispatch();
-	const { categories } = useSelector((state) => state.allCategory);
+	const {
+		categories,
+		error: categoriesError,
+		loading,
+		categoriesLoading
+	} = useSelector((state) => state.allCategory);
+	const {
+		products,
+		loading: productLoading,
+		error: productError
+	} = useSelector((state) => state.allProduct);
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [search, setSearch] = useState("");
-
-	console.log("the categories are ", categories);
 
 	const onSubscribe = (e) => {
 		e.preventDefault();
@@ -25,8 +37,17 @@ const HomeScreen = () => {
 
 	const submit = () => {};
 
+	var getMeRandomElements = (prod) => {
+		var result = [];
+		for (var i = 0; i < 4; i++) {
+			result.push(products[Math.floor(Math.random() * prod?.length)]);
+		}
+		return result;
+	};
+
 	useEffect(() => {
 		dispatch(allCategoryAction());
+		dispatch(getAllProductAction());
 	}, [dispatch]);
 
 	return (
@@ -111,7 +132,7 @@ const HomeScreen = () => {
 						</span>
 					</h2>
 
-					<Link className="text-app-orange session-header" to="/productscreen">
+					<Link className="text-app-orange session-header" to="/categories">
 						See all
 					</Link>
 				</div>
@@ -119,50 +140,20 @@ const HomeScreen = () => {
 				{/* Horizontal list of items */}
 
 				<div className=" flex flex-row md:mt-[0px] mt-[10px] w-full scroll-m-8 scroll-auto snap-x overflow-x-auto whitespace-no-wrap">
-					<CardByCategories
-						image={
-							"https://media.istockphoto.com/id/459018635/photo/liquor-bottles-on-a-white-background.jpg?s=612x612&w=is&k=20&c=NOT0S0Bb7ZnXa3nFabWISHv2uS6WCXxFCPJfqN3SDE8="
-						}
-						name="Alcoholic Drinks"
-						onClick={() => {
-							navigate("/categories");
-						}}
-					/>
+					{categoriesLoading && <Spin size="25px" />}
+					{categories &&
+						categories?.map((cat) => (
+							<CardByCategories
+								name={cat?.name}
+								image={cat?.image?.[0] || "/assets/logo.png"}
+							/>
+						))}
 
-					<CardByCategories
-						image={
-							"https://media.istockphoto.com/id/168277558/photo/large-diamond-on-reflective-surface.jpg?s=612x612&w=0&k=20&c=OjULqGPkC6DqPTrGyzDpTXbEECfaBrxgswIueUF_mRs="
-						}
-						name="Jewelries"
-					/>
-
-					<CardByCategories
-						image={
-							"https://media.istockphoto.com/id/1404603483/photo/female-autumn-clothes-on-hangers-in-white-room.jpg?b=1&s=170667a&w=0&k=20&c=H5oDGZDgKtTieO4OwU_HZlGMjtt--RuiHdxCswZOKvU="
-						}
-						name="Clothing"
-					/>
-
-					<CardByCategories
-						image={
-							"https://media.istockphoto.com/id/173880248/photo/ciruit.jpg?s=612x612&w=0&k=20&c=fFwJ1TmkRzYyMQyL5RBAXzN6ZSiqRXkelUxvCGUW5Zk="
-						}
-						name="Electronics"
-					/>
-
-					<CardByCategories
-						image={
-							"https://media.istockphoto.com/id/507143336/photo/red-wine.jpg?s=612x612&w=0&k=20&c=E4dDQlwkGe0A7URC4J6rfUXtcCiDmMHi2pVPfj6PnAs="
-						}
-						name="House items"
-					/>
-
-					<CardByCategories
-						image={
-							"https://media.istockphoto.com/id/1411029939/photo/top-view-on-colorful-stacked-books-education-and-learning-concept-background.jpg?s=612x612&w=0&k=20&c=9X5M5RI_aAXvRv4r1OZUSBYSVKx0HK0Sg2dLUN8oQwQ="
-						}
-						name="Books"
-					/>
+					{categoriesError && (
+						<p className="text-red-400 text-[10px]">
+							An Error while loading the categories
+						</p>
+					)}
 				</div>
 
 				{/* Top Selling */}
@@ -186,46 +177,21 @@ const HomeScreen = () => {
 						</div>
 
 						<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"Soft wood"}
-								image={
-									"https://media.istockphoto.com/id/1405039658/photo/stack-of-various-construction-sample-wood-boards.jpg?b=1&s=170667a&w=0&k=20&c=uRk4qMBvhMBOYB6djQ4iZ3gJPTQw2n2fkAg-5al0EoY="
-								}
-								price={"C 150"}
-								name={"Soft wood"}
-								addToFav={() => {}}
-							/>
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"Light bulb"}
-								image={
-									"https://images.unsplash.com/photo-1529310399831-ed472b81d589?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-								}
-								price={"C 300"}
-								name={"Light bulb"}
-								addToFav={() => {}}
-							/>
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"nice stuff"}
-								image={
-									"https://plus.unsplash.com/premium_photo-1681666713728-9ed75e148617?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
-								}
-								price={"C 23,000"}
-								name={"Mac 2023 "}
-								addToFav={() => {}}
-							/>
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"nice stuff"}
-								image={
-									"https://images.unsplash.com/photo-1652450852307-53646a5a5e19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZmFuY3klMjBjdXB8ZW58MHx8MHx8&auto=format&fit=crop&w=700&q=60"
-								}
-								price={"C 20"}
-								name={"Tea Cup"}
-								addToFav={() => {}}
-							/>
+							{getMeRandomElements(products)?.map((product) => {
+								return (
+									<BasicEssentialCard
+										addToCart={() => {
+											dispatch(AddToCartAction(product));
+										}}
+										description={product?.description}
+										image={product?.images[0]}
+										price={`Ȼ ${product?.price}`}
+										name={product?.name}
+										addToFav={() => {}}
+										key={product?._id}
+									/>
+								);
+							})}
 						</div>
 					</div>
 					<div className=" bg-white md:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">

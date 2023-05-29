@@ -2,10 +2,12 @@ import React from "react";
 import Header from "../components/header";
 import ScreenWithPadding from "../components/ScreenWithPadding";
 import StandardProductCard from "../components/standardProductCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CategoryScreen = () => {
+const CategoryByName = () => {
 	const navigate = useNavigate();
+	const { name } = useParams();
+
 	return (
 		<div className="bg-background">
 			<Header />
@@ -13,12 +15,12 @@ const CategoryScreen = () => {
 				<div className=" min-h-screen">
 					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full">
 						<h3 className="font-bold family-poppins">
-							Home > Categories > Alcoholic Drinks
+							Home > Categories > {name}
 						</h3>
 					</div>
 
 					<div className="mt-[15px] font-bold family-poppins">
-						<h3>Alcoholic Drinks</h3>
+						<h3>{name}</h3>
 						<hr />
 					</div>
 
@@ -108,4 +110,4 @@ const CategoryScreen = () => {
 	);
 };
 
-export default CategoryScreen;
+export default CategoryByName;

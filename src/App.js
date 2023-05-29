@@ -9,7 +9,7 @@ import Account from "./screens/account";
 import OtpScreen from "./screens/otpScreen";
 import RequestAccess from "./screens/requestAccess";
 import PersonalDetailScreen from "./screens/personalDetailScreen";
-import CategoryScreen from "./screens/categoryScreen";
+import CategoryScreen from "./screens/CategoryByName";
 import ProductByIdScreen from "./screens/productByIdScreen";
 import CartScreen from "./screens/cartScreen";
 import VerificationForPhoneNumberScreen from "./screens/verificationForPhoneNumberScreen";
@@ -19,6 +19,8 @@ import DeliverySelfScreen from "./screens/deliverySelfScreen";
 import AddRecipientScreen from "./screens/addRecipientScreen";
 import RecentlyViewedScreen from "./screens/RecentlyViewedScreen";
 import Dashboard from "./screens/Dashboard";
+import CategoryByName from "./screens/CategoryByName";
+import CategoriesScreen from "./screens/productScreen";
 
 function App() {
 	return (
@@ -33,8 +35,8 @@ function App() {
 				<Route path="/otp" element={<OtpScreen />} />
 				<Route path="/requestaccess" element={<RequestAccess />} />
 				<Route path="/personaldetails" element={<PersonalDetailScreen />} />
-				<Route path="/categories" element={<CategoryScreen />} />
-				<Route path="/categories/:id" element={<ProductByIdScreen />} />
+				<Route path="/categories" element={<CategoriesScreen />} />
+				<Route path="/categories/:name" element={<CategoryByName />} />
 				<Route path="/cart" element={<CartScreen />} />
 				<Route
 					path="/verification"

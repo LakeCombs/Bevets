@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookie from "js-cookie";
 
 const createProductSlice = createSlice({
 	name: "create product",
@@ -167,3 +168,76 @@ export const {
 	resetDeleteProduct
 } = deleteProductSlice.actions;
 export const deleteProductReducer = deleteProductSlice.reducer;
+
+const productByCategorySlice = createSlice({
+	name: "product by category",
+	initialState: {
+		products: {},
+		loading: false,
+		error: ""
+	},
+	reducers: {
+		productByCategoryRequest: (state) => {
+			state.loading = true;
+			state.error = "";
+		},
+		productByCategorySuccess: (state, { payload }) => {
+			state.loading = false;
+			state.product = payload;
+			state.error = "";
+		},
+		productByCategoryFailed: (state, { payload }) => {
+			state.loading = false;
+			state.error = payload;
+		}
+	}
+});
+
+export const {
+	productByCategoryFailed,
+	productByCategoryRequest,
+	productByCategorySuccess
+} = productByCategorySlice.actions;
+export const productByCategoryReducer = productByCategorySlice.reducer;
+
+const cart = {
+	cartItems: Cookie.get("cartItems") ? JSON.parse(Cookie.get("cartItems")) : [],
+	favorite: Cookie.get("favorite") ? JSON.parse(Cookie.get("favorite")) : []
+};
+
+const cartSlice = createSlice({
+	name: "cart slice",
+	initialState: {
+		...cart,
+		loading: false,
+		error: ""
+	},
+	reducers: {
+		setCart: (state, { payload }) => {
+			state.cartItems = payload.cartItems;
+			state.favorite = payload.favorite;
+			Cookie.set("cartItems", JSON.stringify(payload?.cartItems));
+			Cookie.set("favorite", JSON.stringify(payload?.favorite));
+		},
+
+		addToCart: (state, { payload }) => {
+			state.cartItems = payload;
+		},
+
+		removeFromCart: (state, { payload }) => {
+			const RemainingItem = state.items.filter(
+				(item) => item?.item?._id !== payload?._id
+			);
+			state.items = RemainingItem;
+			Cookie.set("cartItems", JSON.stringify(RemainingItem));
+		},
+
+		addToFav: (state, { payload }) => {
+			state.fav = payload;
+		}
+	}
+});
+
+export const { addToCart, addToFav, removeFromCart, setCart } =
+	cartSlice.actions;
+export const cartReducer = cartSlice.reducer;

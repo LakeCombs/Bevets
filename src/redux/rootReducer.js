@@ -10,9 +10,11 @@ import {
 	userRegisterReducer
 } from "./reducers/user.slice";
 import {
+	cartReducer,
 	createProductReducer,
 	deleteProductReducer,
 	getAllProductReducer,
+	productByCategoryReducer,
 	productByIdReducer,
 	updateProductReducer
 } from "./reducers/product.slice";
@@ -41,6 +43,8 @@ const rootReducer = combineReducers({
 	allProduct: getAllProductReducer,
 	updateProduct: updateProductReducer,
 	deleteProduct: deleteProductReducer,
+	productByCategory: productByCategoryReducer,
+	cart: cartReducer,
 
 	//category reducers
 	createCategory: createCategoryReducer,

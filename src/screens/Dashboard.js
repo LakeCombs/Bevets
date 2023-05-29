@@ -31,7 +31,7 @@ const Dashboard = () => {
 		<div className="bg-primary-blue min-h-screen">
 			<DashboardHeader />
 			<div className="flex flex-row mt-[60px]">
-				<div className="h-auto bg-white w-[220px]   px-[10px] py-[20px] flex flex-col justify-start">
+				<div className="h-auto bg-white w-[220px] fixed position-absolute  px-[10px] py-[20px] flex flex-col justify-start">
 					<Left
 						icon={<CgMenuGridR />}
 						text={"Dashboard"}
@@ -69,7 +69,7 @@ const Dashboard = () => {
 					/>
 				</div>
 
-				<div className="p-[20px] w-full rounded-lg">
+				<div className="p-[20px] w-full rounded-lg pl-[240px]">
 					{page === "dashboard" && <DashboardComp />}
 					{page === "product" && <DashboardProductPage />}
 					{page === "order" && <DashboardOrderPage />}

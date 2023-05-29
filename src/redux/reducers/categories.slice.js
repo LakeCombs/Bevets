@@ -55,6 +55,7 @@ const allCategorySlice = createSlice({
 		allCategoryFailed: (state, { payload }) => {
 			state.error = payload;
 			state.loading = false;
+			state.categories = [];
 		}
 	}
 });

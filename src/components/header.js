@@ -6,10 +6,14 @@ import { BsFillCollectionFill } from "react-icons/bs";
 import { MdFavorite } from "react-icons/md";
 import { Dropdown, Badge } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
 	const [search, setSearch] = useState("");
 	const navigate = useNavigate();
+	const { cartItems } = useSelector((state) => state.cart);
+
+	console.log("the cart items is ", cartItems);
 
 	const submit = (e) => {
 		e.preventDefault();
@@ -106,7 +110,10 @@ const Header = () => {
 						navigate("/cart");
 					}}>
 					<span className="mr-2 text-black  text-[20px]">
-						<Badge count={5} color={"FF8A00"} size="small">
+						<Badge
+							count={cartItems.reduce((item) => item?.item?.qty + 0)}
+							color={"FF8A00"}
+							size="small">
 							<HiShoppingCart className="text-[20px]" />
 						</Badge>
 					</span>
@@ -120,7 +127,10 @@ const Header = () => {
 						navigate("/cart");
 					}}>
 					<span className="mr-2 text-black  text-[20px]">
-						<Badge count={5} color={"FF8A00"} size="small">
+						<Badge
+							count={cartItems.reduce((item) => item?.item?.qty + 0)}
+							color={"FF8A00"}
+							size="small">
 							<HiShoppingCart className="text-[20px]" />
 						</Badge>
 					</span>

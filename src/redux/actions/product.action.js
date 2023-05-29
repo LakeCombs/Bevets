@@ -2,6 +2,8 @@ import { api } from "../../utils/apiInstance";
 import { RequestError } from "../../utils/error";
 import { headerConfig } from "../../utils/headerConfig";
 import {
+	addToCart,
+	addToFav,
 	createProductFailed,
 	createProductRequest,
 	createProductSuccess,
@@ -14,12 +16,17 @@ import {
 	getProductByIdFailed,
 	getProductByIdRequest,
 	getProductByIdSuccess,
+	productByCategoryFailed,
+	productByCategoryRequest,
+	productByCategorySuccess,
+	removeFromCart,
 	resetDeleteProduct,
 	resetUpdateProduct,
 	updateProductFailed,
 	updateProductRequest,
 	updateProductSuccess
 } from "../reducers/product.slice";
+import Cookie from "js-cookie";
 
 export const createProductAction = (product) => async (dispatch, getState) => {
 	try {
@@ -98,4 +105,51 @@ export const DeleteProductAction = (id) => async (dispatch, getState) => {
 
 export const resetDeleteProductAction = () => (dispatch) => {
 	dispatch(resetDeleteProduct());
+};
+
+export const GetProductByCategoryAction =
+	(category) => async (dispatch, getState) => {
+		try {
+			const {
+				userLogin: { userInfo }
+			} = getState();
+			dispatch(productByCategoryRequest());
+			const { data } = await api.get(
+				`/products/categories/${category}`,
+				headerConfig(userInfo)
+			);
+			dispatch(productByCategorySuccess(data));
+		} catch (error) {
+			dispatch(productByCategoryFailed(RequestError(error)));
+		}
+	};
+
+export const AddToCartAction = (prod) => (dispatch) => {
+	const cart = Cookie.get("cartItems")
+		? JSON.parse(Cookie.get("cartItems"))
+		: [];
+
+	const exist = cart?.find((item) => item?.item?._id === prod?._id);
+
+	const items = exist
+		? cart?.map((item) => {
+				if (item?._id === exist?._id) {
+					return { ...item, qty: item.qty + 1 };
+				} else {
+					return {
+						...item
+					};
+				}
+		  })
+		: [...cart, { item: prod, qty: 1 }];
+	Cookie.set("cartItems", JSON.stringify(items));
+	dispatch(addToCart(items));
+};
+
+export const AddToFavAction = (prod) => (dispatch) => {
+	dispatch(addToFav(prod));
+};
+
+export const RemoveFromCartAction = (prod) => (dispatch) => {
+	dispatch(removeFromCart(prod));
 };
