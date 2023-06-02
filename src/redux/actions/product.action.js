@@ -20,6 +20,7 @@ import {
 	productByCategoryRequest,
 	productByCategorySuccess,
 	removeFromCart,
+	resetCreateProduct,
 	resetDeleteProduct,
 	resetUpdateProduct,
 	updateProductFailed,
@@ -43,6 +44,10 @@ export const createProductAction = (product) => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch(createProductFailed(RequestError(error)));
 	}
+};
+
+export const resetCreateProductAction = () => (dispatch) => {
+	dispatch(resetCreateProduct());
 };
 
 export const getProductByIdAction = (id) => async (dispatch, getState) => {

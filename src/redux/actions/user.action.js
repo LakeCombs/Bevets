@@ -38,7 +38,7 @@ export const userLoginAction =
 	async (dispatch, getState) => {
 		try {
 			dispatch(loginRequest());
-			const { data } = await api.post("/user/login", { email, password });
+			const { data } = await api.post("/users/login", { email, password });
 			Cookie.set("userInfo", JSON.stringify(data));
 			dispatch(loginSuccess(data));
 		} catch (error) {
@@ -50,9 +50,10 @@ export const userRegisterAction =
 	(userDetails) => async (dispatch, getState) => {
 		try {
 			dispatch(registerRequest());
-			const { data } = await api.post("/user/register", { ...userDetails });
+			const { data } = await api.post("/users/signup", { ...userDetails });
 			Cookie.set("userInfo", JSON.stringify(data));
 			dispatch(registerSuccess(data));
+			dispatch(loginSuccess(data));
 		} catch (error) {
 			dispatch(registerFailed(RequestError(error)));
 		}
@@ -66,7 +67,7 @@ export const logoutUserAction = () => (dispatch) => {
 export const getUserByIdAction = (id) => async (dispatch, getState) => {
 	try {
 		dispatch(userByIdRequest());
-		const { data } = await api.get(`/user/${id}`);
+		const { data } = await api.get(`/users/${id}`);
 		dispatch(userByIdSuccess(data));
 	} catch (error) {
 		dispatch(userByIdFailed(RequestError(error)));
@@ -89,7 +90,7 @@ export const deleteUserAction = (id) => async (dispatch, getState) => {
 	} = getState();
 	try {
 		dispatch(deleteUserRequest());
-		const { data } = await api.delete(`/user/${id}`, headerConfig(userInfo));
+		const { data } = await api.delete(`/users/${id}`, headerConfig(userInfo));
 		dispatch(deleteUserSuccess(data));
 	} catch (error) {
 		dispatch(deleteUserFailed(RequestError(error)));
@@ -104,7 +105,7 @@ export const updateUserAction = (id, update) => async (dispatch, getState) => {
 
 		dispatch(updateUserRequest());
 		const { data } = await api.put(
-			`/user/${id}`,
+			`/users/${id}`,
 			{ ...update },
 			headerConfig(userInfo)
 		);
@@ -126,7 +127,7 @@ export const blockUpdateUserAction = (id) => async (dispatch, getState) => {
 	try {
 		dispatch(blockUserRequest());
 		const { data } = await api.post(
-			`/user/blockUser/${id}`,
+			`/users/blockUser/${id}`,
 			{},
 			headerConfig(userInfo)
 		);
@@ -147,7 +148,7 @@ export const unblockUpdateUserAction = (id) => async (dispatch, getState) => {
 	try {
 		dispatch(unBlockUserRequest());
 		const { data } = await api.post(
-			`/user/unBlockUser/${id}`,
+			`/users/unBlockUser/${id}`,
 			{},
 			headerConfig(userInfo)
 		);

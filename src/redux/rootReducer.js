@@ -25,6 +25,13 @@ import {
 	deleteCategoryReducer,
 	updateCategoryReducer
 } from "./reducers/categories.slice";
+import {
+	deleteImageByIdReducer,
+	editImageByIdReducer,
+	getAllImageReducer,
+	getImageByIdReducer,
+	uploadImageReducer
+} from "./reducers/image.slice";
 
 const rootReducer = combineReducers({
 	//user reducers
@@ -51,7 +58,14 @@ const rootReducer = combineReducers({
 	allCategory: allCategoryReducer,
 	categoryById: categoryByIdReducer,
 	updateCategory: updateCategoryReducer,
-	deleteCategory: deleteCategoryReducer
+	deleteCategory: deleteCategoryReducer,
+
+	//image reducer
+	uploadImage: uploadImageReducer,
+	getAllImage: getAllImageReducer,
+	getImageById: getImageByIdReducer,
+	editImage: editImageByIdReducer,
+	deleteImage: deleteImageByIdReducer
 });
 
 export default rootReducer;

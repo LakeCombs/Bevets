@@ -1,20 +1,31 @@
 import React, { useState } from "react";
-import { Input } from "antd";
+import { Input, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userLoginAction } from "../redux/actions/user.action";
+import { useEffect } from "react";
 
 const LoginScreen = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { userInfo, loading, error } = useSelector((state) => state.userLogin);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const login = (e) => {
 		e.preventDefault();
+		console.log("you click login");
+		dispatch(userLoginAction({ email, password }));
 	};
+
+	// useEffect(() => {
+	// 	if (userInfo?._id) navigate("/");
+	// }, [navigate, userInfo?._id]);
 	return (
 		<div className="flex pt-[50px] flex-col bg-background h-screen items-center w-full">
 			<img
 				alt="bevets"
-				src={"/images/logo.png"}
+				src={"/public/assets/logo.png"}
 				className="w-[120px] md:mt-0 "
 			/>
 
@@ -31,7 +42,7 @@ const LoginScreen = () => {
 				<Input
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
-					placeholder="+233 XX XXX XXXX"
+					placeholder="email@email.com"
 					className=" rounded-xl mb-[23px] px-3 bg-primary-blue md:py-[5px] py-[3px] border-black outline-black"
 				/>
 				<br />
@@ -42,27 +53,20 @@ const LoginScreen = () => {
 					className=" rounded-xl mb-[10px] px-3 bg-primary-blue md:py-[5px] py-[3px] border-black outline-black"
 				/>
 
+				{error && (
+					<p className="text-red-400 my-[5px] text-center">
+						{"Sorry! an error occoured while trying to login."}
+					</p>
+				)}
+
 				<button
 					className="md:mt-[15px] mt-[6px] w-full md:py-[5px] py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none bg-app-orange family-inter rounded-2xl text-white hover:shadow-md"
 					type="submit"
-					onClick={() => navigate("/")}>
+					onClick={login}>
 					Login
 				</button>
 			</form>
 
-			<div className="mt-[15px] md:w-[30%] sm:w-[40%] w-[80%]">
-				<button
-					className="md:mt-[15px] mt-[6px] w-full md:py-[5px] py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none bg-app-orange text-white family-inter rounded-2xl"
-					onClick={() => navigate("/loginphone")}>
-					Login with phone number
-				</button>
-				{/* <button className="md:mt-[15px] mt-[10px] mb-[10px] w-full md:py-[5px] py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none bg-dark-blue family-inter text-white rounded-2xl">
-					Login with Gmail{" "}
-				</button>
-				<button className="md:mt-[5px] mt-[5px] w-full py-[5px] text-[10px] md:text-[15px] font-semibold border-none outline-none text-white bg-bright-blue family-inter rounded-2xl">
-					Login with Facebook
-				</button> */}
-			</div>
 			<p className="mt-[20px] text-[12px] md:text-[15px] family-poppins">
 				Don't have an account?{" "}
 				<a

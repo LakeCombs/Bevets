@@ -45,6 +45,14 @@ const HomeScreen = () => {
 		return result;
 	};
 
+	const ShowCategories = (cat) => {
+		let result = [];
+		for (var i = 0; i < 5; i++) {
+			result.push(products[Math.floor(Math.random() * cat?.length)]);
+		}
+		return result;
+	};
+
 	useEffect(() => {
 		dispatch(allCategoryAction());
 		dispatch(getAllProductAction());
@@ -119,10 +127,6 @@ const HomeScreen = () => {
 					{/* </Carousel> */}
 				</div>
 
-				{/* <div className="md:hidden flex h-[230px]  mt-[-18px]">
-					<div className="rounded-2xl bg-bright-blue w-[100%]">the content</div>
-				</div> */}
-
 				{/* Shop by categories */}
 				<div className="w-full md:flex hidden justify-between mt-[130px] mb-[20px]  session-header">
 					<h2 className=" ">
@@ -142,12 +146,15 @@ const HomeScreen = () => {
 				<div className=" flex flex-row md:mt-[0px] mt-[10px] w-full scroll-m-8 scroll-auto snap-x overflow-x-auto whitespace-no-wrap">
 					{categoriesLoading && <Spin size="25px" />}
 					{categories &&
-						categories?.map((cat) => (
-							<CardByCategories
-								name={cat?.name}
-								image={cat?.image?.[0] || "/assets/logo.png"}
-							/>
-						))}
+						categories
+							.slice(0, 6)
+							?.map((cat) => (
+								<CardByCategories
+									name={cat?.name}
+									image={cat?.image?.[0] || "/assets/logo.png"}
+									key={cat?._id}
+								/>
+							))}
 
 					{categoriesError && (
 						<p className="text-red-400 text-[10px]">
@@ -201,49 +208,21 @@ const HomeScreen = () => {
 								Trending <span className="text-app-orange ">Products</span>
 							</h2>
 							<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
-								<BasicEssentialCard
-									addToCart={() => {}}
-									description={"nice stuff"}
-									image={
-										"https://media.istockphoto.com/id/157587362/photo/detailed-close-up-of-sliced-grain-bread-on-white-background.jpg?s=612x612&w=0&k=20&c=nr5f0Mb3Dx9RP_LmKKwlo6IlzDebfIdCbnERsnoSG94="
-									}
-									price={"C 40"}
-									name={"Wheat Bread"}
-									addToFav={() => {}}
-								/>
-
-								<BasicEssentialCard
-									addToCart={() => {}}
-									description={"nice stuff"}
-									image={
-										"https://media.istockphoto.com/id/1168380232/photo/peanut-butter-scattered-on-a-slice-of-bread.jpg?b=1&s=170667a&w=0&k=20&c=4lWzj9utiIYU-hGWuLATQt3ZoFt0jAeKNXI7zb6Jot8="
-									}
-									price={"C 50"}
-									name={"Peanuts Spread"}
-									addToFav={() => {}}
-								/>
-
-								<BasicEssentialCard
-									addToCart={() => {}}
-									description={"nice stuff"}
-									image={
-										"https://media.istockphoto.com/id/1400656321/photo/homemade-cheese-smash-burger.jpg?b=1&s=170667a&w=0&k=20&c=8fjw6SEeNqKQg1fn4X0xRDiQET4slAjVrqGYBEnPDIo="
-									}
-									price={"C 60"}
-									name={"Burger"}
-									addToFav={() => {}}
-								/>
-
-								<BasicEssentialCard
-									addToCart={() => {}}
-									description={"nice stuff"}
-									image={
-										"https://www.graphic.com.gh/images/2018/mar/6/9498216-3x2-700x467.jpg								"
-									}
-									price={"C 20"}
-									name={"milo"}
-									addToFav={() => {}}
-								/>
+								{getMeRandomElements(products)?.map((product) => {
+									return (
+										<BasicEssentialCard
+											addToCart={() => {
+												dispatch(AddToCartAction(product));
+											}}
+											description={product?.description}
+											image={product?.images[0]}
+											price={`Ȼ ${product?.price}`}
+											name={product?.name}
+											addToFav={() => {}}
+											key={product?._id}
+										/>
+									);
+								})}
 							</div>
 						</div>
 					</div>
@@ -253,49 +232,21 @@ const HomeScreen = () => {
 							Basic <span className="text-app-orange  ">Essentials</span>
 						</h2>
 						<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"nice stuff"}
-								image={
-									"https://media.istockphoto.com/id/1258142863/photo/tomatoes-isolate-on-white-background-tomato-half-isolated-tomatoes-side-view-whole-cut-slice.jpg?b=1&s=170667a&w=0&k=20&c=hFvgq7wOVkoxHR7O2KE3DDbO127FJT4Ub_NZJ6FQCTQ="
-								}
-								price={"C 100"}
-								name={"Tomatoes"}
-								addToFav={() => {}}
-							/>
-
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"nice stuff"}
-								image={
-									"https://media.istockphoto.com/id/1388403435/photo/fresh-carrots-isolated-on-white-background.jpg?b=1&s=170667a&w=0&k=20&c=PJAHETwd9svcjPbrmnmnEmLsTFHLmxjpLpFfKiRzm-4="
-								}
-								price={"C 20"}
-								name={"Carrot"}
-								addToFav={() => {}}
-							/>
-
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"nice stuff"}
-								image={
-									"https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YmFnfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
-								}
-								price={"C 2,300"}
-								name={"Chenel Bag"}
-								addToFav={() => {}}
-							/>
-
-							<BasicEssentialCard
-								addToCart={() => {}}
-								description={"nice stuff"}
-								image={
-									"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8YmFnfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
-								}
-								price={"C 20"}
-								name={"Gucci bag"}
-								addToFav={() => {}}
-							/>
+							{getMeRandomElements(products)?.map((product) => {
+								return (
+									<BasicEssentialCard
+										addToCart={() => {
+											dispatch(AddToCartAction(product));
+										}}
+										description={product?.description}
+										image={product?.images[0]}
+										price={`Ȼ ${product?.price}`}
+										name={product?.name}
+										addToFav={() => {}}
+										key={product?._id}
+									/>
+								);
+							})}
 						</div>
 					</div>
 				</div>

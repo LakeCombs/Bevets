@@ -111,7 +111,7 @@ const Header = () => {
 					}}>
 					<span className="mr-2 text-black  text-[20px]">
 						<Badge
-							count={cartItems.reduce((item) => item?.item?.qty + 0)}
+							// count={cartItems?.reduce((item) => item?.item?.qty + 0)}
 							color={"FF8A00"}
 							size="small">
 							<HiShoppingCart className="text-[20px]" />
@@ -128,7 +128,7 @@ const Header = () => {
 					}}>
 					<span className="mr-2 text-black  text-[20px]">
 						<Badge
-							count={cartItems.reduce((item) => item?.item?.qty + 0)}
+							// count={cartItems?.reduce((item) => item?.item?.qty + 0)}
 							color={"FF8A00"}
 							size="small">
 							<HiShoppingCart className="text-[20px]" />

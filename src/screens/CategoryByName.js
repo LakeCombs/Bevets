@@ -2,11 +2,25 @@ import React from "react";
 import Header from "../components/header";
 import ScreenWithPadding from "../components/ScreenWithPadding";
 import StandardProductCard from "../components/standardProductCard";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { GetProductByCategoryAction } from "../redux/actions/product.action";
 
 const CategoryByName = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const { name } = useParams();
+	const { _id } = useLocation();
+	const { products, loading, error } = useSelector(
+		(state) => state.productByCategory
+	);
+
+	console.log("the _id is ", _id);
+
+	useEffect(() => {
+		dispatch(GetProductByCategoryAction(name));
+	}, [dispatch, name]);
 
 	return (
 		<div className="bg-background">

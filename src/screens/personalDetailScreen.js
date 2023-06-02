@@ -1,14 +1,40 @@
+/* eslint-disable react/style-prop-object */
 import React, { useEffect, useState } from "react";
 import WideButton from "../components/wideButton";
-import { Checkbox, DatePicker } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Checkbox, DatePicker, Input } from "antd";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userRegisterAction } from "../redux/actions/user.action";
 
 const PersonalDetailScreen = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const location = useLocation();
 	const [gender, setGender] = useState("");
 	const [date, setDate] = useState("");
 	const [ready, setReady] = useState(false);
 	const [check, setCheck] = useState(false);
+	const [password, setPassword] = useState("");
+
+	const { userData } = location.state;
+
+	const onchangeDate = (dateString) => {
+		setDate(dateString);
+	};
+
+	const registerUser = () => {
+		// navigate("/", {
+		// 	userData: { ...userData, gender, date }
+		// });
+
+		dispatch(
+			userRegisterAction({
+				...userData,
+				gender,
+				password
+			})
+		);
+	};
 
 	useEffect(() => {
 		if (date && gender) {
@@ -42,28 +68,30 @@ const PersonalDetailScreen = () => {
 				</select>
 
 				<DatePicker
-					onChange={(dateString) => {
-						setDate(dateString);
-					}}
+					onChange={onchangeDate}
+					picker="date"
 					value={date}
 					placeholder="Select date"
 					className="bg-primary-blue border-black mt-[10px] mb-[10px] w-full"
 				/>
 
+				<Input.Password
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					placeholder="Password"
+					className="mt-[6px] mb-[10px] px-3 bg-primary-blue md:py-[5px] py-[3px] border-black outline-black"
+				/>
+
 				<WideButton
 					text="Continue"
-					style={
-						ready ? "bg-bright-blue shadow-md" : "bg-primary-blue shadow-md"
-					}
+					style={"bg-bright-blue shadow-md"}
 					// style={`shadow-md`}
 					color={"white"}
-					onClick={() => {
-						navigate("/");
-					}}
+					onClick={registerUser}
 				/>
 			</form>
 
-			<p className="mt-[10px] family-inter text-center">
+			{/* <p className="mt-[10px] family-inter text-center">
 				<Checkbox
 					value={check}
 					onChange={() => setCheck(!check)}
@@ -71,7 +99,7 @@ const PersonalDetailScreen = () => {
 				/>
 				I read and consent to the{" "}
 				<span className="text-app-orange">Terms and Conditions</span>
-			</p>
+			</p> */}
 
 			<h6
 				className={`mt-[30px] bottom-[30px] fixed text-[10px] w-[35%] text-center`}>

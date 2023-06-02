@@ -172,7 +172,7 @@ export const deleteProductReducer = deleteProductSlice.reducer;
 const productByCategorySlice = createSlice({
 	name: "product by category",
 	initialState: {
-		products: {},
+		products: [],
 		loading: false,
 		error: ""
 	},

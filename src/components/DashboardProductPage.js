@@ -1,29 +1,56 @@
 import { Input, Table, Spin } from "antd";
-import Dragger from "antd/es/upload/Dragger";
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsPencil } from "react-icons/bs";
 import { MdDelete, MdOutlineDeleteOutline } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { message } from "antd";
-import { FiUpload } from "react-icons/fi";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	getAllProductAction,
-	createProductAction
+	createProductAction,
+	resetCreateProductAction,
+	DeleteProductAction
 } from "../redux/actions/product.action";
 import { allCategoryAction } from "../redux/actions/category.action";
+import { api } from "../utils/apiInstance";
+import axios from "axios";
+import {
+	deleteImageByfileNameAction,
+	resetDeleteImageAction,
+	uploadImageAction
+} from "../redux/actions/image.action";
+import { useRef } from "react";
 
 const DashboardProductPage = () => {
 	const dispatch = useDispatch();
-	const { products } = useSelector((state) => state.allProduct);
+	const {
+		products,
+		loading: allProductLoading,
+		error: allProductError
+	} = useSelector((state) => state.allProduct);
 	const { categories } = useSelector((state) => state.allCategory);
 	const {
 		product,
 		loading: productLoading,
-		error: errorLoading
+		error: createError
 	} = useSelector((state) => state.createProduct);
+	const {
+		image,
+		loading,
+		error: uploadImageError
+	} = useSelector((state) => state.uploadImage);
+	const {
+		product: deletedProduct,
+		loading: loadingDeletedProduct,
+		error: deleteProductError
+	} = useSelector((state) => state.deleteProduct);
+	const {
+		image: deletedImage,
+		loading: deletedImageLoading,
+		error: deleteImageError
+	} = useSelector((state) => state.deleteImage);
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState("all");
 	const [name, setName] = useState("");
@@ -36,14 +63,34 @@ const DashboardProductPage = () => {
 	const [description, setDescription] = useState("");
 	const [images, setImages] = useState([]);
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+	const [uploadImageLoading, setUploadImageLoading] = useState(false);
 	const onSelectChange = (newSelectedRowKeys) => {
 		console.log("selectedRowKeys changed: ", newSelectedRowKeys);
 		setSelectedRowKeys(newSelectedRowKeys);
 	};
-
-	console.log("the categories is ", categories);
+	const [messageApi, contextHolder] = message.useMessage();
+	const inputRef = useRef(null);
 
 	const CreateProduct = () => {
+		if (!name) {
+			return messageApi.warning("Please provide a product name");
+		}
+		if (!cat) {
+			return messageApi.warning("Please select a product category");
+		}
+
+		if (!price) {
+			return messageApi.warning("Please provide a product price");
+		}
+
+		if (!description) {
+			return messageApi.warning("Please provide a product description");
+		}
+
+		if (!images) {
+			return messageApi.warning("Please add a product image");
+		}
+
 		dispatch(
 			createProductAction({
 				name,
@@ -59,23 +106,38 @@ const DashboardProductPage = () => {
 		);
 	};
 
-	const props = {
-		name: "file",
-		multiple: true,
-		action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-		onChange(info) {
-			const { status } = info.file;
-			if (status !== "uploading") {
-				console.log(info.file, info.fileList);
-			}
-			if (status === "done") {
-				message.success(`${info.file.name} file uploaded successfully.`);
-			} else if (status === "error") {
-				message.error(`${info.file.name} file upload failed.`);
-			}
-		},
-		onDrop(e) {
-			console.log("Dropped files", e.dataTransfer.files);
+	console.log("the product to be created is ", {
+		name,
+		category: cat,
+		price,
+		expire,
+		description,
+		images,
+		quantity,
+		code: itemNumber,
+		brand
+	});
+
+	const handleFileChange = async (e) => {
+		const fileObj = e.target.files && e.target.files[0];
+		if (!fileObj) {
+			return;
+		}
+
+		let formData = new FormData();
+		formData.append("image", fileObj, fileObj?.name);
+		try {
+			setUploadImageLoading(true);
+			const res = await api.post("/images", formData);
+			console.log("Response:", res.data);
+			setImages([...images, res.data]);
+			setUploadImageLoading(false);
+			dispatch(resetDeleteImageAction());
+			// Handle the response from the API as needed
+		} catch (error) {
+			setUploadImageLoading(false);
+			console.error("Error:", error);
+			// Handle any errors that occurred during the API request
 		}
 	};
 
@@ -101,7 +163,7 @@ const DashboardProductPage = () => {
 	const columns = [
 		{
 			title: "Item No",
-			dataIndex: "item No"
+			dataIndex: "itemNo"
 		},
 		{
 			title: "Image",
@@ -138,11 +200,12 @@ const DashboardProductPage = () => {
 		data.push({
 			key: products[index]?._id,
 			name: products[index]?.name,
+			itemNo: products[index]?._id?.slice(0, 4),
 			image: (
 				<img
 					alt=""
 					className="h-[50px] w-[50px]"
-					src={products[index]?.images[0]}
+					src={products[index]?.images[0]?.image}
 				/>
 			),
 			price: products[index]?.price,
@@ -154,20 +217,46 @@ const DashboardProductPage = () => {
 					<p className=" p-[10px] bg-green-500 hover:cursor-pointer rounded-full text-[12px] text-white mr-[4px]">
 						<BsPencil />
 					</p>
-					<p className=" p-[10px] bg-[#E77D00]  hover:cursor-pointer rounded-full text-[12px] text-white">
-						<MdOutlineDeleteOutline />
+					<p
+						className=" p-[10px] bg-[#E77D00]  hover:cursor-pointer rounded-full text-[12px] text-white"
+						onClick={() => dispatch(DeleteProductAction(products[index]?._id))}>
+						{deletedImageLoading ? (
+							<Spin size={"small"} />
+						) : (
+							<MdOutlineDeleteOutline />
+						)}
 					</p>
 				</div>
 			)
 		});
 	}
+
+	console.log("the product is ", product);
 	useEffect(() => {
 		dispatch(getAllProductAction());
 		dispatch(allCategoryAction());
+	}, [dispatch, deletedProduct?._id]);
+
+	useEffect(() => {
+		if (deletedImage?.image) {
+			setImages([
+				...images.filter((image) => image.image === deletedImage?.image)
+			]);
+		}
+	}, [deletedImage, images]);
+
+	useEffect(() => {
+		if (product?._id) {
+			setPage("all");
+			dispatch(getAllProductAction());
+			messageApi.success("a new product have been created");
+		}
+		dispatch(resetCreateProductAction());
 	}, [dispatch]);
 
 	return (
 		<div className="rounded-lg p-2">
+			{contextHolder}
 			<div className="py-[8px] px-[10px] flex flex-row justify-between w-full bg-background rounded-lg ">
 				<div className="flex flex-row justify-center items-center">
 					<p
@@ -218,7 +307,13 @@ const DashboardProductPage = () => {
 			</div>
 			{page === "all" && (
 				<div className="mt-[10px] bg-background">
-					<div className="border-b  p-[8px]">Manage Products</div>
+					<div className="border-b  p-[8px]">
+						Manage Products{" "}
+						{allProductLoading && <Spin className="ml-[10px]" />}{" "}
+						{allProductError && (
+							<p className="ml-[3px] text-red-400">{allProductError}</p>
+						)}
+					</div>
 					<Table
 						rowSelection={rowSelection}
 						columns={columns}
@@ -232,7 +327,7 @@ const DashboardProductPage = () => {
 						<CategoryCard
 							name={cat?.name}
 							key={cat?._id}
-							count={cat?.description.splice(0, 20)}
+							count={cat?.description?.splice(0, 20)}
 							src={cat?.image[0]}
 						/>;
 					})}
@@ -241,74 +336,49 @@ const DashboardProductPage = () => {
 			{page === "create" && (
 				<div className="rounded-lg mt-[10px] bg-white p-[15px] flex flex-row w-full">
 					<div className="w-[45%] mr-[10px] rounded-lg border p-[10px]">
-						<p>Add Image</p>
+						<p>
+							Add Image{" "}
+							{uploadImageLoading && (
+								<Spin size={"small"} className="ml-[3px]" />
+							)}
+						</p>
 						<div>
-							<Dragger {...props}>
-								<div className="flex flex-col justify-center max-w-full items-center">
-									<img
-										alt=""
-										src={"/assets/upload.svg"}
-										className="w-[50px] h-[50px]"
-									/>
-									<p className="flex flex-row items-center">
-										<FiUpload className="mr-[3px] text-bright-blue" /> Drop your
-										file here or{" "}
-										<span className="text-bright-blue ml-[3px]">Browse</span>
-									</p>
-								</div>
-							</Dragger>
+							<input
+								type="file"
+								className="my-3"
+								ref={inputRef}
+								accept="image/*"
+								onChange={handleFileChange}
+							/>
+
+							<br />
 						</div>
 						<br />
 
-						<div className="bg-background w-full flex flex-row justify-between mb-[20px] px-[5px] items-center">
-							<div className="flex flex-row items-center">
-								<img
-									className="w-[50px] h-[50px] mr-[4px]"
-									alt=""
-									src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-								/>
+						{images?.map((image) => {
+							return (
+								<div
+									key={image?._id}
+									className="bg-background w-full flex flex-row justify-between mb-[15px] px-[5px] items-center">
+									<div className="flex flex-row items-center">
+										<img
+											className="w-[50px] h-[50px] mr-[4px]"
+											alt=""
+											src={image?.image}
+										/>
+									</div>
 
-								<div className="text-[12px]">
-									<p>Baileys Original 01.png</p>
-									<p>400kb</p>
+									<MdDelete
+										className="text-red-500 text-[20px]"
+										onClick={() => {
+											dispatch(deleteImageByfileNameAction(image?.image));
+										}}
+									/>
 								</div>
-							</div>
-
-							<MdDelete className="text-red-500 text-[20px]" />
-						</div>
-						<div className="bg-background w-full flex flex-row justify-between mb-[20px] px-[5px] items-center">
-							<div className="flex flex-row items-center">
-								<img
-									className="w-[50px] h-[50px] mr-[4px]"
-									alt=""
-									src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-								/>
-
-								<div className="text-[12px]">
-									<p>Baileys Original 01.png</p>
-									<p>400kb</p>
-								</div>
-							</div>
-
-							<MdDelete className="text-red-500 text-[20px]" />
-						</div>
-						<div className="bg-background w-full flex flex-row justify-between mb-[20px] px-[5px] items-center">
-							<div className="flex flex-row items-center">
-								<img
-									className="w-[50px] h-[50px] mr-[4px]"
-									alt=""
-									src="https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-								/>
-
-								<div className="text-[12px]">
-									<p>Baileys Original 01.png</p>
-									<p>400kb</p>
-								</div>
-							</div>
-
-							<MdDelete className="text-red-500 text-[20px] hover:cursor-pointer" />
-						</div>
+							);
+						})}
 					</div>
+
 					<div className=" w-[50%] ml-[10px] flex flex-col">
 						<div className=" w-full  p-[20px] rounded-lg border flex flex-col">
 							<label>Product Name</label>
@@ -318,19 +388,20 @@ const DashboardProductPage = () => {
 								className="px-[5px] border rounded-lg outline-none mt-[4px]"
 							/>
 							<label className="mt-[15px]">Category Name</label>
-
 							<select
 								value={cat}
 								className="px-[5px] border rounded-lg outline-none mt-[4px]"
 								onChange={(e) => setCat(e.target.value)}>
-								{categories?.map((cate) => {
-									return <option value={cate?.name}>{cate?.name}</option>;
-								})}
+								{categories &&
+									categories?.map((cate) => {
+										return (
+											<option key={cate?._id} value={cate?._id}>
+												{cate?.name}
+											</option>
+										);
+									})}
 							</select>
-							{/* <input
-								value={cat}
-								onChange={(e) => setCat(e.target.value)}
-							/> */}
+
 							<div className="flex flex-row w-full justify-between mt-[15px]">
 								<div className="w-[50%] mr-[3px] flex flex-col">
 									<label>Item Number</label>
@@ -349,7 +420,6 @@ const DashboardProductPage = () => {
 									/>
 								</div>
 							</div>
-
 							<div className="flex flex-row w-[100%] justify-between mt-[15px]">
 								<div className="w-[30%] mr-[3px] flex flex-col">
 									<label>Price</label>
@@ -379,7 +449,6 @@ const DashboardProductPage = () => {
 									/>
 								</div>
 							</div>
-
 							<label className="mt-[15px]">Description</label>
 							<textarea
 								value={description}
@@ -388,11 +457,17 @@ const DashboardProductPage = () => {
 							/>
 						</div>
 
+						{createError && (
+							<p className="my-[3px] text-red-400">{createError}</p>
+						)}
 						<div className="flex justify-end w-full mt-[20px] rounded-lg">
+							{productLoading && (
+								<Spin size="small" className="text-white ml-[3px]" />
+							)}
 							<button
 								onClick={CreateProduct}
 								className="bg-bright-blue w-[120px] py-[4px] text-white">
-								Add Item {errorLoading && <Spin size="small" />}
+								Add Item{" "}
 							</button>
 						</div>
 					</div>
