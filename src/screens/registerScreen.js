@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import { Input, Spin } from "antd";
+import { Input } from "antd";
 import React, { useEffect, useState } from "react";
 import WideButton from "../components/wideButton";
 import { useNavigate } from "react-router-dom";
@@ -89,6 +89,17 @@ const RegisterScreen = () => {
 					style="bg-bright-blue"
 					onClick={registerUser}
 				/>
+				<br />
+
+				<p className="mt-[20px] text-[12px] text-center md:text-[15px] family-poppins">
+					Already have an account?{" "}
+					<a
+						className="text-app-orange"
+						href="/login"
+						onClick={() => navigate("/login")}>
+						Login
+					</a>
+				</p>
 			</form>
 
 			<h6 className="mt-[30px] text-[10px] w-[35%] text-center">

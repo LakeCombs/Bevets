@@ -1,4 +1,3 @@
-import axios from "axios";
 import { api } from "../../utils/apiInstance";
 import { RequestError } from "../../utils/error";
 import { headerConfig } from "../../utils/headerConfig";
@@ -21,22 +20,23 @@ import {
 	updateCategorySuccess
 } from "../reducers/categories.slice";
 
-export const createCategoryAction = (data) => async (dispatch, getState) => {
-	try {
-		const {
-			userLogin: { userInfo }
-		} = getState();
-		dispatch(createCategoryRequest());
-		const { data } = await api.post(
-			"/categories",
-			{ ...data },
-			headerConfig(userInfo)
-		);
-		dispatch(createCategorySuccess(data));
-	} catch (error) {
-		dispatch(createCategoryFailed(RequestError(error)));
-	}
-};
+export const createCategoryAction =
+	(categoryData) => async (dispatch, getState) => {
+		try {
+			const {
+				userLogin: { userInfo }
+			} = getState();
+			dispatch(createCategoryRequest());
+			const { data } = await api.post(
+				"/categories",
+				{ ...categoryData },
+				headerConfig(userInfo)
+			);
+			dispatch(createCategorySuccess(data));
+		} catch (error) {
+			dispatch(createCategoryFailed(RequestError(error)));
+		}
+	};
 
 export const resetcreateCategoryAction = () => (dispatch) => {
 	dispatch(resetcreateCategory());

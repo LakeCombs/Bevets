@@ -113,14 +113,14 @@ export const resetDeleteProductAction = () => (dispatch) => {
 };
 
 export const GetProductByCategoryAction =
-	(category) => async (dispatch, getState) => {
+	(_id) => async (dispatch, getState) => {
 		try {
 			const {
 				userLogin: { userInfo }
 			} = getState();
 			dispatch(productByCategoryRequest());
 			const { data } = await api.get(
-				`/products/categories/${category}`,
+				`/products/categories/${_id}`,
 				headerConfig(userInfo)
 			);
 			dispatch(productByCategorySuccess(data));

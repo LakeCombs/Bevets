@@ -148,13 +148,7 @@ const HomeScreen = () => {
 					{categories &&
 						categories
 							.slice(0, 6)
-							?.map((cat) => (
-								<CardByCategories
-									name={cat?.name}
-									image={cat?.image?.[0] || "/assets/logo.png"}
-									key={cat?._id}
-								/>
-							))}
+							?.map((cat) => <CardByCategories cat={cat} />)}
 
 					{categoriesError && (
 						<p className="text-red-400 text-[10px]">

@@ -31,6 +31,7 @@ function App() {
 				<Route path="/signup" element={<RegisterScreen />} />
 				<Route path="/loginphone" element={<LoginWithPhone />} />
 				<Route path="/productscreen" element={<ProductScreen />} />
+				<Route path="/product/:id" element={<ProductByIdScreen />} />
 				<Route path="/account" element={<Account />} />
 				<Route path="/otp" element={<OtpScreen />} />
 				<Route path="/requestaccess" element={<RequestAccess />} />

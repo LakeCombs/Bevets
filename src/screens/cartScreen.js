@@ -8,10 +8,24 @@ import Footer from "../components/footer";
 import { MdDeleteOutline } from "react-icons/md";
 import SearchComponent from "../components/searchComponent";
 import WideButton from "../components/wideButton";
+import { useDispatch, useSelector } from "react-redux";
+import { RemoveFromCartAction } from "../redux/actions/product.action";
 
 const CartScreen = () => {
 	const navigate = useNavigate();
-	const cart = [1, 2];
+	const dispatch = useDispatch();
+
+	const { cartItems } = useSelector((state) => state.cart);
+
+	const totalPrice = () => {
+		let price = 0;
+		for (let i = 0; i < cartItems?.length; i++) {
+			console.log("the cart item is ", cartItems[i]);
+			price = price + cartItems[i]?.item?.price;
+		}
+		return price;
+	};
+
 	return (
 		<div className="min-h-screen md:bg-background bg-primary-blue">
 			<Header />
@@ -19,7 +33,7 @@ const CartScreen = () => {
 				<SearchComponent />
 			</div>
 			<ScreenWithPadding>
-				{!cart?.length ? (
+				{!cartItems?.length ? (
 					<div className="w-full bg-white shadow-md rounded-2xl pt-[15px] pb-[15px]">
 						<h2 className="font-bold ml-[15px] text-[12px] md:text-[15px] mb-[10px]">
 							CART(0)
@@ -43,69 +57,87 @@ const CartScreen = () => {
 								CART
 							</h2>
 							<hr />
-
 							{/* Cart Object */}
 
-							<div className="flex justify-between px-[20px] py-[20px] border-y">
-								<div className="w-full ">
-									<div className="flex flex-row justify-start">
-										<img className="h-[50px] w-[50px]" alt={""} src={""} />
+							{cartItems?.map(({ item, qty }) => {
+								return (
+									<div className="flex justify-between px-[20px] py-[20px] border-y">
+										<div className="w-full ">
+											<div className="flex flex-row justify-start">
+												<img
+													className="h-[50px] w-[50px]"
+													alt={""}
+													// src={item?.photos[0] || ""}
+													src={""}
+												/>
 
-										<div className="ml-[10px]">
-											<h3>Baileys Original Irish Cream</h3>
-											<p className="flex md:hidden text-app-orange">
-												GhC 100.00
-											</p>
-											<p className="text-[#00000066] text-[10px]">
-												Enter Description
-											</p>
-											<p className="text-[#00000066] text-[10px]">
-												Enter Description
-											</p>
+												<div className="ml-[10px]">
+													<h3>{item?.name}</h3>
+													<p className="flex md:hidden text-app-orange">
+														GhC {item?.price}
+													</p>
+													<p className="text-[#00000066] text-[10px]">
+														{item?.description}
+													</p>
+													{/* <p className="text-[#00000066] text-[10px]">
+														Enter Description
+													</p> */}
+												</div>
+											</div>
+											<div className="flex justify-between w-full">
+												<p
+													className="text-app-orange flex flex-row mt-[15px] hover:cursor-pointer"
+													onClick={() => {
+														console.log("deleting item from cart");
+													}}>
+													<MdDeleteOutline className="mr-[3px] text-[18px]" />
+													REMOVE
+												</p>
+												<div className=" md:hidden flex justify-end w-auto mt-[20px]">
+													<span
+														className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
+														onClick={() => {
+															dispatch(RemoveFromCartAction(item));
+														}}>
+														-
+													</span>{" "}
+													<span className="mx-[10px]">{qty}</span>
+													<span
+														className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
+														onClick={() => {
+															dispatch(RemoveFromCartAction(item));
+														}}>
+														+
+													</span>
+												</div>
+											</div>
+										</div>
+
+										<div className="flex-col hidden md:flex">
+											<div className="flex flex-col items-end justify-end">
+												<h1 className="font-semibold">GHc {item?.price}</h1>
+												{/* <p>
+													<span className="font-light mr-[3px]">
+														GHc {item?.price}
+													</span>
+													<span className="bg-app-orange-pale py-[3px] px-[4px] text-[10px] rounded-lg text-app-orange">
+														-{item?.discount}%
+													</span>
+												</p> */}
+											</div>
+											<div className="flex justify-end w-auto mt-[20px]">
+												<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
+													-
+												</span>{" "}
+												<span className="mx-[10px]">{qty}</span>
+												<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
+													+
+												</span>
+											</div>
 										</div>
 									</div>
-									<div className="flex justify-between w-full">
-										<p
-											className="text-app-orange flex flex-row mt-[15px] hover:cursor-pointer"
-											onClick={() => {
-												console.log("deleting item from cart");
-											}}>
-											<MdDeleteOutline className="mr-[3px] text-[18px]" />
-											REMOVE
-										</p>
-										<div className=" md:hidden flex justify-end w-auto mt-[20px]">
-											<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
-												-
-											</span>{" "}
-											<span className="mx-[10px]">1</span>
-											<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
-												+
-											</span>
-										</div>
-									</div>
-								</div>
-
-								<div className="flex-col hidden md:flex">
-									<div className="flex flex-col items-end justify-end">
-										<h1 className="font-semibold">GHc 100.00</h1>
-										<p>
-											<span className="font-light mr-[3px]">GHc 110.00 </span>
-											<span className="bg-app-orange-pale py-[3px] px-[4px] text-[10px] rounded-lg text-app-orange">
-												-10%
-											</span>
-										</p>
-									</div>
-									<div className="flex justify-end w-auto mt-[20px]">
-										<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
-											-
-										</span>{" "}
-										<span className="mx-[10px]">1</span>
-										<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
-											+
-										</span>
-									</div>
-								</div>
-							</div>
+								);
+							})}
 						</div>
 						<div className="md:w-2/5 w-full flex flex-col bg-white rounded-lg md:ml-[10px] pb-[20px]">
 							<h2 className="font-bold ml-[15px] text-[12px] md:text-[15px] my-[10px]">
@@ -120,7 +152,7 @@ const CartScreen = () => {
 										Delivery fees not included yet
 									</p>
 								</div>
-								<h1 className="font-bold text-[15px]">GHc 200</h1>
+								<h1 className="font-bold text-[15px]">GHc {totalPrice()}</h1>
 							</div>
 							<hr className="hidden md:flex" />
 

@@ -18,9 +18,13 @@ const LoginScreen = () => {
 		dispatch(userLoginAction({ email, password }));
 	};
 
-	// useEffect(() => {
-	// 	if (userInfo?._id) navigate("/");
-	// }, [navigate, userInfo?._id]);
+	useEffect(() => {
+		if (userInfo?.role === "admin") {
+			navigate("/dashboard");
+		} else {
+			navigate("/");
+		}
+	}, [navigate, userInfo]);
 	return (
 		<div className="flex pt-[50px] flex-col bg-background h-screen items-center w-full">
 			<img
@@ -64,6 +68,7 @@ const LoginScreen = () => {
 					type="submit"
 					onClick={login}>
 					Login
+					{loading && <Spin />}
 				</button>
 			</form>
 

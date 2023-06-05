@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsPencil } from "react-icons/bs";
 import { MdDelete, MdOutlineDeleteOutline } from "react-icons/md";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import { message } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,9 +12,12 @@ import {
 	resetCreateProductAction,
 	DeleteProductAction
 } from "../redux/actions/product.action";
-import { allCategoryAction } from "../redux/actions/category.action";
+import {
+	allCategoryAction,
+	createCategoryAction,
+	resetcreateCategoryAction
+} from "../redux/actions/category.action";
 import { api } from "../utils/apiInstance";
-import axios from "axios";
 import {
 	deleteImageByfileNameAction,
 	resetDeleteImageAction,
@@ -51,6 +53,11 @@ const DashboardProductPage = () => {
 		loading: deletedImageLoading,
 		error: deleteImageError
 	} = useSelector((state) => state.deleteImage);
+	const {
+		category: createCat,
+		loading: loadingCategory,
+		error: errorCategory
+	} = useSelector((state) => state.createCategory);
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState("all");
 	const [name, setName] = useState("");
@@ -106,17 +113,27 @@ const DashboardProductPage = () => {
 		);
 	};
 
-	console.log("the product to be created is ", {
-		name,
-		category: cat,
-		price,
-		expire,
-		description,
-		images,
-		quantity,
-		code: itemNumber,
-		brand
-	});
+	const CreateNewCategory = () => {
+		if (!name) {
+			return messageApi.warning("Please add a category name");
+		}
+
+		if (!description) {
+			return messageApi.warning("Please add a category description");
+		}
+
+		if (!images) {
+			return messageApi.warning("Please add a category image");
+		}
+
+		dispatch(
+			createCategoryAction({
+				name,
+				desc: description,
+				image: images[0]?.image
+			})
+		);
+	};
 
 	const handleFileChange = async (e) => {
 		const fileObj = e.target.files && e.target.files[0];
@@ -129,8 +146,7 @@ const DashboardProductPage = () => {
 		try {
 			setUploadImageLoading(true);
 			const res = await api.post("/images", formData);
-			console.log("Response:", res.data);
-			setImages([...images, res.data]);
+			setImages([...images, res.data?.image]);
 			setUploadImageLoading(false);
 			dispatch(resetDeleteImageAction());
 			// Handle the response from the API as needed
@@ -141,11 +157,12 @@ const DashboardProductPage = () => {
 		}
 	};
 
-	const CategoryCard = ({ count, name, src, onClick }) => {
+	const CategoryCard = ({ count, name, src, onClick, key }) => {
 		return (
 			<div
 				className="rounded-xl shadow-md bg-white p-[20px] w-[250px]  h-[150px] hover:cursor-pointer "
-				onClick={onclick}>
+				onClick={onclick}
+				key={key}>
 				<img alt="" src={src} className="h-[70px] w-[70px] mb-[15px]" />
 
 				<p className="font-bold text-[15px] text-black">{name}</p>
@@ -167,7 +184,7 @@ const DashboardProductPage = () => {
 		},
 		{
 			title: "Image",
-			dataIndex: "Image"
+			dataIndex: "image"
 		},
 		{
 			title: "Name",
@@ -205,7 +222,7 @@ const DashboardProductPage = () => {
 				<img
 					alt=""
 					className="h-[50px] w-[50px]"
-					src={products[index]?.images[0]?.image}
+					src={products[index]?.images[0]}
 				/>
 			),
 			price: products[index]?.price,
@@ -231,28 +248,33 @@ const DashboardProductPage = () => {
 		});
 	}
 
-	console.log("the product is ", product);
 	useEffect(() => {
 		dispatch(getAllProductAction());
 		dispatch(allCategoryAction());
 	}, [dispatch, deletedProduct?._id]);
 
 	useEffect(() => {
+		if (createCat?._id) {
+			// dispatch(allCategoryAction());
+			messageApi.success("a new category have been created");
+		}
+		// dispatch(resetcreateCategoryAction());
+	}, [createCat, dispatch, messageApi]);
+
+	useEffect(() => {
 		if (deletedImage?.image) {
-			setImages([
-				...images.filter((image) => image.image === deletedImage?.image)
-			]);
+			setImages([...images.filter((image) => image === deletedImage)]);
 		}
 	}, [deletedImage, images]);
 
 	useEffect(() => {
 		if (product?._id) {
-			setPage("all");
 			dispatch(getAllProductAction());
 			messageApi.success("a new product have been created");
+			dispatch(resetCreateProductAction());
 		}
-		dispatch(resetCreateProductAction());
-	}, [dispatch]);
+		setPage("all");
+	}, [dispatch, messageApi, product]);
 
 	return (
 		<div className="rounded-lg p-2">
@@ -282,7 +304,7 @@ const DashboardProductPage = () => {
 
 				<div className="flex flex-row ">
 					<button
-						className="bg-bright-blue w-[100px] rounded-xl  py-[8px] text-white"
+						className="bg-bright-blue w-auto px-[3px] rounded-xl  py-[8px] text-white"
 						onClick={() => {
 							if (page === "categories") {
 								return setPage("createCategory");
@@ -291,9 +313,6 @@ const DashboardProductPage = () => {
 							}
 						}}>
 						{page !== "categories" ? "+ Add New" : "+ Add New Categories"}
-					</button>
-					<button className="bg-red-400 w-[100px] rounded-xl text-white ml-[4px] flex flex-row justify-center items-center">
-						<RiDeleteBin5Line /> <span className="ml-[3px]">Delete</span>
 					</button>
 
 					<Input
@@ -322,14 +341,16 @@ const DashboardProductPage = () => {
 				</div>
 			)}{" "}
 			{page === "categories" && (
-				<div className="  flex-wrap justify-start mt-[10px] grid grid-cols-4 gap-3">
+				<div className="  flex-wrap justify-start mt-[20px] md:grid grid-cols-4 gap-4 flex">
 					{categories?.map((cat) => {
-						<CategoryCard
-							name={cat?.name}
-							key={cat?._id}
-							count={cat?.description?.splice(0, 20)}
-							src={cat?.image[0]}
-						/>;
+						return (
+							<CategoryCard
+								name={cat?.name}
+								key={cat?._id}
+								count={cat?.desc}
+								src={cat?.image}
+							/>
+						);
 					})}
 				</div>
 			)}
@@ -358,20 +379,20 @@ const DashboardProductPage = () => {
 						{images?.map((image) => {
 							return (
 								<div
-									key={image?._id}
+									key={image}
 									className="bg-background w-full flex flex-row justify-between mb-[15px] px-[5px] items-center">
 									<div className="flex flex-row items-center">
 										<img
 											className="w-[50px] h-[50px] mr-[4px]"
 											alt=""
-											src={image?.image}
+											src={image}
 										/>
 									</div>
 
 									<MdDelete
 										className="text-red-500 text-[20px]"
 										onClick={() => {
-											dispatch(deleteImageByfileNameAction(image?.image));
+											dispatch(deleteImageByfileNameAction(image));
 										}}
 									/>
 								</div>
@@ -473,7 +494,84 @@ const DashboardProductPage = () => {
 					</div>
 				</div>
 			)}
-			{page === "createCategory" && <div>create Category</div>}
+			{page === "createCategory" && (
+				<div className="rounded-lg mt-[10px] bg-white p-[15px] flex flex-row w-full">
+					<div className="w-[45%] mr-[10px] rounded-lg border p-[10px]">
+						<p>
+							Add Image{" "}
+							{uploadImageLoading && (
+								<Spin size={"small"} className="ml-[3px]" />
+							)}
+						</p>
+						<div>
+							<input
+								type="file"
+								className="my-3"
+								ref={inputRef}
+								accept="image/*"
+								onChange={handleFileChange}
+							/>
+
+							<br />
+						</div>
+						<br />
+						{images?.map((image) => {
+							return (
+								<div
+									key={image}
+									className="bg-background w-full flex flex-row justify-between mb-[15px] px-[5px] items-center">
+									<div className="flex flex-row items-center">
+										<img
+											className="w-[50px] h-[50px] mr-[4px]"
+											alt=""
+											src={image}
+										/>
+									</div>
+
+									<MdDelete
+										className="text-red-500 text-[20px]"
+										onClick={() => {
+											dispatch(deleteImageByfileNameAction(image));
+										}}
+									/>
+								</div>
+							);
+						})}
+					</div>
+
+					<div className=" w-[50%] ml-[10px] flex flex-col">
+						<div className=" w-full  p-[20px] rounded-lg border flex flex-col">
+							<label>Category Name</label>
+							<input
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+								className="px-[5px] border rounded-lg outline-none mt-[4px]"
+							/>
+
+							<label className="mt-[15px]">Description</label>
+							<textarea
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								className=" border rounded-lg outline-none mt-[4px]"
+							/>
+						</div>
+
+						{errorCategory && (
+							<p className="my-[3px] text-red-400">{errorCategory}</p>
+						)}
+						<div className="flex justify-end w-full mt-[20px] rounded-lg">
+							{loadingCategory && (
+								<Spin size="small" className="text-white ml-[3px]" />
+							)}
+							<button
+								onClick={CreateNewCategory}
+								className="bg-bright-blue w-auto rounded-md px-[5px] py-[4px] text-white">
+								Create Category
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };

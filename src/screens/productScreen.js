@@ -9,7 +9,6 @@ import { GetProductByCategoryAction } from "../redux/actions/product.action";
 import { useEffect } from "react";
 import { allCategoryAction } from "../redux/actions/category.action";
 import { BsBasket3 } from "react-icons/bs";
-import { CgSpinner } from "react-icons/cg";
 import { MdOutlineError } from "react-icons/md";
 
 const CategoriesScreen = () => {
@@ -95,9 +94,6 @@ const CategoriesScreen = () => {
 							<span>
 								<Spin size="100px" className="text-[100px] text-green-400" />
 							</span>
-							<p className="mt-[20px] text-red-400 font-semibold">
-								Sorry! there are no product in this category at the moment
-							</p>
 						</div>
 					)}
 
@@ -112,16 +108,17 @@ const CategoriesScreen = () => {
 						</div>
 					)}
 
-					{!productsByCategory?.length && (
-						<div className="pt-[50px] flex flex-col justify-center items-center">
-							<span>
-								<BsBasket3 className="text-[100px] text-bright-blue" />
-							</span>
-							<p className="mt-[20px] text-bright-blue font-semibold">
-								Sorry! there are no product in this category at the moment
-							</p>
-						</div>
-					)}
+					{!productsByCategory?.length &&
+						!productByCategoryLoading(
+							<div className="pt-[50px] flex flex-col justify-center items-center">
+								<span>
+									<BsBasket3 className="text-[100px] text-bright-blue" />
+								</span>
+								<p className="mt-[20px] text-bright-blue font-semibold">
+									Sorry! there are no product in this category at the moment
+								</p>
+							</div>
+						)}
 
 					{/* <StandardProductCard
 						addToCart={() => {}}

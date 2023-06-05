@@ -183,7 +183,7 @@ const productByCategorySlice = createSlice({
 		},
 		productByCategorySuccess: (state, { payload }) => {
 			state.loading = false;
-			state.product = payload;
+			state.products = payload;
 			state.error = "";
 		},
 		productByCategoryFailed: (state, { payload }) => {

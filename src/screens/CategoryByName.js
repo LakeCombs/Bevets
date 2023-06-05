@@ -1,26 +1,30 @@
 import React from "react";
 import Header from "../components/header";
+import { Spin } from "antd";
 import ScreenWithPadding from "../components/ScreenWithPadding";
 import StandardProductCard from "../components/standardProductCard";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { GetProductByCategoryAction } from "../redux/actions/product.action";
+import { BsBasket3 } from "react-icons/bs";
+import {
+	GetProductByCategoryAction,
+	AddToCartAction,
+	AddToFavAction
+} from "../redux/actions/product.action";
 
 const CategoryByName = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { name } = useParams();
-	const { _id } = useLocation();
+	const location = useLocation();
+	const { _id, name } = location.state;
 	const { products, loading, error } = useSelector(
 		(state) => state.productByCategory
 	);
 
-	console.log("the _id is ", _id);
-
 	useEffect(() => {
-		dispatch(GetProductByCategoryAction(name));
-	}, [dispatch, name]);
+		dispatch(GetProductByCategoryAction(_id));
+	}, [_id, dispatch]);
 
 	return (
 		<div className="bg-background">
@@ -29,94 +33,52 @@ const CategoryByName = () => {
 				<div className=" min-h-screen">
 					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full">
 						<h3 className="font-bold family-poppins">
-							Home > Categories > {name}
+							Home > Categories > {name} {loading && <Spin />}
 						</h3>
 					</div>
 
 					<div className="mt-[15px] font-bold family-poppins">
-						<h3>{name}</h3>
+						<h3>
+							{name} {error && <p className="text-red-400"> {error}</p>}
+						</h3>
 						<hr />
 					</div>
 
+					{!products?.length && !loading && (
+						<div className="pt-[50px] flex flex-col justify-center items-center">
+							<span>
+								<BsBasket3 className="text-[100px] text-bright-blue" />
+							</span>
+							<p className="mt-[20px] text-bright-blue font-semibold">
+								Sorry! there are no product in this category at the moment
+							</p>
+						</div>
+					)}
+
 					<div className="flex justify-around flex-wrap">
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60"
-							}
-							name={"Strawberry Drink"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-							onClick={() => navigate("/categories/drinkl")}
-						/>
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1551782450-3939704166fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Savanna blue"}
-							price={"200.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1556881286-fc6915169721?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Curt"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1612078902883-77b82ae10aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEwfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Lemon Street Juice"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1498772776855-2248a3e740f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Family ripe"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1576541720773-870ee9c61b6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"orange dry"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1619604395382-2c03dbfbbdf8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Yomata juice"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
+						{products?.map((product) => (
+							<StandardProductCard
+								addToCart={() => {
+									dispatch(AddToCartAction(product));
+								}}
+								addToFav={() => {
+									dispatch(AddToFavAction(product));
+								}}
+								description={""}
+								image={product?.[0]}
+								name={product?.name}
+								price={product?.price}
+								key={product?._id}
+								onClick={() =>
+									navigate(`/product/${product?._id}`, {
+										state: {
+											categoryName: product?.category?.name,
+											categoryId: product?.category?._id
+										}
+									})
+								}
+							/>
+						))}
 					</div>
 				</div>
 			</ScreenWithPadding>
