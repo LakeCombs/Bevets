@@ -21,7 +21,9 @@ const LoginScreen = () => {
 	useEffect(() => {
 		if (userInfo?.role === "admin") {
 			navigate("/dashboard");
-		} else {
+		}
+
+		if (userInfo?._id) {
 			navigate("/");
 		}
 	}, [navigate, userInfo]);
