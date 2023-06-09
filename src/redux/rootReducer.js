@@ -32,6 +32,10 @@ import {
 	getImageByIdReducer,
 	uploadImageReducer
 } from "./reducers/image.slice";
+import {
+	addAddressReducer,
+	removeAddressReducer
+} from "./reducers/addressSlice";
 
 const rootReducer = combineReducers({
 	//user reducers
@@ -65,7 +69,11 @@ const rootReducer = combineReducers({
 	getAllImage: getAllImageReducer,
 	getImageById: getImageByIdReducer,
 	editImage: editImageByIdReducer,
-	deleteImage: deleteImageByIdReducer
+	deleteImage: deleteImageByIdReducer,
+
+	//address reducer
+	addAddress: addAddressReducer,
+	removeAddress: removeAddressReducer
 });
 
 export default rootReducer;

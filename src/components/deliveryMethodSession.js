@@ -4,26 +4,56 @@ import { Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import WideButton from "./wideButton";
+import { AiFillExclamationCircle } from "react-icons/ai";
+import {
+	AddAddressAction,
+	DeleteAddressAction
+} from "../redux/actions/address.action";
+import { useEffect } from "react";
+import { resetAddAddress } from "../redux/reducers/addressSlice";
 
 const DeliveryMethodSession = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { cartItems } = useSelector((state) => state.cart);
 	const { userInfo } = useSelector((state) => state.userLogin);
+	const {
+		address: Addr,
+		loading,
+		error
+	} = useSelector((state) => state.addAddress);
+	const { address: DelAddr } = useSelector((state) => state.removeAddress);
 	const [pickup, setPickup] = useState(false);
 	const [deliveryPrice, setDeiveryPrice] = useState(0);
 	const [editAddress, setEditAddress] = useState(false);
-	const [fullName, setFullName] = useState("");
 	const [address, setAddress] = useState("");
-	const [phone, setPhone] = useState("");
+	const [city, setCity] = useState("");
+	const [state, setState] = useState("");
+	const [zipCode, setZipCode] = useState("");
 
-	const count = () => {
-		let num = 0;
-		for (let index = 0; index < cartItems.length; index++) {
-			num = cartItems[index]?.qty;
-		}
-		return num;
+	const SaveAddress = () => {
+		dispatch(
+			AddAddressAction({
+				address,
+				city,
+				state,
+				zipCode
+			})
+		);
 	};
+
+	const RemoveAddress = (id) => {
+		dispatch(DeleteAddressAction(id));
+	};
+
+	useEffect(() => {
+		setAddress("");
+		setCity("");
+		setState("");
+		setZipCode("");
+		setEditAddress(true);
+		// dispatch(resetAddAddress());
+	}, [Addr, dispatch]);
 
 	return (
 		<div className="flex md:flex-row flex-col justify-between w-full ">
@@ -36,38 +66,53 @@ const DeliveryMethodSession = () => {
 						<h2
 							className="text-bright-blue text-[12px] md:text-[15px] hover:cursor-pointer "
 							onClick={() => {
-								setEditAddress(!editAddress);
+								setEditAddress(false);
 							}}>
-							EDIT
+							{!userInfo?.addressess?.length && editAddress
+								? "Add Address"
+								: ""}
 						</h2>
 					</div>
 					<hr />
 					{editAddress ? (
-						<div className="ml-[15px]">
-							<p className="font-bold mb-[15px] text-[15px] mt-[10px]">
-								{userInfo?.firstname} {userInfo?.lastname}
-							</p>
-							<p className="text-[#00000066] mt-[5px] text-[11px]">
-								House No B13/40, Tantrahills, Greater Accra
-							</p>
+						<>
+							{userInfo?.addresses?.map((address) => {
+								return (
+									<div className="ml-[15px] border-b pb-[10px]">
+										<div className="flex justify-between items-center">
+											<p className="font-bold mb-[15px] text-[15px] mt-[10px]">
+												Address: {address?.address}
+											</p>
+											<span
+												className="text-red-500 font-bold text-[10px] px-[10px] cursor-pointer hover:bg-gray-300"
+												onClick={RemoveAddress(address?._id)}>
+												REMOVE{" "}
+											</span>
+										</div>
+										<p className=" mt-[5px] text-[11px]">
+											City: {address?.city}
+										</p>
 
-							<p className="text-[#00000066] mt-[5px] text-[11px]">
-								GG-738-6606
-							</p>
-							<p className="text-[#00000066] mt-[5px] text-[11px]">
-								+233549831157
-							</p>
-						</div>
+										<p className=" mt-[5px] text-[11px]">
+											State: {address?.state}
+										</p>
+										<p className=" mt-[5px] text-[11px]">
+											ZipCode: {address?.zipCode}
+										</p>
+									</div>
+								);
+							})}
+
+							{!userInfo?.addresses?.length && (
+								<div className="flex flex-row items-center justify-center my-[15px]">
+									<AiFillExclamationCircle className="text-[30px] text-red-400 mr-[5px]" />{" "}
+									<span> No address registered! </span>
+								</div>
+							)}
+						</>
 					) : (
 						<div className="mx-[15px]">
-							<div className="flex flex-col">
-								<label>full name</label>
-								<input
-									value={fullName}
-									onChange={(e) => setFullName(e.target.value)}
-									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
-								/>
-							</div>
+							{error && <p className="text-red-400 my-[3px]">{error}</p>}
 							<div className="flex flex-col">
 								<label>Address</label>
 								<input
@@ -77,10 +122,26 @@ const DeliveryMethodSession = () => {
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label>Contact phone</label>
+								<label>City</label>
 								<input
-									value={phone}
-									onChange={(e) => setPhone(e.target.value)}
+									value={city}
+									onChange={(e) => setCity(e.target.value)}
+									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
+								/>
+							</div>
+							<div className="flex flex-col">
+								<label>State</label>
+								<input
+									value={state}
+									onChange={(e) => setState(e.target.value)}
+									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
+								/>
+							</div>
+							<div className="flex flex-col">
+								<label>Zip Code</label>
+								<input
+									value={zipCode}
+									onChange={(e) => setZipCode(e.target.value)}
 									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
 								/>
 							</div>
@@ -88,7 +149,17 @@ const DeliveryMethodSession = () => {
 							<WideButton
 								style="bg-bright-blue "
 								text={"Save Address"}
-								onClick={() => {}}
+								onClick={SaveAddress}
+								key={"Save Address"}
+							/>
+
+							<br />
+							<WideButton
+								style="bg-red-500 "
+								text={"Cancel"}
+								onClick={() => {
+									setEditAddress(true);
+								}}
 								key={"Save Address"}
 							/>
 						</div>
@@ -189,7 +260,11 @@ const DeliveryMethodSession = () => {
 			<div className="md:w-4/12 w-full bg-white rounded-2xl shadow-md p-[10px] md:mt-0 mt-[20px] flex flex-col">
 				{" "}
 				<h2 className="font-bold ml-[15px] text-[12px] md:text-[15px] my-[5px] ">
-					YOUR ORDER ({count()}) items
+					YOUR ORDER (
+					{cartItems?.reduce((accumulator, currentValue) => {
+						return accumulator + currentValue?.qty;
+					}, 0)}
+					) items
 				</h2>
 				<hr />
 				{cartItems?.map((product) => {
