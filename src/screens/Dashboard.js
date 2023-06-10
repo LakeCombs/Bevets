@@ -14,8 +14,13 @@ import DashboardCustomerPage from "../components/DashboardCustomerPage";
 import DashboardMessagePage from "../components/DashboardMessagePage";
 import DashboardReportPage from "../components/DashboardReportPage";
 import DashboardSettingsPage from "../components/DashboardSettingsPage";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+	const navigate = useNavigate();
+	const { userInfo } = useSelector((state) => state.userLogin);
 	const [page, setPage] = useState("dashboard");
 	const Left = ({ icon, text, onClick }) => {
 		return (
@@ -27,6 +32,12 @@ const Dashboard = () => {
 			</div>
 		);
 	};
+
+	useEffect(() => {
+		if (userInfo?.role !== "admin") {
+			window.history.back();
+		}
+	}, []);
 	return (
 		<div className="bg-primary-blue min-h-screen">
 			<DashboardHeader />

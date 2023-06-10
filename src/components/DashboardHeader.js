@@ -3,9 +3,11 @@ import React from "react";
 import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { IoMdNotifications } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const DashboardHeader = () => {
 	const [show, setShow] = useState(true);
+	const { userInfo } = useSelector((state) => state.userLogin);
 	return (
 		<div className="w-full py-[10px] px-[20px] z-10 top-0 fixed bg-white flex justify-between items-center">
 			<img src={"/assets/logo.png"} alt="logo" />
@@ -19,14 +21,11 @@ const DashboardHeader = () => {
 					<IoMdNotifications className="text-[20px]" />
 				</Badge>
 				<div className="flex flex-row ml-[5px] items-start">
-					<Avatar
-						size={"20px"}
-						src={
-							"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCdR4OpNgJzcRw8Ky759Cx9ocLScZE_a-fUg&usqp=CAU"
-						}
-					/>
+					<Avatar size={"20px"} src={userInfo?.profile_picture} />
 					<div className="ml-[5px]">
-						<p className="font-bold text-[12px]">Daniel Cooper</p>
+						<p className="font-bold text-[12px]">
+							{userInfo?.firstname} {userInfo?.lastname}
+						</p>
 						<h6 className="text-text-gray text-[10px] mt-[-5px]">Admin</h6>
 					</div>
 				</div>

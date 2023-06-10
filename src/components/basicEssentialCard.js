@@ -1,5 +1,7 @@
 import React from "react";
 import { BsFillSuitHeartFill } from "react-icons/bs";
+import { MdFavorite } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const BasicEssentialCard = ({
 	name,
@@ -9,15 +11,22 @@ const BasicEssentialCard = ({
 	addToCart,
 	addToFav,
 	onClick,
-	key
+	_id
 }) => {
+	const { favorite } = useSelector((state) => state.cart);
+
 	return (
 		<div
 			className="flex sm:flex-row rounded-lg sm:rounded-3xl flex-col sm:m-[16px]  items-center sm:justify-between bg-bright-blue font-mont sm:h-[180px] h-[200px] w-[130px] sm:w-[270px] m-[5px]  px-[10px] sm:py-[5px]   sm:mt-[10px] "
-			key={key}>
+			key={_id}>
 			<span onClick={addToFav} className="flex sm:hidden self-end my-[3px] ">
-				<BsFillSuitHeartFill className=" outline-white text-white text-[15px] " />
+				{favorite?.find((prod) => prod?._id === _id) ? (
+					<MdFavorite className="outline-orange text-orange-400 text-white text-[15px] " />
+				) : (
+					<BsFillSuitHeartFill className=" outline-white text-white text-[15px] " />
+				)}
 			</span>
+
 			<img
 				className="sm:h-[140px] sm:w-[120px] h-[120px] w-[120px]  object-cover"
 				src={image || "/public/assets/logo.png"}

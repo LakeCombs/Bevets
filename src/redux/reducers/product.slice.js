@@ -225,15 +225,12 @@ const cartSlice = createSlice({
 		},
 
 		removeFromCart: (state, { payload }) => {
-			const RemainingItem = state.items.filter(
-				(item) => item?.item?._id !== payload?._id
-			);
-			state.items = RemainingItem;
-			Cookie.set("cartItems", JSON.stringify(RemainingItem));
+			console.log("the payload is ", payload);
+			state.cartItems = payload;
 		},
 
 		addToFav: (state, { payload }) => {
-			state.fav = payload;
+			state.favorite = payload;
 		}
 	}
 });

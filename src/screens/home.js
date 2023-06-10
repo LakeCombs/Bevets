@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { allCategoryAction } from "../redux/actions/category.action";
 import {
 	AddToCartAction,
+	AddToFavAction,
 	getAllProductAction
 } from "../redux/actions/product.action";
 
@@ -188,8 +189,10 @@ const HomeScreen = () => {
 										image={product?.images[0]}
 										price={`Ȼ ${product?.price}`}
 										name={product?.name}
-										addToFav={() => {}}
-										key={product?._id}
+										addToFav={() => {
+											dispatch(AddToFavAction(product));
+										}}
+										_id={product?._id}
 									/>
 								);
 							})}
@@ -208,12 +211,14 @@ const HomeScreen = () => {
 											addToCart={() => {
 												dispatch(AddToCartAction(product));
 											}}
+											addToFav={() => {
+												dispatch(AddToFavAction(product));
+											}}
 											description={product?.description}
 											image={product?.images[0]}
 											price={`Ȼ ${product?.price}`}
 											name={product?.name}
-											addToFav={() => {}}
-											key={product?._id}
+											_id={product?._id}
 										/>
 									);
 								})}
@@ -232,12 +237,14 @@ const HomeScreen = () => {
 										addToCart={() => {
 											dispatch(AddToCartAction(product));
 										}}
+										addToFav={() => {
+											dispatch(AddToFavAction(product));
+										}}
 										description={product?.description}
 										image={product?.images[0]}
 										price={`Ȼ ${product?.price}`}
 										name={product?.name}
-										addToFav={() => {}}
-										key={product?._id}
+										_id={product?._id}
 									/>
 								);
 							})}

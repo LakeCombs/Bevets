@@ -6,12 +6,15 @@ import { BsFillCollectionFill } from "react-icons/bs";
 import { MdFavorite } from "react-icons/md";
 import { Dropdown, Badge } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUserAction } from "../redux/actions/user.action";
 
 const Header = () => {
 	const [search, setSearch] = useState("");
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const { cartItems } = useSelector((state) => state.cart);
+	const { userInfo } = useSelector((state) => state.userLogin);
 
 	const cartCount = () => {
 		let qty = 0;
@@ -28,16 +31,31 @@ const Header = () => {
 	const items = [
 		{
 			label: (
-				<p
-					className="items-center w-full md:flex hover:cursor-pointer "
-					onClick={() => {
-						navigate("/login");
-					}}>
-					<span className="mr-2 text-black">
-						<FaUserAlt />
-					</span>
-					My Account
-				</p>
+				<>
+					{userInfo?._id ? (
+						<p
+							className="items-center w-full md:flex hover:cursor-pointer "
+							onClick={() => {
+								dispatch(logoutUserAction());
+							}}>
+							<span className="mr-2 text-black">
+								<FaUserAlt />
+							</span>
+							Logout
+						</p>
+					) : (
+						<p
+							className="items-center w-full md:flex hover:cursor-pointer "
+							onClick={() => {
+								navigate("/login");
+							}}>
+							<span className="mr-2 text-black">
+								<FaUserAlt />
+							</span>
+							My Account
+						</p>
+					)}
+				</>
 			),
 			key: "0"
 		},

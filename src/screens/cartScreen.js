@@ -9,22 +9,16 @@ import { MdDeleteOutline } from "react-icons/md";
 import SearchComponent from "../components/searchComponent";
 import WideButton from "../components/wideButton";
 import { useDispatch, useSelector } from "react-redux";
-import { RemoveFromCartAction } from "../redux/actions/product.action";
+import {
+	AddToCartAction,
+	RemoveFromCartAction
+} from "../redux/actions/product.action";
 
 const CartScreen = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
+	const { userInfo } = useSelector((state) => state.userLogin);
 	const { cartItems } = useSelector((state) => state.cart);
-
-	const totalPrice = () => {
-		let price = 0;
-		for (let i = 0; i < cartItems?.length; i++) {
-			console.log("the cart item is ", cartItems[i]);
-			price = price + cartItems[i]?.item?.price;
-		}
-		return price;
-	};
 
 	return (
 		<div className="min-h-screen md:bg-background bg-primary-blue">
@@ -61,13 +55,15 @@ const CartScreen = () => {
 
 							{cartItems?.map(({ item, qty }) => {
 								return (
-									<div className="flex justify-between px-[20px] py-[20px] border-y">
+									<div
+										className="flex justify-between px-[20px] py-[20px] border-y"
+										key={item?._id}>
 										<div className="w-full ">
 											<div className="flex flex-row justify-start">
 												<img
 													className="h-[50px] w-[50px]"
 													alt={""}
-													// src={item?.photos[0] || ""}
+													src={(item?.photos && item?.photos[0]) || ""}
 													src={""}
 												/>
 
@@ -88,7 +84,7 @@ const CartScreen = () => {
 												<p
 													className="text-app-orange flex flex-row mt-[15px] hover:cursor-pointer"
 													onClick={() => {
-														console.log("deleting item from cart");
+														dispatch(RemoveFromCartAction(item));
 													}}>
 													<MdDeleteOutline className="mr-[3px] text-[18px]" />
 													REMOVE
@@ -96,16 +92,14 @@ const CartScreen = () => {
 												<div className=" md:hidden flex justify-end w-auto mt-[20px]">
 													<span
 														className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
-														onClick={() => {
-															dispatch(RemoveFromCartAction(item));
-														}}>
+														onClick={() => {}}>
 														-
 													</span>{" "}
 													<span className="mx-[10px]">{qty}</span>
 													<span
 														className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
 														onClick={() => {
-															dispatch(RemoveFromCartAction(item));
+															dispatch(AddToCartAction(item));
 														}}>
 														+
 													</span>
@@ -126,11 +120,19 @@ const CartScreen = () => {
 												</p> */}
 											</div>
 											<div className="flex justify-end w-auto mt-[20px]">
-												<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
+												<span
+													className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
+													onClick={() => {
+														// dispatch(RemoveFromCartAction(item));
+													}}>
 													-
 												</span>{" "}
 												<span className="mx-[10px]">{qty}</span>
-												<span className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale">
+												<span
+													className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
+													onClick={() => {
+														dispatch(AddToCartAction(item));
+													}}>
 													+
 												</span>
 											</div>
@@ -152,14 +154,25 @@ const CartScreen = () => {
 										Delivery fees not included yet
 									</p>
 								</div>
-								<h1 className="font-bold text-[15px]">GHc {totalPrice()}</h1>
+								<h1 className="font-bold text-[15px]">
+									GHc{" "}
+									{cartItems?.reduce((accumulator, currentValue) => {
+										return (
+											accumulator + currentValue?.item?.price * currentValue.qty
+										);
+									}, 0)}
+								</h1>
 							</div>
 							<hr className="hidden md:flex" />
 
 							<button
 								className=" md:flex hidden w-[50%] justify-center align-center rounded-lg bg-bright-blue py-[5px] text-white font-semibold  mt-[20px] self-center hover:shadow-md "
 								onClick={() => {
-									navigate("/delivery");
+									if (!userInfo?._id) {
+										navigate("/login");
+									} else {
+										navigate("/delivery");
+									}
 								}}>
 								CHECKOUT
 							</button>

@@ -152,9 +152,28 @@ export const AddToCartAction = (prod) => (dispatch) => {
 };
 
 export const AddToFavAction = (prod) => (dispatch) => {
-	dispatch(addToFav(prod));
+	const favorite = Cookie.get("favorite")
+		? JSON.parse(Cookie.get("favorite"))
+		: [];
+
+	const exist = favorite?.find((item) => item?._id === prod?._id);
+	const setFav = exist
+		? [...favorite]
+		: prod?._id
+		? [...favorite, prod]
+		: [...favorite];
+
+	Cookie.set("favorite", JSON.stringify(setFav));
+	dispatch(addToFav(setFav));
 };
 
 export const RemoveFromCartAction = (prod) => (dispatch) => {
-	dispatch(removeFromCart(prod));
+	const cart = Cookie.get("cartItems")
+		? JSON.parse(Cookie.get("cartItems"))
+		: [];
+
+	const itemLeft = cart?.filter((item) => item?.item?._id !== prod?._id);
+
+	Cookie.set("cartItems", JSON.stringify(itemLeft));
+	dispatch(removeFromCart(itemLeft));
 };

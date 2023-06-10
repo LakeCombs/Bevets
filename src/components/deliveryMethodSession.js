@@ -11,10 +11,12 @@ import {
 } from "../redux/actions/address.action";
 import { useEffect } from "react";
 import { resetAddAddress } from "../redux/reducers/addressSlice";
+import { current } from "@reduxjs/toolkit";
 
 const DeliveryMethodSession = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [deliveryFee, setDeliveryFee] = useState(0);
 	const { cartItems } = useSelector((state) => state.cart);
 	const { userInfo } = useSelector((state) => state.userLogin);
 	const {
@@ -78,16 +80,25 @@ const DeliveryMethodSession = () => {
 						<>
 							{userInfo?.addresses?.map((address) => {
 								return (
-									<div className="ml-[15px] border-b pb-[10px]">
-										<div className="flex justify-between items-center">
+									<div
+										key={address?._id}
+										className="ml-[15px] border-b pb-[10px]">
+										<div className="flex justify-between items-center mb-[-20px]">
 											<p className="font-bold mb-[15px] text-[15px] mt-[10px]">
 												Address: {address?.address}
 											</p>
-											<span
-												className="text-red-500 font-bold text-[10px] px-[10px] cursor-pointer hover:bg-gray-300"
-												onClick={RemoveAddress(address?._id)}>
-												REMOVE{" "}
-											</span>
+											<div className="flex h-[60px] pt-[10px] flex-col justify-between">
+												<span
+													className="text-green-500 font-bold text-[10px] px-[10px] cursor-pointer hover:bg-gray-300"
+													onClick={() => RemoveAddress(address?._id)}>
+													SELECT
+												</span>
+												<span
+													className="text-red-500 font-bold text-[10px] px-[10px] cursor-pointer hover:bg-gray-300"
+													onClick={() => RemoveAddress(address?._id)}>
+													REMOVE{" "}
+												</span>
+											</div>
 										</div>
 										<p className=" mt-[5px] text-[11px]">
 											City: {address?.city}
@@ -146,11 +157,11 @@ const DeliveryMethodSession = () => {
 								/>
 							</div>
 							<br />
+
 							<WideButton
 								style="bg-bright-blue "
 								text={"Save Address"}
 								onClick={SaveAddress}
-								key={"Save Address"}
 							/>
 
 							<br />
@@ -160,7 +171,6 @@ const DeliveryMethodSession = () => {
 								onClick={() => {
 									setEditAddress(true);
 								}}
-								key={"Save Address"}
 							/>
 						</div>
 					)}
@@ -227,23 +237,39 @@ const DeliveryMethodSession = () => {
 						</div>
 						<div className="flex w-full justify-between mt-[15px]">
 							<p>Subtotal</p>
-							<p>GHC 100.00</p>
+							<p>
+								GHC
+								{cartItems?.reduce((accumulator, currectValue) => {
+									return (
+										accumulator + currectValue?.item?.price * currectValue?.qty
+									);
+								}, 0)}
+							</p>
 						</div>
 						<div className="flex w-full justify-between my-[5px]">
 							<p>Delivery Fee</p>
-							<p className="font-semibold">GHC 100.00</p>
+							<p className="font-semibold">GHC {deliveryFee}</p>
 						</div>
-						<div className="flex w-full justify-between">
+						{/* <div className="flex w-full justify-between">
 							<p>Discount</p>
 							<p className="text-bright-blue font-bold">GHC 100.00</p>
-						</div>
+						</div> */}
 					</div>
 
 					<hr className="my-[10px] mt-[-20px]" />
 					<div className="flex px-[30px] w-full flex-col ">
 						<div className="flex w-full justify-between">
 							<p className="font-bold">Total</p>
-							<p className="text-app-orange font-bold">GHC 100.00</p>
+							<p className="text-app-orange font-bold">
+								GHC
+								{cartItems?.reduce((accumulator, currectValue) => {
+									return (
+										accumulator +
+										currectValue?.item?.price * currectValue?.qty +
+										deliveryFee
+									);
+								}, 0)}
+							</p>
 						</div>
 					</div>
 
@@ -295,7 +321,9 @@ const DeliveryMethodSession = () => {
 					<p>
 						GHC{" "}
 						{cartItems?.reduce((accumulator, currectValue) => {
-							return accumulator + currectValue?.item?.price;
+							return (
+								accumulator + currectValue?.item?.price * currectValue?.qty
+							);
 						}, 0)}
 					</p>
 				</div>
@@ -312,8 +340,10 @@ const DeliveryMethodSession = () => {
 					<p className="font-bold">Total</p>
 					<p className="text-app-orange font-bold">
 						GHC{" "}
-						{cartItems?.reduce((accumulator, currentValue) => {
-							return accumulator + currentValue?.item?.price;
+						{cartItems?.reduce((accumulator, currectValue) => {
+							return (
+								accumulator + currectValue?.item?.price * currectValue?.qty
+							);
 						}, 0)}
 					</p>
 				</div>

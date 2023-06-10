@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Input, Spin } from "antd";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoginAction } from "../redux/actions/user.action";
 import { useEffect } from "react";
@@ -24,7 +24,7 @@ const LoginScreen = () => {
 		}
 
 		if (userInfo?._id) {
-			navigate("/");
+			navigate("/") || redirect(-1);
 		}
 	}, [navigate, userInfo]);
 	return (

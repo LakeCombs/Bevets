@@ -255,10 +255,11 @@ const DashboardProductPage = () => {
 
 	useEffect(() => {
 		if (createCat?._id) {
-			// dispatch(allCategoryAction());
+			dispatch(allCategoryAction());
 			messageApi.success("a new category have been created");
+			setPage("categories");
+			dispatch(resetcreateCategoryAction());
 		}
-		// dispatch(resetcreateCategoryAction());
 	}, [createCat, dispatch, messageApi]);
 
 	useEffect(() => {
