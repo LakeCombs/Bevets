@@ -28,6 +28,8 @@ const ProductByIdScreen = () => {
 	} = useSelector((state) => state.productByCategory);
 	const { categoryName, categoryId } = location.state;
 
+	console.log("the product is ", product);
+
 	useEffect(() => {
 		dispatch(getProductByIdAction(id));
 		dispatch(GetProductByCategoryAction(categoryId));
@@ -47,8 +49,13 @@ const ProductByIdScreen = () => {
 					<div className="mt-[20px] w-full flex justify-between flex-col md:flex-row">
 						<div className="md:w-3/5 w-full md:h-auto h-[300px]  mr-[40px] ">
 							<Carousel
-								data={product?.images}
-								time={2000}
+								data={product?.images?.map((image) => {
+									return {
+										image: image,
+										caption: "image"
+									};
+								})}
+								time={1000}
 								width="850px"
 								height="500px"
 								// captionStyle={captionStyle}
@@ -72,12 +79,12 @@ const ProductByIdScreen = () => {
 								}}
 							/>
 
-							<img
-								// src={product?.images[0]}
+							{/* <img
+								src={product?.images[0]}
 								src={""}
 								className="w-full h-full object-cover bg-green-4000"
 								alt="img"
-							/>
+							/> */}
 						</div>
 						<div className="md:w-2/5 w-full md:mt-0 mt-[20px] h-auto flex justify-start flex-col">
 							<h3 className="font-semibold  text-[15px]"> {product?.name}</h3>

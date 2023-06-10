@@ -19,6 +19,7 @@ import {
 	productByCategoryFailed,
 	productByCategoryRequest,
 	productByCategorySuccess,
+	reduceItemInCart,
 	removeFromCart,
 	resetCreateProduct,
 	resetDeleteProduct,
@@ -176,4 +177,29 @@ export const RemoveFromCartAction = (prod) => (dispatch) => {
 
 	Cookie.set("cartItems", JSON.stringify(itemLeft));
 	dispatch(removeFromCart(itemLeft));
+};
+
+export const ReductItemInCartAction = (prod) => (dispatch) => {
+	const cart = Cookie.get("cartItems")
+		? JSON.parse(Cookie.get("cartItems"))
+		: [];
+
+	const itemExist = cart?.find((item) => item?.item?._id === prod?._id);
+
+	const items = itemExist
+		? cart?.map((item) => {
+				if (item?.qty === 1) {
+					return cart?.filter((item) => item?.item?._id !== prod?._id);
+				} else if (item?.qty > 1) {
+					return { ...item, qty: item?.qty - 1 };
+				} else {
+					return {
+						...item
+					};
+				}
+		  })
+		: cart?.filter((item) => item?.item?._id === prod?._id);
+
+	Cookie.set("cartItems", JSON.stringify(items));
+	dispatch(reduceItemInCart(items));
 };

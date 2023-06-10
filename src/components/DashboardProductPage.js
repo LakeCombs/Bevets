@@ -273,8 +273,8 @@ const DashboardProductPage = () => {
 			dispatch(getAllProductAction());
 			messageApi.success("a new product have been created");
 			dispatch(resetCreateProductAction());
+			setPage("all");
 		}
-		setPage("all");
 	}, [dispatch, messageApi, product]);
 
 	return (

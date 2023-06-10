@@ -11,6 +11,7 @@ import WideButton from "../components/wideButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	AddToCartAction,
+	ReductItemInCartAction,
 	RemoveFromCartAction
 } from "../redux/actions/product.action";
 
@@ -123,7 +124,7 @@ const CartScreen = () => {
 												<span
 													className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
 													onClick={() => {
-														// dispatch(RemoveFromCartAction(item));
+														dispatch(ReductItemInCartAction(item));
 													}}>
 													-
 												</span>{" "}

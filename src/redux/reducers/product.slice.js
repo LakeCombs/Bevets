@@ -225,7 +225,10 @@ const cartSlice = createSlice({
 		},
 
 		removeFromCart: (state, { payload }) => {
-			console.log("the payload is ", payload);
+			state.cartItems = payload;
+		},
+
+		reduceItemInCart: (state, { payload }) => {
 			state.cartItems = payload;
 		},
 
@@ -235,6 +238,11 @@ const cartSlice = createSlice({
 	}
 });
 
-export const { addToCart, addToFav, removeFromCart, setCart } =
-	cartSlice.actions;
+export const {
+	addToCart,
+	addToFav,
+	removeFromCart,
+	setCart,
+	reduceItemInCart
+} = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

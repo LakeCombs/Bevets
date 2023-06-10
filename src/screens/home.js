@@ -12,6 +12,7 @@ import {
 	AddToFavAction,
 	getAllProductAction
 } from "../redux/actions/product.action";
+import HomeCarousel from "../components/homeCarousel";
 
 const HomeScreen = () => {
 	const navigate = useNavigate;
@@ -81,52 +82,7 @@ const HomeScreen = () => {
 			</div>
 			<div className="md:px-[50px] px-[20px]  min-h-full md:pt-[100px] pt-[40px]">
 				{/* Carousel session */}
-				<div className="flex h-[300px] w-full ">
-					{/* <Carousel autoplay={true}> */}
-					<div className=" h-full md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col">
-						<div className="w-full flex items-start justify-between ">
-							<img
-								src={"/assets/left-hanger.svg"}
-								alt=""
-								className="top-0 left w-3/6"
-							/>
-							<img
-								src={"/assets/right-hanger.svg"}
-								alt=""
-								className="top-0 right  h-[170px] "
-							/>
-						</div>
-						<div className="flex justify-center w-full flex-row mt-[-100px] md:mt-[-160px] ml-0  md:ml-[120px]  ">
-							<img
-								src={"/assets/gift.svg"}
-								alt=""
-								className="md:w-[200px] w-[100px] ml-[50px] hidden md:flex"
-							/>
-							<div className="ml-[30px] w-3/4 mt-0 mt:mt-[40px]">
-								<h3 className="text-[20px] font-bold family-poppins">
-									Save up to 20% <br />
-									<span className="text-white">This</span> Christmas{" "}
-									<span className="text-white">on</span> items
-									<br />
-									Purchased <span className="text-white">from our shop</span>
-								</h3>
-								<p className="text-white text-[8px] family-poppins">
-									Start your Christmas shopping with{" "}
-									<span className="text-black">Bevet</span>
-								</p>
-
-								<button
-									className="rounded-lg w-[120px] py-[8px] mt-[20px] shadow-md bg-black text-white"
-									onClick={() => navigate("/productscreen")}>
-									Order Now
-								</button>
-							</div>
-						</div>
-					</div>
-					{/* <div className="h-[230px] bg-blue-400  rounded-xl">Two</div> */}
-					{/* <div className="h-[230px] bg-blue-400  rounded-xl"> three </div> */}
-					{/* </Carousel> */}
-				</div>
+				<HomeCarousel />
 
 				{/* Shop by categories */}
 				<div className="w-full md:flex hidden justify-between mt-[130px] mb-[20px]  session-header">
@@ -180,21 +136,7 @@ const HomeScreen = () => {
 
 						<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
 							{getMeRandomElements(products)?.map((product) => {
-								return (
-									<BasicEssentialCard
-										addToCart={() => {
-											dispatch(AddToCartAction(product));
-										}}
-										description={product?.description}
-										image={product?.images[0]}
-										price={`Ȼ ${product?.price}`}
-										name={product?.name}
-										addToFav={() => {
-											dispatch(AddToFavAction(product));
-										}}
-										_id={product?._id}
-									/>
-								);
+								return <BasicEssentialCard product={product} />;
 							})}
 						</div>
 					</div>
@@ -206,21 +148,7 @@ const HomeScreen = () => {
 							</h2>
 							<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
 								{getMeRandomElements(products)?.map((product) => {
-									return (
-										<BasicEssentialCard
-											addToCart={() => {
-												dispatch(AddToCartAction(product));
-											}}
-											addToFav={() => {
-												dispatch(AddToFavAction(product));
-											}}
-											description={product?.description}
-											image={product?.images[0]}
-											price={`Ȼ ${product?.price}`}
-											name={product?.name}
-											_id={product?._id}
-										/>
-									);
+									return <BasicEssentialCard product={product} />;
 								})}
 							</div>
 						</div>
@@ -232,21 +160,7 @@ const HomeScreen = () => {
 						</h2>
 						<div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
 							{getMeRandomElements(products)?.map((product) => {
-								return (
-									<BasicEssentialCard
-										addToCart={() => {
-											dispatch(AddToCartAction(product));
-										}}
-										addToFav={() => {
-											dispatch(AddToFavAction(product));
-										}}
-										description={product?.description}
-										image={product?.images[0]}
-										price={`Ȼ ${product?.price}`}
-										name={product?.name}
-										_id={product?._id}
-									/>
-								);
+								return <BasicEssentialCard product={product} />;
 							})}
 						</div>
 					</div>

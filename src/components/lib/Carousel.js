@@ -30,8 +30,8 @@ function Carousel({
 
 	//Function to change slide
 	const addSlide = (n) => {
-		if (slide + n >= data.length) setSlide(0);
-		else if (slide + n < 0) setSlide(data.length - 1);
+		if (slide + n >= data?.length) setSlide(0);
+		else if (slide + n < 0) setSlide(data?.length - 1);
 		else setSlide(slide + n);
 	};
 
@@ -44,8 +44,8 @@ function Carousel({
 					if (!isPaused) {
 						setSlide(index);
 						index++;
-						if (index >= data.length) index = 0;
-						if (index < 0) index = data.length - 1;
+						if (index >= data?.length) index = 0;
+						if (index < 0) index = data?.length - 1;
 					}
 				},
 				time ? time : 2000
@@ -94,7 +94,7 @@ function Carousel({
 		//If thumbnails are enabled
 		if (thumbnails) {
 			var thumbnailsArray = document.getElementsByClassName("thumbnail");
-			for (i = 0; i < thumbnailsArray.length; i++) {
+			for (i = 0; i < thumbnailsArray?.length; i++) {
 				thumbnailsArray[i].className = thumbnailsArray[i].className.replace(
 					" active-thumbnail",
 					""
