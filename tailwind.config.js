@@ -35,12 +35,6 @@ module.exports = {
 				mont: ["Montserrat"],
 				poppins: ["Poppins"],
 				inter: ["Inter"]
-			},
-			backgroundImage: {
-				hero1: "url('/public/assets/MacBook Pro 14_ - 1bg.png')",
-				hero2: "url('/public/assets/MacBook Pro 14_ - 1bg2.png')",
-				hero3: "url('/public/assets/MacBook Pro 14_ - 1bg3.png')",
-				hero4: "url('/public/assets/MacBook Pro 14_ - 1bg4 (1).png')"
 			}
 		}
 	},
