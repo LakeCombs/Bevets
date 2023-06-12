@@ -3,9 +3,11 @@ import Header from "../components/header";
 import ScreenWithPadding from "../components/ScreenWithPadding";
 import { useDispatch, useSelector } from "react-redux";
 import { OrderByUserAction } from "../redux/actions/order.action";
+import { useNavigate } from "react-router-dom";
 
 const MyOrderScreen = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { orders, loading, error } = useSelector((state) => state.orderByUser);
 
 	useEffect(() => {
@@ -42,6 +44,9 @@ const MyOrderScreen = () => {
 								<tbody>
 									{orders?.map((order) => (
 										<tr
+											onClick={() => {
+												navigate(`/order/${order?._id}`);
+											}}
 											key={order?._id}
 											className="border-b hover:bg-gray-100 hover:cursor-pointer">
 											<td className="border px-4 py-2">

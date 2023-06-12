@@ -22,6 +22,7 @@ import Dashboard from "./screens/Dashboard";
 import CategoryByName from "./screens/CategoryByName";
 import CategoriesScreen from "./screens/productScreen";
 import MyOrderScreen from "./screens/orderScreen";
+import OrderByIdScreen from "./screens/orderByIdScreen";
 
 function App() {
 	return (
@@ -51,6 +52,7 @@ function App() {
 				<Route path="/recently_viewed" element={<RecentlyViewedScreen />} />
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/orders" element={<MyOrderScreen />} />
+				<Route path="/order/:id" element={<OrderByIdScreen />} />
 			</Routes>
 		</Router>
 	);
