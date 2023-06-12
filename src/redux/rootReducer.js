@@ -34,8 +34,18 @@ import {
 } from "./reducers/image.slice";
 import {
 	addAddressReducer,
-	removeAddressReducer
+	removeAddressReducer,
+	addressByIdReducer
 } from "./reducers/addressSlice";
+import {
+	OrderDetailsReducer,
+	createOrderReducer,
+	deleteOrderReducer,
+	getAllOrderReducer,
+	getOrderByIdReducer,
+	updateOrderReducer,
+	OrderByUserReducer
+} from "./reducers/orderSilce";
 
 const rootReducer = combineReducers({
 	//user reducers
@@ -73,7 +83,17 @@ const rootReducer = combineReducers({
 
 	//address reducer
 	addAddress: addAddressReducer,
-	removeAddress: removeAddressReducer
+	removeAddress: removeAddressReducer,
+	addressById: addressByIdReducer,
+
+	//order reducer
+	createOrder: createOrderReducer,
+	orderDetails: OrderDetailsReducer,
+	allOrder: getAllOrderReducer,
+	orderById: getOrderByIdReducer,
+	updateOrder: updateOrderReducer,
+	deleteOrder: deleteOrderReducer,
+	orderByUser: OrderByUserReducer
 });
 
 export default rootReducer;

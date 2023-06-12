@@ -8,7 +8,10 @@ import {
 	removeAddressFailed,
 	removeAddressRequest,
 	removeAddressSuccess,
-	resetAddAddress
+	resetAddAddress,
+	addressByIdRequest,
+	addressByIdSuccess,
+	addressByIdFailed
 } from "../reducers/addressSlice";
 import { loginSuccess } from "../reducers/user.slice";
 import Cookie from "js-cookie";
@@ -30,6 +33,16 @@ export const AddAddressAction = (address) => async (dispatch, getState) => {
 		Cookie.set("userInfo", JSON.stringify(data));
 	} catch (error) {
 		dispatch(addAddressFailed(RequestError(error)));
+	}
+};
+
+export const GetAddressByIdAction = (id) => async (dispatch, getState) => {
+	try {
+		dispatch(addressByIdRequest());
+		const { data } = await api.get(`/address/${id}`);
+		dispatch(addressByIdSuccess(data));
+	} catch (error) {
+		dispatch(addressByIdFailed(RequestError(error)));
 	}
 };
 

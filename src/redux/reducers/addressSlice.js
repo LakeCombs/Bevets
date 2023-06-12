@@ -29,12 +29,39 @@ const addAddressSlice = createSlice({
 });
 
 export const {
-	addAddressFailed,
 	addAddressRequest,
 	addAddressSuccess,
+	addAddressFailed,
 	resetAddAddress
 } = addAddressSlice.actions;
 export const addAddressReducer = addAddressSlice.reducer;
+
+const getAddressByIdSice = createSlice({
+	name: "add address",
+	initialState: {
+		address: {},
+		loading: false,
+		error: ""
+	},
+	reducers: {
+		addressByIdRequest: (state) => {
+			state.loading = true;
+		},
+		addressByIdSuccess: (state, { payload }) => {
+			state.loading = false;
+			state.address = payload;
+			state.error = "";
+		},
+		addressByIdFailed: (state, { payload }) => {
+			state.loading = false;
+			state.error = payload;
+		}
+	}
+});
+
+export const { addressByIdRequest, addressByIdSuccess, addressByIdFailed } =
+	getAddressByIdSice.actions;
+export const addressByIdReducer = getAddressByIdSice.reducer;
 
 const removeAddressSlice = createSlice({
 	name: "remove address",

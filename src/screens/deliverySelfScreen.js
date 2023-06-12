@@ -16,25 +16,23 @@ const DeliverySelfScreen = () => {
 				<button
 					className={`px-[40px] py-[8px] ${
 						flip ? bg1 : bg2
-					}  md:text-[12px] text-[10px] font-semibold rounded-md mr-[5px]`}
-					onClick={() => {
-						setFlip(true);
-					}}>
+					}  md:text-[12px] text-[10px] font-semibold rounded-md mr-[5px]`}>
 					DELIVERY METHOD
 				</button>
 				<button
 					className={`px-[40px] py-[8px]  ${
 						!flip ? bg1 : bg2
-					}  md:text-[12px] text-[10px] fonts-semibold rounded-md mr-[5px]`}
-					onClick={() => {
-						setFlip(false);
-					}}>
+					}  md:text-[12px] text-[10px] fonts-semibold rounded-md mr-[5px]`}>
 					PAYMENT METHOD
 				</button>
 			</div>
 			<ScreenWithPadding>
 				<div className="flex md:mt-[-90px] p-[10px] px-[20px] flex-col  ">
-					{flip ? <DeliveryMethodSession /> : <PaymentMethodSession />}
+					{flip ? (
+						<DeliveryMethodSession setFlip={setFlip} flip={flip} />
+					) : (
+						<PaymentMethodSession setFlip={setFlip} flip={flip} />
+					)}
 				</div>
 			</ScreenWithPadding>
 		</div>

@@ -9,9 +9,8 @@ import Footer from "../components/footer";
 
 const AddressDetails = () => {
 	const navigate = useNavigate();
-	const Next = e => {
+	const Next = (e) => {
 		e.preventDefault();
-		console.log("you have clicked the next");
 	};
 	return (
 		<div className="min-h-screen md:bg-background bg-primary-blue ">

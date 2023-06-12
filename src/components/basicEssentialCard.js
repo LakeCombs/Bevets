@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { AddToCartAction } from "../redux/actions/product.action";
 
 const BasicEssentialCard = ({ product }) => {
-	console.log("the product is ", product);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { favorite } = useSelector((state) => state.cart);
@@ -29,7 +28,7 @@ const BasicEssentialCard = ({ product }) => {
 
 			<img
 				className="sm:h-[140px] sm:w-[120px] h-[120px] w-[120px]  object-cover"
-				src={product?.image || "/public/assets/logo.png"}
+				src={product?.images && product?.images[0]}
 				alt={""}
 				onClick={() => {
 					navigate(`/product/${product?._id}`, {

@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState } from "react";
-import { Checkbox } from "antd";
+import { Checkbox, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import WideButton from "./wideButton";
@@ -12,8 +12,9 @@ import {
 import { useEffect } from "react";
 import { resetAddAddress } from "../redux/reducers/addressSlice";
 import { current } from "@reduxjs/toolkit";
+import { OrderDetailsAction } from "../redux/actions/order.action";
 
-const DeliveryMethodSession = () => {
+const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [deliveryFee, setDeliveryFee] = useState(0);
@@ -25,13 +26,20 @@ const DeliveryMethodSession = () => {
 		error
 	} = useSelector((state) => state.addAddress);
 	const { address: DelAddr } = useSelector((state) => state.removeAddress);
-	const [pickup, setPickup] = useState(false);
 	const [deliveryPrice, setDeiveryPrice] = useState(0);
 	const [editAddress, setEditAddress] = useState(false);
 	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
 	const [state, setState] = useState("");
 	const [zipCode, setZipCode] = useState("");
+	const [selectedAddress, setSelectedAddress] = useState("");
+	const [deliveryMethod, setDeliveryMethod] = useState("Door Delivery");
+	const [selectedDelivery, setSelectedDelivery] = useState(false);
+	const [messageApi, contextHolder] = message.useMessage();
+
+	const totalPrice = cartItems?.reduce((accumulator, currectValue) => {
+		return accumulator + currectValue?.item?.price * currectValue?.qty;
+	}, 0);
 
 	const SaveAddress = () => {
 		dispatch(
@@ -48,17 +56,50 @@ const DeliveryMethodSession = () => {
 		dispatch(DeleteAddressAction(id));
 	};
 
+	const NextClick = () => {
+		if (!selectedAddress) {
+			return messageApi.open({ type: "warning", content: "Select an address" });
+		}
+
+		if (!deliveryMethod) {
+			return messageApi.open({
+				type: "warning",
+				content: "Select a delivery method"
+			});
+		}
+
+		setFlip(!flip);
+	};
+
+	const CheckAddress = userInfo?.addresses?.find(
+		(add) => add?._id === selectedAddress
+	);
+
 	useEffect(() => {
 		setAddress("");
 		setCity("");
 		setState("");
 		setZipCode("");
 		setEditAddress(true);
-		// dispatch(resetAddAddress());
 	}, [Addr, dispatch]);
+
+	useEffect(() => {
+		dispatch(
+			OrderDetailsAction({
+				user: userInfo?._id,
+				total_price: totalPrice,
+				items: cartItems?.map((item) => {
+					return { product: item?.item?._id, qty: item?.qty };
+				}),
+				delivery_method: deliveryMethod
+			})
+		);
+	}, []);
 
 	return (
 		<div className="flex md:flex-row flex-col justify-between w-full ">
+			{contextHolder}
+
 			<div className="md:w-8/12 w-full flex flex-col  md:mr-[10px] mr-0">
 				<div className="bg-white rounded-2xl shadow-md pb-[15px]">
 					<div className="flex justify-between mx-[15px] items-center">
@@ -89,9 +130,23 @@ const DeliveryMethodSession = () => {
 											</p>
 											<div className="flex h-[60px] pt-[10px] flex-col justify-between">
 												<span
-													className="text-green-500 font-bold text-[10px] px-[10px] cursor-pointer hover:bg-gray-300"
-													onClick={() => RemoveAddress(address?._id)}>
-													SELECT
+													className={`text-green-500 font-bold  px-[10px] ${
+														CheckAddress ? "bg-green-500" : "bg-none"
+													} cursor-pointer hover:bg-gray-300  ${
+														CheckAddress
+															? "text-white py-[3px] font-bold text-[15px]"
+															: "text-green-400 text-[10px]"
+													} `}
+													onClick={() => {
+														setSelectedAddress(address?._id);
+														dispatch(
+															OrderDetailsAction({
+																address: address?._id
+															})
+														);
+													}}>
+													{CheckAddress ? "Selected" : "Select"}
+													{/* SELECT */}
 												</span>
 												<span
 													className="text-red-500 font-bold text-[10px] px-[10px] cursor-pointer hover:bg-gray-300"
@@ -187,27 +242,68 @@ const DeliveryMethodSession = () => {
 						<p className="font-[500] text-[15px] mt-[10px]">
 							How do you want your delivery?
 						</p>
+						<br />
 
-						<p className="font-[500]">
-							<span className="mr-[5px]">
-								<Checkbox
-									value={pickup}
-									onChange={(e) => {
-										setPickup(!pickup);
-										console.log("the pick up are ", pickup);
-									}}
-								/>
-							</span>
-							Collect your items at our pickup station (Cheaper option)
-						</p>
-						<p className=" mt-[5px] ">
-							Items available for pick up from{" "}
-							<span className="font-semibold">Monday 2 Jan</span>
-						</p>
+						<div>
+							<p className="font-[500]">
+								<span className="mr-[5px]">
+									<input
+										type="checkbox"
+										value={"Pickup Station"}
+										checked={!selectedDelivery}
+										onChange={(e) => {
+											setDeliveryMethod("Pickup Station");
+											setSelectedDelivery(!selectedDelivery);
+											dispatch(
+												OrderDetailsAction({
+													delivery_method: deliveryMethod
+												})
+											);
+										}}
+									/>
+								</span>
+								Pickup station,{" "}
+								<span className="font-light">
+									collect your items at our pickup station (Cheaper option)
+								</span>
+							</p>
+							<p className=" mt-[5px] ">
+								Items available for pick up from{" "}
+								<span className="font-semibold">Monday 2 Jan</span>
+							</p>
+						</div>
+						<div className="mt-[10px]">
+							<p className="font-[500]">
+								<span className="mr-[5px]">
+									<input
+										type="checkbox"
+										value={"Door Delivery"}
+										checked={selectedDelivery}
+										onChange={(e) => {
+											setDeliveryMethod("Door Delivery");
+											setSelectedDelivery(!selectedDelivery);
+											dispatch(
+												OrderDetailsAction({
+													delivery_method: deliveryMethod
+												})
+											);
+										}}
+									/>
+								</span>
+								Door Delivery,{" "}
+								<span className="font-light">
+									wait for a delivery service to delivery your items
+								</span>
+							</p>
+							<p className=" mt-[5px] ">
+								Items available for pick up from{" "}
+								<span className="font-semibold">Monday 2 Jan</span>
+							</p>
+						</div>
 					</div>
 
 					<hr />
-					<div className="pt-[20px] px-[15px]">
+					{/* <div className="pt-[20px] px-[15px]">
 						<p className="font-[500]">
 							<span className="mr-[5px]">
 								<Checkbox
@@ -225,7 +321,7 @@ const DeliveryMethodSession = () => {
 							<span className="text-black font-semibold">Monday 2 Jan</span> for{" "}
 							<span className="text-app-orange font-semibold">C 15.00</span>
 						</p>
-					</div>
+					</div> */}
 
 					<div className="flex p-[30px] w-full flex-col ">
 						<div className="border rounded-2xl p-[10px] w-full pb-[70px]">
@@ -275,10 +371,7 @@ const DeliveryMethodSession = () => {
 
 					<button
 						className="w-[55%] text-white bg-bright-blue py-[5px] mt-[15px] self-center rounded-lg hover:shadow-md"
-						onClick={() => {
-							navigate("/addressbook");
-						}}>
-						{" "}
+						onClick={NextClick}>
 						NEXT
 					</button>
 				</div>
@@ -298,10 +391,7 @@ const DeliveryMethodSession = () => {
 						<div className="flex mt-[15px] px-[20px] mb-[20px]  items-start ">
 							<img
 								alt={""}
-								src={
-									product?.item?.images[0]
-									// "https://media.istockphoto.com/id/1396897706/photo/vanilla-soft-serve-ice-cream-cone.jpg?b=1&s=170667a&w=0&k=20&c=S6oypYSoesaaKrndBk1POlIVhojg4WIv3Br0eplLuoA="
-								}
+								src={product?.item?.images[0]}
 								className="h-[100px] w-[100px]"
 							/>
 

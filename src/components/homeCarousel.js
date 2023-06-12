@@ -22,7 +22,11 @@ const HomeCarousel = () => {
 
 							<br />
 
-							<button className=" py-[5px] rounded-md px-[40px] bg-black text-white">
+							<button
+								className=" py-[5px] rounded-md px-[40px] bg-black text-white"
+								onClick={() => {
+									navigate("/categories");
+								}}>
 								Order Now
 							</button>
 						</div>

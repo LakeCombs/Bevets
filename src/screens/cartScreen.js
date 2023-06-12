@@ -64,7 +64,7 @@ const CartScreen = () => {
 												<img
 													className="h-[50px] w-[50px]"
 													alt={""}
-													src={(item?.photos && item?.photos[0]) || ""}
+													src={item?.images && item?.images[0]}
 													src={""}
 												/>
 
