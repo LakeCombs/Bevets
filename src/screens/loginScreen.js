@@ -31,7 +31,7 @@ const LoginScreen = () => {
 		<div className="flex pt-[50px] flex-col bg-background h-screen items-center w-full">
 			<img
 				alt="bevets"
-				src={"/public/assets/logo.png"}
+				src={"/assets/logo.png"}
 				className="w-[120px] md:mt-0 "
 			/>
 

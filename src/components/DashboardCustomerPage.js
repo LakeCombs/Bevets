@@ -8,8 +8,6 @@ const DashboardCustomerPage = () => {
 	const dispatch = useDispatch();
 	const { users, loading, error } = useSelector((state) => state.allUser);
 
-	console.log("the users are ", users);
-
 	const rowSelection = {
 		selections: []
 	};

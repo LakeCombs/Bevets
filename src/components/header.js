@@ -61,7 +61,11 @@ const Header = () => {
 		},
 		{
 			label: (
-				<p className="items-center w-full  md:flex hover:cursor-pointer">
+				<p
+					className="items-center w-full  md:flex hover:cursor-pointer"
+					onClick={() => {
+						navigate("/orders");
+					}}>
 					<span className="mr-2 text-black">
 						<BsFillCollectionFill />
 					</span>

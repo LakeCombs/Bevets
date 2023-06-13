@@ -15,10 +15,14 @@ import {
 	updateOrderDetails,
 	updateOrderFailure,
 	updateOrderRequest,
-	updateOrderSuccesss,
 	orderByUserRequest,
 	orderByUserSuccess,
-	orderByUserFailure
+	orderByUserFailure,
+	getAllOrderSuccess,
+	getAllOrderRequest,
+	resetOrderDetails,
+	resetUpdateOrder,
+	updateOrderSuccess
 } from "../reducers/orderSilce";
 import {
 	getAllProductFailed,
@@ -49,11 +53,11 @@ export const GetOrdersAction = () => async (dispatch, getState) => {
 		const {
 			userLogin: { userInfo }
 		} = getState();
-		dispatch(getAllProductRequest());
+		dispatch(getAllOrderRequest());
 		const { data } = await api.get("/orders", headerConfig(userInfo));
-		dispatch(getAllProductSuccess(data));
+		dispatch(getAllOrderSuccess(data));
 	} catch (error) {
-		dispatch(getAllProductFailed(RequestError(error)));
+		dispatch(getAllOrderFailure(RequestError(error)));
 	}
 };
 
@@ -84,7 +88,7 @@ export const updateOrderAction = (id, update) => async (dispatch, getState) => {
 			{ ...update },
 			headerConfig(userInfo)
 		);
-		dispatch(updateOrderSuccesss(data));
+		dispatch(updateOrderSuccess(data));
 	} catch (error) {
 		dispatch(updateOrderFailure(RequestError(error)));
 	}
@@ -109,7 +113,10 @@ export const OrderByUserAction = () => async (dispatch, getState) => {
 			userLogin: { userInfo }
 		} = getState();
 		dispatch(orderByUserRequest());
-		const { data } = await api.get(`/orders/user`, headerConfig(userInfo));
+		const { data } = await api.get(
+			`/orders/user/${userInfo?._id}`,
+			headerConfig(userInfo)
+		);
 		dispatch(orderByUserSuccess(data));
 	} catch (error) {
 		dispatch(orderByUserFailure(RequestError(error)));
@@ -120,6 +127,10 @@ export const OrderDetailsAction = (payload) => (dispatch) => {
 	dispatch(updateOrderDetails(payload));
 };
 
-export const ResetOrderAction = () => (dispatch) => {
-	dispatch(resetUpdateOrderDetails());
+export const ResetOrderDetailsAction = () => (dispatch) => {
+	dispatch(resetOrderDetails());
+};
+
+export const ResetUpdateOrderAction = () => (dispatch) => {
+	dispatch(resetUpdateOrder());
 };

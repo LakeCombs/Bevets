@@ -5,7 +5,7 @@ import { GetAddressByIdAction } from "../redux/actions/address.action.js";
 import {
 	OrderDetailsAction,
 	CreateOrderAction,
-	ResetOrderAction
+	ResetOrderDetailsAction
 } from "../redux/actions/order.action";
 import { useNavigate } from "react-router-dom";
 
@@ -77,7 +77,7 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 			});
 
 			navigate("/orders");
-			dispatch(ResetOrderAction());
+			dispatch(ResetOrderDetailsAction());
 		}
 	}, [createdOrder]);
 

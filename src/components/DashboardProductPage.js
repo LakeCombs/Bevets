@@ -222,7 +222,7 @@ const DashboardProductPage = () => {
 				<img
 					alt=""
 					className="h-[50px] w-[50px]"
-					src={products[index]?.images[0]}
+					src={products[index]?.images && products[index]?.images[0]}
 				/>
 			),
 			price: products[index]?.price,

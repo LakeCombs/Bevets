@@ -1,5 +1,5 @@
 import { Input } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -7,10 +7,18 @@ import DashboardOrderAll from "./DashboardOrderAll";
 import DashboardOrderDelivery from "./DashboardOrderDelivery";
 import DashboardOrderPending from "./DashboardOrderPending";
 import DashboardOrderById from "./DashboardOrderById";
+import { useDispatch, useSelector } from "react-redux";
+import { GetOrdersAction } from "../redux/actions/order.action";
 
 const DashboardOrderPage = () => {
+	const dispatch = useDispatch();
+	const { orders, loading, error } = useSelector((state) => state.allOrder);
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState("all");
+
+	useEffect(() => {
+		dispatch(GetOrdersAction());
+	}, []);
 
 	return (
 		<div className="rounded-xl w-full">
@@ -48,12 +56,12 @@ const DashboardOrderPage = () => {
 				</div>
 
 				<div className="flex flex-row ">
-					<button className="bg-red-400 w-[100px] rounded-xl text-white  flex flex-row justify-center items-center">
+					{/* <button className="bg-red-400 w-[100px] rounded-xl text-white  flex flex-row justify-center items-center">
 						<RiDeleteBin5Line /> <span className="ml-[3px]">Delete</span>
-					</button>
-					<button className="bg-blue-400   rounded-lg  p-[5px] text-white ml-[4px]">
+					</button> */}
+					{/* <button className="bg-blue-400   rounded-lg  p-[5px] text-white ml-[4px]">
 						<FiSettings />
-					</button>
+					</button> */}
 
 					<Input
 						value={search}

@@ -25,7 +25,7 @@ const OrderDetailsSlice = createSlice({
 				? payload?.payment_method
 				: state.payment_method;
 		},
-		resetUpdateOrderDetails: (state) => {
+		resetOrderDetails: (state) => {
 			state.user = "";
 			state.delivery_method = "";
 			state.address = "";
@@ -36,7 +36,7 @@ const OrderDetailsSlice = createSlice({
 	}
 });
 
-export const { updateOrderDetails, resetUpdateOrderDetails } =
+export const { updateOrderDetails, resetOrderDetails } =
 	OrderDetailsSlice.actions;
 export const OrderDetailsReducer = OrderDetailsSlice.reducer;
 
@@ -148,12 +148,21 @@ const updateOrderSlice = createSlice({
 			state.loading = false;
 			state.error = payload;
 			state.order = {};
+		},
+		resetUpdateOrder: (state) => {
+			state.loading = false;
+			state.error = "";
+			state.order = {};
 		}
 	}
 });
 
-export const { updateOrderFailure, updateOrderRequest, updateOrderSuccesss } =
-	updateOrderSlice.actions;
+export const {
+	updateOrderFailure,
+	updateOrderRequest,
+	updateOrderSuccess,
+	resetUpdateOrder
+} = updateOrderSlice.actions;
 export const updateOrderReducer = updateOrderSlice.reducer;
 
 const deleteOrderSlice = createSlice({

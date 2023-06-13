@@ -1,10 +1,18 @@
-import { Checkbox } from "antd";
+import { Checkbox, Spin } from "antd";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const DashboardOrderDelivery = ({ onClick }) => {
+	const { loading, error } = useSelector((state) => state.updateOrder);
+	const { loading: ordersLoading } = useSelector((state) => state.allOrder);
+
+	console.log("the loading for all orders is ", ordersLoading);
 	return (
 		<div className="w-full bg-white rounded-md p-[10px]">
-			<div className="border-b  p-[8px]">Manage Orders</div>
+			<div className="border-b  p-[8px]">
+				Manage Orders {(loading || ordersLoading) && <Spin />}{" "}
+				{error && <p className="text-red-400">{error}</p>}
+			</div>
 			<table className="w-full">
 				<thead>
 					<tr>
