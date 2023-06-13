@@ -135,7 +135,6 @@ const DashboardOrderAll = ({ onClick }) => {
 
 	useEffect(() => {
 		if (order?._id) {
-			console.log("the order is already selected");
 			dispatch(GetOrdersAction());
 			dispatch(ResetUpdateOrderAction());
 		}

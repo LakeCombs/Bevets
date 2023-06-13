@@ -334,11 +334,7 @@ const DashboardProductPage = () => {
 							<p className="ml-[3px] text-red-400">{allProductError}</p>
 						)}
 					</div>
-					<Table
-						rowSelection={rowSelection}
-						columns={columns}
-						dataSource={data}
-					/>
+					<Table columns={columns} dataSource={data} />
 				</div>
 			)}{" "}
 			{page === "categories" && (

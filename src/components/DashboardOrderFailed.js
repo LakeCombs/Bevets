@@ -9,18 +9,16 @@ import {
 import moment from "moment";
 import { BiDotsVertical } from "react-icons/bi";
 
-const DashboardOrderPending = ({ onClick }) => {
+const DashboardOrderFailed = ({ onClick }) => {
 	const dispatch = useDispatch();
 	const { order, loading, error } = useSelector((state) => state.updateOrder);
 	const { orders, loading: ordersLoading } = useSelector(
 		(state) => state.allOrder
 	);
 
-	const pendingOrders = orders?.filter(
-		(order) => order?.delivery_status === "pending"
+	const failedOrders = orders?.filter(
+		(order) => order?.delivery_status === "failed"
 	);
-
-	console.log("the pending orders: ", pendingOrders);
 
 	const columns = [
 		{
@@ -96,42 +94,42 @@ const DashboardOrderPending = ({ onClick }) => {
 	};
 
 	const data = [];
-	for (let index = 0; index < pendingOrders?.length; index++) {
+	for (let index = 0; index < failedOrders?.length; index++) {
 		data.push({
 			orderNo: (
 				<p onClick={() => {}} className="hover:cursor-pointer">
 					{" "}
-					{orders[index]?._id?.slice(0, 5)}
+					{failedOrders[index]?._id?.slice(0, 5)}
 				</p>
 			),
-			createdAt: moment(pendingOrders[index]?.createdAt).format("YYYY-MM-DD"),
-			user: `${pendingOrders[index]?.user?.firstname} ${orders[index]?.user?.lastname}`,
-			total_price: `GHc ${pendingOrders[index]?.total_price}`,
-			payment_method: pendingOrders[index]?.payment_method,
-			delivery_method: pendingOrders[index]?.delivery_method,
+			createdAt: moment(failedOrders[index]?.createdAt).format("YYYY-MM-DD"),
+			user: `${failedOrders[index]?.user?.firstname} ${orders[index]?.user?.lastname}`,
+			total_price: `GHc ${failedOrders[index]?.total_price}`,
+			payment_method: failedOrders[index]?.payment_method,
+			delivery_method: failedOrders[index]?.delivery_method,
 			status: (
 				<span
 					className={`${
-						pendingOrders[index]?.delivery_status === "pending"
+						failedOrders[index]?.delivery_status === "pending"
 							? "text-orange-400"
 							: ""
 					} ${
-						pendingOrders[index]?.delivery_status === "success"
+						failedOrders[index]?.delivery_status === "success"
 							? "text-green-500"
 							: ""
 					} 
 					
-					${pendingOrders[index]?.delivery_status === "failed" ? "text-red-500" : ""}
+					${failedOrders[index]?.delivery_status === "failed" ? "text-red-500" : ""}
 					
 					`}>
-					{pendingOrders[index]?.delivery_status}
+					{failedOrders[index]?.delivery_status}
 				</span>
 			),
 			actions: (
 				<button className="bg-bright-blue text-white rounded-lg py-[5px] px-[5px]">
 					<Dropdown
 						menu={{
-							items: items(pendingOrders[index]?._id)
+							items: items(failedOrders[index]?._id)
 						}}
 						trigger={["click"]}>
 						<BiDotsVertical />
@@ -157,4 +155,4 @@ const DashboardOrderPending = ({ onClick }) => {
 	);
 };
 
-export default DashboardOrderPending;
+export default DashboardOrderFailed;

@@ -9,6 +9,7 @@ import DashboardOrderPending from "./DashboardOrderPending";
 import DashboardOrderById from "./DashboardOrderById";
 import { useDispatch, useSelector } from "react-redux";
 import { GetOrdersAction } from "../redux/actions/order.action";
+import DashboardOrderFailed from "./DashboardOrderFailed";
 
 const DashboardOrderPage = () => {
 	const dispatch = useDispatch();
@@ -53,6 +54,16 @@ const DashboardOrderPage = () => {
 						onClick={() => setPage("pending")}>
 						Pending
 					</p>
+
+					<p
+						className={`ml-[20px] ${
+							page === "failed" ? "bg-bright-blue" : "bg-transparent"
+						} px-[10px] py-[7px] ${
+							page === "failed" ? "text-white" : "text-black"
+						} rounded-lg  hover:cursor-pointer`}
+						onClick={() => setPage("failed")}>
+						Failed
+					</p>
 				</div>
 
 				<div className="flex flex-row ">
@@ -82,6 +93,10 @@ const DashboardOrderPage = () => {
 				)}
 				{page === "pending" && (
 					<DashboardOrderPending onClick={() => setPage("byid")} />
+				)}
+
+				{page === "failed" && (
+					<DashboardOrderFailed onClick={() => setPage("byid")} />
 				)}
 				{page === "byid" && <DashboardOrderById />}
 			</div>
