@@ -14,7 +14,6 @@ const LoginScreen = () => {
 
 	const login = (e) => {
 		e.preventDefault();
-		console.log("you click login");
 		dispatch(userLoginAction({ email, password }));
 	};
 

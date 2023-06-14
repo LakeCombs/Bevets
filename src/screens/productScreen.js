@@ -76,7 +76,6 @@ const CategoriesScreen = () => {
 			<div className="mt-[5px]   md:px-[50px] px-[20px] md:flex-row flex flex-col ">
 				<div className="w-full flex flex-wrap justify-around md:mt-0 mt-5">
 					{products?.map((prod) => {
-						console.log("the prodoce by category ", prod);
 						return <StandardProductCard product={prod} />;
 					})}
 

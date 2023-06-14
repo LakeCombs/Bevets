@@ -61,7 +61,6 @@ export const DeleteAddressAction = (id) => async (dispatch, getState) => {
 		dispatch(removeAddressRequest());
 		const { data } = await api.delete(`/address/${id}`, headerConfig(userInfo));
 
-		console.log("the data is ", data);
 		dispatch(removeAddressSuccess(data));
 		dispatch(loginSuccess(data));
 		Cookie.set("userInfo", JSON.stringify(data));

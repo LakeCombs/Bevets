@@ -75,8 +75,6 @@ const MyOrderScreen = () => {
 											<td className="px-6 py-4">
 												GHc{" "}
 												{order?.items?.reduce((accumulator, currentValue) => {
-													console.log("the currentValue is ", currentValue);
-
 													return (
 														accumulator +
 														currentValue?.product?.price * currentValue?.qty

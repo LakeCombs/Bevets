@@ -22,8 +22,6 @@ const DashboardOrderPending = ({ onClick }) => {
 		(order) => order?.delivery_status === "pending"
 	);
 
-	console.log("the pending orders: ", pendingOrders);
-
 	const columns = [
 		{
 			title: "Order No",

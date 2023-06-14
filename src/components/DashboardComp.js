@@ -27,7 +27,6 @@ const DashboardComp = () => {
 		textcolor,
 		bgcolor
 	}) => {
-		console.log("the color is ", percent);
 		return (
 			<div className="flex justify-between w-full items-center my-[12px]">
 				<div>

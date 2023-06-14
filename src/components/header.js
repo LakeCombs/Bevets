@@ -26,7 +26,6 @@ const Header = () => {
 
 	const submit = (e) => {
 		e.preventDefault();
-		console.log("the search value is ", search);
 	};
 	const items = [
 		{

@@ -310,7 +310,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 									value={pickup}
 									onChange={(e) => {
 										setPickup(!pickup);
-										console.log("the pick up are ", pickup);
 									}}
 								/>
 							</span>

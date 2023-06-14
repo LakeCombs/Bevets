@@ -72,7 +72,6 @@ const DashboardProductPage = () => {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [uploadImageLoading, setUploadImageLoading] = useState(false);
 	const onSelectChange = (newSelectedRowKeys) => {
-		console.log("selectedRowKeys changed: ", newSelectedRowKeys);
 		setSelectedRowKeys(newSelectedRowKeys);
 	};
 	const [messageApi, contextHolder] = message.useMessage();

@@ -34,7 +34,6 @@ const HomeScreen = () => {
 
 	const onSubscribe = (e) => {
 		e.preventDefault();
-		console.log("subscribing");
 	};
 
 	const submit = () => {};
