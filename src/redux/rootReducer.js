@@ -35,7 +35,8 @@ import {
 import {
 	addAddressReducer,
 	removeAddressReducer,
-	addressByIdReducer
+	addressByIdReducer,
+	updateAddressReducer
 } from "./reducers/addressSlice";
 import {
 	OrderDetailsReducer,
@@ -85,6 +86,7 @@ const rootReducer = combineReducers({
 	addAddress: addAddressReducer,
 	removeAddress: removeAddressReducer,
 	addressById: addressByIdReducer,
+	updateAddress: updateAddressReducer,
 
 	//order reducer
 	createOrder: createOrderReducer,

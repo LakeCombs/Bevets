@@ -14,6 +14,7 @@ import {
 	ReductItemInCartAction,
 	RemoveFromCartAction
 } from "../redux/actions/product.action";
+import { HiOutlineShoppingCart } from "react-icons/hi";
 
 const CartScreen = () => {
 	const navigate = useNavigate();
@@ -35,11 +36,13 @@ const CartScreen = () => {
 						</h2>
 						<hr />
 						<div className="flex justify-center items-center h-[300px] flex-col">
-							<img
+							{/* <img
 								className="h-[100px] w-[100px] rounded-full"
 								alt=""
 								src={""}
-							/>
+							/> */}
+
+							<HiOutlineShoppingCart className="text-[100px]" />
 							<h2 className="family-poppins mt-[30px] text-[25px] ">
 								Oops!, your cart is empty
 							</h2>

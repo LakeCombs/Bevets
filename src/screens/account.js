@@ -4,7 +4,7 @@ import Footer from "../components/footer";
 import { FaUserAlt } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiInboxArchiveLine, RiMailSendLine } from "react-icons/ri";
-import { MdOutlineFavorite } from "react-icons/md";
+import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import { GiBackwardTime } from "react-icons/gi";
 import AccountSession from "../components/AccountSession";
 import InboxSession from "../components/InboxSession";
@@ -14,10 +14,12 @@ import OrderTrackingSession from "../components/OrderTrackingSession";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { Dropdown } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Account = () => {
 	const navigate = useNavigate();
 	const [right, setRight] = useState("account");
+	const { userInfo } = useSelector((state) => state.userLogin);
 
 	const items = [
 		{
@@ -150,7 +152,7 @@ const Account = () => {
 							<div
 								className="py-[8px] px-[20px] flex flex-row font-semibold  hover:cursor-pointer hover:bg-primary-blue items-center"
 								onClick={() => setRight("saved_items")}>
-								<MdOutlineFavorite className="text-[15px] mr-[20px]" />
+								<MdOutlineFavoriteBorder className="text-[15px] mr-[20px]" />
 								<p>Saved Items</p>
 							</div>
 

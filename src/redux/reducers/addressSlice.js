@@ -93,3 +93,33 @@ export const {
 	removeAddressSuccess
 } = removeAddressSlice.actions;
 export const removeAddressReducer = removeAddressSlice.reducer;
+
+const updateAddressById = createSlice({
+	name: "update address",
+	initialState: {
+		address: {},
+		loading: false,
+		error: ""
+	},
+	reducers: {
+		updateAddressRequest: (state) => {
+			state.loading = true;
+		},
+		updateAddressSuccess: (state, { payload }) => {
+			state.loading = false;
+			state.address = payload;
+			state.error = "";
+		},
+		updateAddressFailed: (state, { payload }) => {
+			state.loading = false;
+			state.error = payload;
+		}
+	}
+});
+
+export const {
+	updateAddressFailed,
+	updateAddressRequest,
+	updateAddressSuccess
+} = updateAddressById.actions;
+export const updateAddressReducer = updateAddressById.reducer;

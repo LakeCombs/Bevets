@@ -23,6 +23,7 @@ import CategoryByName from "./screens/CategoryByName";
 import CategoriesScreen from "./screens/productScreen";
 import MyOrderScreen from "./screens/orderScreen";
 import OrderByIdScreen from "./screens/orderByIdScreen";
+import AdminOrderByIdScreen from "./screens/adminOrderByIdScreen";
 
 function App() {
 	return (
@@ -53,6 +54,7 @@ function App() {
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/orders" element={<MyOrderScreen />} />
 				<Route path="/order/:id" element={<OrderByIdScreen />} />
+				<Route path="/admin/orders/:id" element={<AdminOrderByIdScreen />} /> }
 			</Routes>
 		</Router>
 	);

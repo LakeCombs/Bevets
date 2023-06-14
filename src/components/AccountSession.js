@@ -1,6 +1,81 @@
-import React from "react";
+import { Input, Spin } from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserAction } from "../redux/actions/user.action";
+import { resetUpdateUser } from "../redux/reducers/user.slice";
+import {
+	AddAddressAction,
+	DeleteAddressAction,
+	UpdateAddressAction
+} from "../redux/actions/address.action";
 
 const AccountSession = () => {
+	const dispatch = useDispatch();
+	const { userInfo } = useSelector((state) => state.userLogin);
+	const { user, loading, error } = useSelector((state) => state.updateUser);
+	const {
+		address: addedAddress,
+		loading: addAddressLoading,
+		error: addAddressError
+	} = useSelector((state) => state.addAddress);
+	const {
+		address: deletedAddress,
+		loading: deleteAddressLoading,
+		error: deleteAddressError
+	} = useSelector((state) => state.removeAddress);
+	const {
+		address: updatedAddress,
+		loading: updateAddressLoading,
+		error: updateAddressError
+	} = useSelector((state) => state.updateAddress);
+
+	const [updateUserDetails, setUpdateUserDetails] = useState(false);
+	const [addAddress, setAddAddress] = useState(false);
+	const [editAddress, setEditAddress] = useState(false);
+
+	const [firstname, setFirstname] = useState(userInfo?.firstname || "");
+	const [lastname, setLastname] = useState(userInfo?.lastname || "");
+	const [email, setEmail] = useState(userInfo?.email || "");
+	const [mobile, setMobile] = useState(userInfo?.mobile || "");
+
+	const [address, setAddress] = useState("");
+	const [city, setCity] = useState("");
+	const [state, setState] = useState("");
+	const [zipCode, setZipCode] = useState("");
+	const [addressId, setAddressId] = useState("");
+
+	useEffect(() => {
+		if (user?._id) {
+			setUpdateUserDetails(false);
+			dispatch(resetUpdateUser());
+			setFirstname(userInfo?.firstname || "");
+			setLastname(userInfo?.lastname || "");
+			setEmail(userInfo?.email || "");
+			setMobile(userInfo?.mobile || "");
+		}
+	}, [user?._id]);
+
+	useEffect(() => {
+		if (addedAddress?._id) {
+			setAddAddress(false);
+			setAddress("");
+			setCity("");
+			setState("");
+			setZipCode("");
+		}
+	}, [addedAddress?._id]);
+
+	useEffect(() => {
+		if (updatedAddress?._id) {
+			setEditAddress(false);
+			setAddress("");
+			setCity("");
+			setState("");
+			setZipCode("");
+			setAddressId("");
+		}
+	}, [updatedAddress?._id]);
+
 	return (
 		<div>
 			<div className="py-3 w-full px-5 md:font-bold font-semibold">
@@ -8,39 +83,298 @@ const AccountSession = () => {
 			</div>
 			<hr />
 			<div className=" flex-wrap p-5 flex justify-between gap-4">
-				<div className=" w-full md:w-[320px] h-[170px] border rounded-lg">
-					<div className="py-3 w-full px-5 md:font-bold font-semibold">
-						<h2 className="font-semibold">Account Details</h2>
-					</div>
-					<hr />
-					<div className="px-5 pt-2">
-						<h2 className="font-semibold md:text-[15px] text-[12px]">
-							{" "}
-							Micheal Owen
-						</h2>
-						<p className="md:text-[12px] text-[10px]">michealowen@gmail.com</p>
-					</div>
-				</div>
-
-				<div className="w-full md:w-[320px] h-[170px] border rounded-lg">
+				<div
+					className={` w-full md:w-[320px] ${
+						updateUserDetails ? "h-auto" : "h-[170px]"
+					} border rounded-lg`}>
 					<div className="py-3 w-full px-5 md:font-bold font-semibold flex  justify-between">
 						<h2 className="font-semibold">Account Details</h2>
-						<p className="text-app-orange">Edit</p>
+						{error && <p className="text-red-400">{error}</p>}
+
+						{!updateUserDetails ? (
+							<p
+								className="text-app-orange hover:cursor-pointer"
+								onClick={() => {
+									setUpdateUserDetails(true);
+								}}>
+								Edit
+							</p>
+						) : (
+							<></>
+						)}
 					</div>
 					<hr />
-					<div className="px-5 pt-2">
-						<h2 className="font-semibold md:text-[15px] text-[12px]">
-							Your default shipping address:
+
+					{!updateUserDetails ? (
+						<div className="px-5 pt-2">
+							<h2 className="font-semibold md:text-[15px] text-[12px]">
+								{`${userInfo?.firstname} ${userInfo?.lastname}`}
+							</h2>
+							<p className="md:text-[12px] text-[10px]">{userInfo?.email}</p>
+							<p className="md:text-[12px] text-[10px]">{userInfo?.mobile}</p>
+						</div>
+					) : (
+						<div className="px-5 pt-2 flex flex-col">
+							<p className="text-[10px]">First name</p>
+							<Input
+								value={firstname}
+								onChange={(e) => {
+									setFirstname(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+
+							<p className="text-[10px]">Last name</p>
+							<Input
+								value={lastname}
+								onChange={(e) => {
+									setLastname(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+
+							<p className="text-[10px]"> Email</p>
+							<Input
+								value={email}
+								onChange={(e) => {
+									setEmail(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+
+							<p className="text-[10px]">Phone</p>
+							<Input
+								value={mobile}
+								onChange={(e) => {
+									setMobile(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+							<div className="mt-[10px] mb-[10px] justify-between w-full flex flex-row">
+								<button
+									className="bg-red-400 text-white px-[15px] py-[8px] rounded-lg"
+									onClick={() => {
+										setUpdateUserDetails(false);
+									}}>
+									Cancel
+								</button>
+
+								<button
+									className="bg-green-400 text-white px-[15px] py-[8px] rounded-lg"
+									onClick={() => {
+										dispatch(
+											updateUserAction(userInfo?._id, {
+												firstname,
+												lastname,
+												email,
+												mobile
+											})
+										);
+									}}>
+									Update {loading && <Spin />}
+								</button>
+							</div>
+						</div>
+					)}
+				</div>
+
+				<div className="w-full md:w-[320px]  h-auto  border rounded-lg">
+					<div className="py-3 w-full px-5 md:font-bold font-semibold flex  justify-between">
+						<h2 className="font-semibold">
+							Address Details{" "}
+							{(addAddressLoading ||
+								deleteAddressLoading ||
+								updateAddressLoading) && <Spin />}
+							{addAddressError && (
+								<p className="text-red-400"> {addAddressError}</p>
+							)}
+							{updateAddressError && (
+								<p className="text-red-400"> {updateAddressError}</p>
+							)}
 						</h2>
-						<p className="md:text-[12px] text-[10px] text-app-gray">
-							Michael Owen
-							<br />
-							House No. B13/40, Tantrahills, Greater Accra
-							<br />
-							GG-738-6606
-							<br />
-							+233501595121
-						</p>
+
+						{!addAddress && (
+							<p
+								className="text-app-orange hover:cursor-pointer"
+								onClick={() => {
+									setAddAddress(true);
+								}}>
+								Add
+							</p>
+						)}
+					</div>
+					<hr />
+
+					{addAddress && (
+						<div className="px-5 pt-2 flex flex-col ">
+							<p className="text-[10px]">Address</p>
+							<Input
+								value={address}
+								onChange={(e) => {
+									setAddress(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+
+							<p className="text-[10px]">City</p>
+							<Input
+								value={city}
+								onChange={(e) => {
+									setCity(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+
+							<p className="text-[10px]">State</p>
+							<Input
+								value={state}
+								onChange={(e) => {
+									setState(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+
+							<p className="text-[10px]">ZipCode</p>
+							<Input
+								value={zipCode}
+								onChange={(e) => {
+									setZipCode(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+							<div className="mt-[10px] mb-[10px] justify-between w-full flex flex-row">
+								<button
+									className="bg-red-400 text-white px-[15px] py-[8px] rounded-lg"
+									onClick={() => {
+										setAddAddress(false);
+									}}>
+									Cancel
+								</button>
+
+								<button
+									className="bg-green-400 text-white px-[15px] py-[8px] rounded-lg"
+									onClick={() => {
+										dispatch(
+											AddAddressAction({
+												address,
+												city,
+												state,
+												zipCode
+											})
+										);
+									}}>
+									Add {loading && <Spin />}
+								</button>
+							</div>
+						</div>
+					)}
+
+					<div className="px-5 ">
+						{userInfo?.addresses?.map((add) => {
+							return (
+								<div
+									key={add?._id}
+									className="flex  pb-[10px] flex-row justify-between">
+									<p className="md:text-[12px] text-[10px]">
+										<br />
+										Address: {add?.address}
+										<br />
+										City: {add?.city}
+										<br />
+										State: {add?.state}
+										<br />
+										ZipCode: {add?.zipCode}
+									</p>
+
+									<div className="pt-[20px]">
+										<p
+											className="text-green-400 hover:cursor-pointer font-bold  text-[12px]"
+											onClick={() => {
+												setEditAddress(true);
+												setAddress(add?.address);
+												setCity(add?.city);
+												setState(add?.state);
+												setZipCode(add?.zipCode);
+												setAddressId(add?._id);
+											}}>
+											Edit
+										</p>
+										<br />
+										<p
+											className="text-red-400 hover:cursor-pointer font-bold text-[12px]"
+											onClick={() => {
+												dispatch(DeleteAddressAction(add?._id));
+											}}>
+											Delete
+										</p>
+									</div>
+								</div>
+							);
+						})}
+
+						{editAddress && (
+							<div className="px-5 pt-2 flex flex-col ">
+								<p className="text-[10px]">Address</p>
+								<Input
+									value={address}
+									onChange={(e) => {
+										setAddress(e.target.value);
+									}}
+									className="mb-[5px]"
+								/>
+
+								<p className="text-[10px]">City</p>
+								<Input
+									value={city}
+									onChange={(e) => {
+										setCity(e.target.value);
+									}}
+									className="mb-[5px]"
+								/>
+
+								<p className="text-[10px]">State</p>
+								<Input
+									value={state}
+									onChange={(e) => {
+										setState(e.target.value);
+									}}
+									className="mb-[5px]"
+								/>
+
+								<p className="text-[10px]">ZipCode</p>
+								<Input
+									value={zipCode}
+									onChange={(e) => {
+										setZipCode(e.target.value);
+									}}
+									className="mb-[5px]"
+								/>
+								<div className="mt-[10px] mb-[10px] justify-between w-full flex flex-row">
+									<button
+										className="bg-red-400 text-white px-[15px] py-[8px] rounded-lg"
+										onClick={() => {
+											setEditAddress(false);
+										}}>
+										Cancel
+									</button>
+
+									<button
+										className="bg-green-400 text-white px-[15px] py-[8px] rounded-lg"
+										onClick={() => {
+											dispatch(
+												UpdateAddressAction(addressId, {
+													address,
+													city,
+													state,
+													zipCode
+												})
+											);
+										}}>
+										Update {updateAddressLoading && <Spin />}
+									</button>
+								</div>
+							</div>
+						)}
 					</div>
 				</div>
 
@@ -50,9 +384,6 @@ const AccountSession = () => {
 					</div>
 					<hr />
 					<div className="px-5 pt-2">
-						{/* <h2 className="font-semibold md:text-[15px] text-[12px]">
-							Your default shipping address:
-						</h2> */}
 						<p className="md:text-[12px] text-[10px] ">
 							You are currently not subscribed to any of our newsletters.
 						</p>

@@ -36,6 +36,29 @@ const Header = () => {
 						<p
 							className="items-center w-full md:flex hover:cursor-pointer "
 							onClick={() => {
+								navigate("/account");
+							}}>
+							<span className="mr-2 text-black">
+								<FaUserAlt />
+							</span>
+							View Profile
+						</p>
+					) : (
+						<></>
+					)}
+				</>
+			),
+			key: "0"
+		},
+
+		{
+			label: (
+				<>
+					{userInfo?._id ? (
+						<p
+							className="items-center w-full md:flex hover:cursor-pointer "
+							onClick={() => {
+								navigate("/");
 								dispatch(logoutUserAction());
 							}}>
 							<span className="mr-2 text-black">
@@ -57,7 +80,7 @@ const Header = () => {
 					)}
 				</>
 			),
-			key: "0"
+			key: "1"
 		},
 		{
 			label: (
@@ -72,7 +95,7 @@ const Header = () => {
 					Orders
 				</p>
 			),
-			key: "1"
+			key: "2"
 		},
 		{
 			label: (
@@ -83,7 +106,7 @@ const Header = () => {
 					Saved Items
 				</p>
 			),
-			key: "2"
+			key: "3"
 		}
 	];
 	return (

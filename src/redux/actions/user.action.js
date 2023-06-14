@@ -110,6 +110,8 @@ export const updateUserAction = (id, update) => async (dispatch, getState) => {
 			headerConfig(userInfo)
 		);
 
+		Cookie.set("userInfo", JSON.stringify(data));
+		dispatch(loginSuccess(data));
 		dispatch(updateUserSuccess(data));
 	} catch (error) {
 		dispatch(updateUserFailed(RequestError(error)));

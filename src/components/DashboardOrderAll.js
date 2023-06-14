@@ -8,9 +8,11 @@ import {
 	updateOrderAction
 } from "../redux/actions/order.action";
 import { BiDotsVertical } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const DashboardOrderAll = ({ onClick }) => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { orders, loading: ordersLoading } = useSelector(
 		(state) => state.allOrder
 	);
@@ -93,7 +95,11 @@ const DashboardOrderAll = ({ onClick }) => {
 	for (let index = 0; index < orders?.length; index++) {
 		data.push({
 			orderNo: (
-				<p onClick={() => {}} className="hover:cursor-pointer">
+				<p
+					onClick={() => {
+						navigate(`/admin/orders/${orders[index]?._id}`);
+					}}
+					className="hover:cursor-pointer">
 					{" "}
 					{orders[index]?._id?.slice(0, 5)}
 				</p>
