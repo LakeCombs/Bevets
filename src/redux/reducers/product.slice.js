@@ -214,8 +214,9 @@ const cartSlice = createSlice({
 	},
 	reducers: {
 		setCart: (state, { payload }) => {
-			state.cartItems = payload.cartItems;
-			state.favorite = payload.favorite;
+			console.log("the payload is ", payload);
+			state.cartItems = payload?.cartItems;
+			state.favorite = payload?.favorite;
 			Cookie.set("cartItems", JSON.stringify(payload?.cartItems));
 			Cookie.set("favorite", JSON.stringify(payload?.favorite));
 		},
@@ -234,6 +235,15 @@ const cartSlice = createSlice({
 
 		addToFav: (state, { payload }) => {
 			state.favorite = payload;
+		},
+
+		removeFromFav: (state, { payload }) => {
+			state.favorite = payload;
+		},
+
+		resetCart: (state) => {
+			state.cartItems = [];
+			state.favorite = [];
 		}
 	}
 });
@@ -243,6 +253,8 @@ export const {
 	addToFav,
 	removeFromCart,
 	setCart,
-	reduceItemInCart
+	reduceItemInCart,
+	removeFromFav,
+	resetCart
 } = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

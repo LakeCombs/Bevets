@@ -32,6 +32,8 @@ import {
 	userByIdSuccess
 } from "../reducers/user.slice";
 import { headerConfig } from "../../utils/headerConfig";
+import { ResetCartAction } from "./product.action";
+import { setCart } from "../reducers/product.slice";
 
 export const userLoginAction =
 	({ email, password }) =>
@@ -40,6 +42,14 @@ export const userLoginAction =
 			dispatch(loginRequest());
 			const { data } = await api.post("/users/login", { email, password });
 			Cookie.set("userInfo", JSON.stringify(data));
+			// Cookie.set("favorite", JSON.stringify(data?.wishlist));
+			// Cookie.set("cartItems", JSON.stringify(data?.wishlist));
+			dispatch(
+				setCart({
+					cartItems: data?.cart,
+					favorite: data?.wishlist
+				})
+			);
 			dispatch(loginSuccess(data));
 		} catch (error) {
 			dispatch(loginFailed(RequestError(error)));
@@ -61,6 +71,9 @@ export const userRegisterAction =
 
 export const logoutUserAction = () => (dispatch) => {
 	Cookie.remove("userInfo");
+	Cookie.remove("cartItems");
+	Cookie.remove("favorite");
+	dispatch(ResetCartAction());
 	dispatch(logOut());
 };
 

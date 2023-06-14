@@ -21,6 +21,8 @@ import {
 	productByCategorySuccess,
 	reduceItemInCart,
 	removeFromCart,
+	removeFromFav,
+	resetCart,
 	resetCreateProduct,
 	resetDeleteProduct,
 	resetUpdateProduct,
@@ -29,6 +31,7 @@ import {
 	updateProductSuccess
 } from "../reducers/product.slice";
 import Cookie from "js-cookie";
+import { updateUserAction } from "./user.action";
 
 export const createProductAction = (product) => async (dispatch, getState) => {
 	try {
@@ -130,16 +133,20 @@ export const GetProductByCategoryAction =
 		}
 	};
 
-export const AddToCartAction = (prod) => (dispatch) => {
-	const cart = Cookie.get("cartItems")
+export const AddToCartAction = (prod) => (dispatch, getState) => {
+	const carts = Cookie.get("cartItems")
 		? JSON.parse(Cookie.get("cartItems"))
 		: [];
 
-	const exist = cart?.find((item) => item?.item?._id === prod?._id);
+	const {
+		userLogin: { userInfo }
+	} = getState();
+
+	const exist = carts?.find((item) => item?.product?._id === prod?._id);
 
 	const items = exist
-		? cart?.map((item) => {
-				if (item?._id === exist?._id) {
+		? carts?.map((item) => {
+				if (item?.product?._id === exist?.product?._id) {
 					return { ...item, qty: item.qty + 1 };
 				} else {
 					return {
@@ -147,15 +154,20 @@ export const AddToCartAction = (prod) => (dispatch) => {
 					};
 				}
 		  })
-		: [...cart, { item: prod, qty: 1 }];
+		: [...carts, { product: prod, qty: 1 }];
+
 	Cookie.set("cartItems", JSON.stringify(items));
 	dispatch(addToCart(items));
 };
 
-export const AddToFavAction = (prod) => (dispatch) => {
+export const AddToFavAction = (prod) => (dispatch, getState) => {
 	const favorite = Cookie.get("favorite")
 		? JSON.parse(Cookie.get("favorite"))
 		: [];
+
+	const {
+		userLogin: { userInfo }
+	} = getState();
 
 	const exist = favorite?.find((item) => item?._id === prod?._id);
 	const setFav = exist
@@ -168,28 +180,51 @@ export const AddToFavAction = (prod) => (dispatch) => {
 	dispatch(addToFav(setFav));
 };
 
-export const RemoveFromCartAction = (prod) => (dispatch) => {
-	const cart = Cookie.get("cartItems")
+export const RemoveFromFavAction = (prod) => (dispatch, getState) => {
+	const favorite = Cookie.get("favorite")
+		? JSON.parse(Cookie.get("favorite"))
+		: [];
+
+	const {
+		userLogin: { userInfo }
+	} = getState();
+
+	const fav = favorite?.filter((f) => f?._id !== prod?._id);
+
+	Cookie.set("favorite", JSON.stringify(fav));
+	dispatch(removeFromFav(fav));
+};
+
+export const RemoveFromCartAction = (prod) => (dispatch, getState) => {
+	const carts = Cookie.get("cartItems")
 		? JSON.parse(Cookie.get("cartItems"))
 		: [];
 
-	const itemLeft = cart?.filter((item) => item?.item?._id !== prod?._id);
+	const {
+		userLogin: { userInfo }
+	} = getState();
+
+	const itemLeft = carts?.filter((item) => item?.product?._id !== prod?._id);
 
 	Cookie.set("cartItems", JSON.stringify(itemLeft));
 	dispatch(removeFromCart(itemLeft));
 };
 
-export const ReductItemInCartAction = (prod) => (dispatch) => {
-	const cart = Cookie.get("cartItems")
+export const ReductItemInCartAction = (prod) => (dispatch, getState) => {
+	const carts = Cookie.get("cartItems")
 		? JSON.parse(Cookie.get("cartItems"))
 		: [];
 
-	const itemExist = cart?.find((item) => item?.item?._id === prod?._id);
+	const {
+		userLogin: { userInfo }
+	} = getState();
+
+	const itemExist = carts?.find((item) => item?.product?._id === prod?._id);
 
 	const items = itemExist
-		? cart?.map((item) => {
+		? carts?.map((item) => {
 				if (item?.qty === 1) {
-					return cart?.filter((item) => item?.item?._id !== prod?._id);
+					return carts?.filter((item) => item?.product?._id !== prod?._id);
 				} else if (item?.qty > 1) {
 					return { ...item, qty: item?.qty - 1 };
 				} else {
@@ -198,8 +233,12 @@ export const ReductItemInCartAction = (prod) => (dispatch) => {
 					};
 				}
 		  })
-		: cart?.filter((item) => item?.item?._id === prod?._id);
+		: carts?.filter((item) => item?.product?._id === prod?._id);
 
 	Cookie.set("cartItems", JSON.stringify(items));
 	dispatch(reduceItemInCart(items));
+};
+
+export const ResetCartAction = () => (dispatch) => {
+	dispatch(resetCart());
 };

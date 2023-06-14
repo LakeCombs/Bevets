@@ -15,6 +15,7 @@ import {
 } from "../redux/actions/product.action";
 import { Spin } from "antd";
 import Carousel from "../components/lib/Carousel.js";
+import { updateUserAction } from "../redux/actions/user.action";
 
 const ProductByIdScreen = () => {
 	const dispatch = useDispatch();
@@ -26,9 +27,9 @@ const ProductByIdScreen = () => {
 		loading: catLoading,
 		error: catError
 	} = useSelector((state) => state.productByCategory);
+	const { cartItems } = useSelector((state) => state.cart);
+	const { userInfo } = useSelector((state) => state.userLogin);
 	const { categoryName, categoryId } = location.state;
-
-	console.log("the product is ", product);
 
 	useEffect(() => {
 		dispatch(getProductByIdAction(id));
@@ -116,6 +117,16 @@ const ProductByIdScreen = () => {
 							<WideButton
 								onClick={() => {
 									dispatch(AddToCartAction(product));
+									dispatch(
+										updateUserAction(userInfo?._id, {
+											cart: cartItems?.map((item) => {
+												return {
+													product: item?.item?._id,
+													qty: item?.qty
+												};
+											})
+										})
+									);
 								}}
 								style={"rounded-lg bg-dark-blue mt-[50px] py-[3px]"}
 								text={"Add to Cart"}

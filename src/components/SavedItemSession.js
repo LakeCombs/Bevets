@@ -1,6 +1,8 @@
+import useSelection from "antd/es/table/hooks/useSelection";
 import React from "react";
 
 const SavedItemSession = () => {
+	const { favorite } = useSelection((state) => state.cart);
 	return (
 		<div className="h-full flex flex-col">
 			<div className="py-3 w-full px-5 md:font-bold font-semibold">
@@ -9,10 +11,14 @@ const SavedItemSession = () => {
 			<hr />
 			<div className="flex h-[100%] flex-col justify-center items-bet">
 				<div className="flex-grow">
-					<div className="flex justify-center w-full h-full items-center flex-col">
-						<img alt="" src={"/assets/favorite.svg"} />
-						<h2 className="">You haven’t saved any items yet</h2>
-					</div>
+					{!favorite?.length ? (
+						<div className="flex justify-center w-full h-full items-center flex-col">
+							<img alt="" src={"/assets/favorite.svg"} />
+							<h2 className="">You haven’t saved any items yet</h2>
+						</div>
+					) : (
+						<div> the items</div>
+					)}
 				</div>
 				<div className="mt-auto">
 					<hr />

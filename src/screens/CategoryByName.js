@@ -12,6 +12,7 @@ import {
 	AddToCartAction,
 	AddToFavAction
 } from "../redux/actions/product.action";
+import { productByCategoryReducer } from "../redux/reducers/product.slice";
 
 const CategoryByName = () => {
 	const navigate = useNavigate();
@@ -21,6 +22,9 @@ const CategoryByName = () => {
 	const { products, loading, error } = useSelector(
 		(state) => state.productByCategory
 	);
+	const { favorite } = useSelector((state) => state.cart);
+
+	console.log("the products fetched here is ", products);
 
 	useEffect(() => {
 		dispatch(GetProductByCategoryAction(_id));
@@ -57,27 +61,7 @@ const CategoryByName = () => {
 
 					<div className="flex justify-around flex-wrap">
 						{products?.map((product) => (
-							<StandardProductCard
-								addToCart={() => {
-									dispatch(AddToCartAction(product));
-								}}
-								addToFav={() => {
-									dispatch(AddToFavAction(product));
-								}}
-								description={""}
-								image={product?.[0]}
-								name={product?.name}
-								price={product?.price}
-								key={product?._id}
-								onClick={() =>
-									navigate(`/product/${product?._id}`, {
-										state: {
-											categoryName: product?.category?.name,
-											categoryId: product?.category?._id
-										}
-									})
-								}
-							/>
+							<StandardProductCard product={product} />
 						))}
 					</div>
 				</div>

@@ -15,6 +15,7 @@ import {
 	RemoveFromCartAction
 } from "../redux/actions/product.action";
 import { HiOutlineShoppingCart } from "react-icons/hi";
+import { updateUserAction } from "../redux/actions/user.action";
 
 const CartScreen = () => {
 	const navigate = useNavigate();
@@ -36,12 +37,6 @@ const CartScreen = () => {
 						</h2>
 						<hr />
 						<div className="flex justify-center items-center h-[300px] flex-col">
-							{/* <img
-								className="h-[100px] w-[100px] rounded-full"
-								alt=""
-								src={""}
-							/> */}
-
 							<HiOutlineShoppingCart className="text-[100px]" />
 							<h2 className="family-poppins mt-[30px] text-[25px] ">
 								Oops!, your cart is empty
@@ -57,27 +52,26 @@ const CartScreen = () => {
 							<hr />
 							{/* Cart Object */}
 
-							{cartItems?.map(({ item, qty }) => {
+							{cartItems?.map(({ product, qty }) => {
 								return (
 									<div
 										className="flex justify-between px-[20px] py-[20px] border-y"
-										key={item?._id}>
+										key={product?._id}>
 										<div className="w-full ">
 											<div className="flex flex-row justify-start">
 												<img
 													className="h-[50px] w-[50px]"
 													alt={""}
-													src={item?.images && item?.images[0]}
-													src={""}
+													src={product?.images && product?.images[0]}
 												/>
 
 												<div className="ml-[10px]">
-													<h3>{item?.name}</h3>
+													<h3>{product?.name}</h3>
 													<p className="flex md:hidden text-app-orange">
-														GhC {item?.price}
+														GhC {product?.price}
 													</p>
 													<p className="text-[#00000066] text-[10px]">
-														{item?.description}
+														{product?.description}
 													</p>
 													{/* <p className="text-[#00000066] text-[10px]">
 														Enter Description
@@ -88,7 +82,17 @@ const CartScreen = () => {
 												<p
 													className="text-app-orange flex flex-row mt-[15px] hover:cursor-pointer"
 													onClick={() => {
-														dispatch(RemoveFromCartAction(item));
+														dispatch(RemoveFromCartAction(product));
+														dispatch(
+															updateUserAction(userInfo?._id, {
+																cart: cartItems?.map((item) => {
+																	return {
+																		product: item?.product?._id,
+																		qty: item?.qty
+																	};
+																})
+															})
+														);
 													}}>
 													<MdDeleteOutline className="mr-[3px] text-[18px]" />
 													REMOVE
@@ -96,14 +100,36 @@ const CartScreen = () => {
 												<div className=" md:hidden flex justify-end w-auto mt-[20px]">
 													<span
 														className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
-														onClick={() => {}}>
+														onClick={() => {
+															dispatch(ReductItemInCartAction(product));
+															dispatch(
+																updateUserAction(userInfo?._id, {
+																	cart: cartItems?.map((item) => {
+																		return {
+																			product: item?.product?._id,
+																			qty: item?.qty
+																		};
+																	})
+																})
+															);
+														}}>
 														-
 													</span>{" "}
 													<span className="mx-[10px]">{qty}</span>
 													<span
 														className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
 														onClick={() => {
-															dispatch(AddToCartAction(item));
+															dispatch(AddToCartAction(product));
+															dispatch(
+																updateUserAction(userInfo?._id, {
+																	cart: cartItems?.map((item) => {
+																		return {
+																			product: item?.product?._id,
+																			qty: item?.qty
+																		};
+																	})
+																})
+															);
 														}}>
 														+
 													</span>
@@ -113,7 +139,7 @@ const CartScreen = () => {
 
 										<div className="flex-col hidden md:flex">
 											<div className="flex flex-col items-end justify-end">
-												<h1 className="font-semibold">GHc {item?.price}</h1>
+												<h1 className="font-semibold">GHc {product?.price}</h1>
 												{/* <p>
 													<span className="font-light mr-[3px]">
 														GHc {item?.price}
@@ -127,7 +153,7 @@ const CartScreen = () => {
 												<span
 													className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
 													onClick={() => {
-														dispatch(ReductItemInCartAction(item));
+														dispatch(ReductItemInCartAction(product));
 													}}>
 													-
 												</span>{" "}
@@ -135,7 +161,7 @@ const CartScreen = () => {
 												<span
 													className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
 													onClick={() => {
-														dispatch(AddToCartAction(item));
+														dispatch(AddToCartAction(product));
 													}}>
 													+
 												</span>
@@ -162,7 +188,8 @@ const CartScreen = () => {
 									GHc{" "}
 									{cartItems?.reduce((accumulator, currentValue) => {
 										return (
-											accumulator + currentValue?.item?.price * currentValue.qty
+											accumulator +
+											currentValue?.product?.price * currentValue.qty
 										);
 									}, 0)}
 								</h1>
