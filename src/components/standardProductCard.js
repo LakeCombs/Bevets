@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
 	AddToCartAction,
 	AddToFavAction,
+	AddToRecentlyViewedAction,
 	RemoveFromFavAction
 } from "../redux/actions/product.action";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +40,7 @@ const StandardProductCard = ({ product }) => {
 				src={product?.images && product?.images[0]}
 				alt={""}
 				onClick={() => {
+					dispatch(AddToRecentlyViewedAction(product));
 					navigate(`/product/${product?._id}`, {
 						state: {
 							categoryName: product?.category?.name,

@@ -4,6 +4,7 @@ import { headerConfig } from "../../utils/headerConfig";
 import {
 	addToCart,
 	addToFav,
+	addToRecently_viewed,
 	createProductFailed,
 	createProductRequest,
 	createProductSuccess,
@@ -160,14 +161,10 @@ export const AddToCartAction = (prod) => (dispatch, getState) => {
 	dispatch(addToCart(items));
 };
 
-export const AddToFavAction = (prod) => (dispatch, getState) => {
+export const AddToFavAction = (prod) => (dispatch) => {
 	const favorite = Cookie.get("favorite")
 		? JSON.parse(Cookie.get("favorite"))
 		: [];
-
-	const {
-		userLogin: { userInfo }
-	} = getState();
 
 	const exist = favorite?.find((item) => item?._id === prod?._id);
 	const setFav = exist
@@ -180,14 +177,10 @@ export const AddToFavAction = (prod) => (dispatch, getState) => {
 	dispatch(addToFav(setFav));
 };
 
-export const RemoveFromFavAction = (prod) => (dispatch, getState) => {
+export const RemoveFromFavAction = (prod) => (dispatch) => {
 	const favorite = Cookie.get("favorite")
 		? JSON.parse(Cookie.get("favorite"))
 		: [];
-
-	const {
-		userLogin: { userInfo }
-	} = getState();
 
 	const fav = favorite?.filter((f) => f?._id !== prod?._id);
 
@@ -195,14 +188,10 @@ export const RemoveFromFavAction = (prod) => (dispatch, getState) => {
 	dispatch(removeFromFav(fav));
 };
 
-export const RemoveFromCartAction = (prod) => (dispatch, getState) => {
+export const RemoveFromCartAction = (prod) => (dispatch) => {
 	const carts = Cookie.get("cartItems")
 		? JSON.parse(Cookie.get("cartItems"))
 		: [];
-
-	const {
-		userLogin: { userInfo }
-	} = getState();
 
 	const itemLeft = carts?.filter((item) => item?.product?._id !== prod?._id);
 
@@ -210,14 +199,10 @@ export const RemoveFromCartAction = (prod) => (dispatch, getState) => {
 	dispatch(removeFromCart(itemLeft));
 };
 
-export const ReductItemInCartAction = (prod) => (dispatch, getState) => {
+export const ReductItemInCartAction = (prod) => (dispatch) => {
 	const carts = Cookie.get("cartItems")
 		? JSON.parse(Cookie.get("cartItems"))
 		: [];
-
-	const {
-		userLogin: { userInfo }
-	} = getState();
 
 	const itemExist = carts?.find((item) => item?.product?._id === prod?._id);
 
@@ -241,4 +226,21 @@ export const ReductItemInCartAction = (prod) => (dispatch, getState) => {
 
 export const ResetCartAction = () => (dispatch) => {
 	dispatch(resetCart());
+};
+
+export const AddToRecentlyViewedAction = (prod) => (dispatch) => {
+	const recently_viewed = Cookie.get("recently_viewed")
+		? JSON.parse(Cookie.get("recently_viewed"))
+		: [];
+
+	const itemExist = recently_viewed?.find((item) => item?._id === prod?._id);
+
+	const itemInViewed = itemExist
+		? [...recently_viewed]
+		: prod?._id
+		? [...recently_viewed, prod]
+		: [...recently_viewed];
+
+	dispatch(addToRecently_viewed(itemInViewed));
+	Cookie.set("recently_viewed", JSON.stringify(itemInViewed));
 };

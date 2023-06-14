@@ -202,7 +202,10 @@ export const productByCategoryReducer = productByCategorySlice.reducer;
 
 const cart = {
 	cartItems: Cookie.get("cartItems") ? JSON.parse(Cookie.get("cartItems")) : [],
-	favorite: Cookie.get("favorite") ? JSON.parse(Cookie.get("favorite")) : []
+	favorite: Cookie.get("favorite") ? JSON.parse(Cookie.get("favorite")) : [],
+	recently_viewed: Cookie.get("recently_viewed")
+		? JSON.parse(Cookie.get("recently_viewed"))
+		: []
 };
 
 const cartSlice = createSlice({
@@ -214,7 +217,6 @@ const cartSlice = createSlice({
 	},
 	reducers: {
 		setCart: (state, { payload }) => {
-			console.log("the payload is ", payload);
 			state.cartItems = payload?.cartItems;
 			state.favorite = payload?.favorite;
 			Cookie.set("cartItems", JSON.stringify(payload?.cartItems));
@@ -244,6 +246,10 @@ const cartSlice = createSlice({
 		resetCart: (state) => {
 			state.cartItems = [];
 			state.favorite = [];
+		},
+
+		addToRecently_viewed: (state, { payload }) => {
+			state.recently_viewed = payload;
 		}
 	}
 });
@@ -255,6 +261,7 @@ export const {
 	setCart,
 	reduceItemInCart,
 	removeFromFav,
-	resetCart
+	resetCart,
+	addToRecently_viewed
 } = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

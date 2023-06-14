@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {
 	AddToCartAction,
 	AddToFavAction,
+	AddToRecentlyViewedAction,
 	RemoveFromFavAction
 } from "../redux/actions/product.action";
 import { updateUserAction } from "../redux/actions/user.action";
@@ -33,6 +34,11 @@ const BasicEssentialCard = ({ product }) => {
 						className={` outline-white text-orange-400 text-[15px] `}
 						onClick={() => {
 							dispatch(RemoveFromFavAction(product));
+							dispatch(
+								updateUserAction(userInfo?._id, {
+									wishlist: favorite?.map((item) => item?._id)
+								})
+							);
 						}}
 					/>
 				) : (
@@ -40,6 +46,11 @@ const BasicEssentialCard = ({ product }) => {
 						className={` outline-white text-white text-[15px] `}
 						onClick={() => {
 							dispatch(AddToFavAction(product));
+							dispatch(
+								updateUserAction(userInfo?._id, {
+									wishlist: favorite?.map((item) => item?._id)
+								})
+							);
 						}}
 					/>
 				)}
@@ -50,6 +61,7 @@ const BasicEssentialCard = ({ product }) => {
 				src={product?.images && product?.images[0]}
 				alt={""}
 				onClick={() => {
+					dispatch(AddToRecentlyViewedAction(product));
 					navigate(`/product/${product?._id}`, {
 						state: {
 							categoryName: product?.category?.name,
@@ -73,16 +85,16 @@ const BasicEssentialCard = ({ product }) => {
 				<button
 					onClick={() => {
 						dispatch(AddToCartAction(product));
-						// dispatch(
-						// 	updateUserAction(userInfo?._id, {
-						// 		cart: cartItems?.map((item) => {
-						// 			return {
-						// 				product: item?.item?._id,
-						// 				qty: item?.qty
-						// 			};
-						// 		})
-						// 	})
-						// );
+						dispatch(
+							updateUserAction(userInfo?._id, {
+								cart: cartItems?.map((item) => {
+									return {
+										product: item?.item?._id,
+										qty: item?.qty
+									};
+								})
+							})
+						);
 					}}
 					className="rounded-lg h3 hover:shadow  text-[12px]  bg-dark-blue text-app-white px-[10px] flex justify-center items-center font-semibold py-[3px] sm:py-[5px] mt-0 sm:mt-3">
 					Add to Cart

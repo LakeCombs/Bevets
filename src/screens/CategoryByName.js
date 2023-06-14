@@ -24,8 +24,6 @@ const CategoryByName = () => {
 	);
 	const { favorite } = useSelector((state) => state.cart);
 
-	console.log("the products fetched here is ", products);
-
 	useEffect(() => {
 		dispatch(GetProductByCategoryAction(_id));
 	}, [_id, dispatch]);

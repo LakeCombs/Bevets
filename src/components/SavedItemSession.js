@@ -1,8 +1,10 @@
-import useSelection from "antd/es/table/hooks/useSelection";
 import React from "react";
+import { useSelector } from "react-redux";
+import StandardProductCard from "./standardProductCard";
 
 const SavedItemSession = () => {
-	const { favorite } = useSelection((state) => state.cart);
+	const { favorite } = useSelector((state) => state.cart);
+	console.log("the favorite is " + favorite);
 	return (
 		<div className="h-full flex flex-col">
 			<div className="py-3 w-full px-5 md:font-bold font-semibold">
@@ -17,7 +19,11 @@ const SavedItemSession = () => {
 							<h2 className="">You haven’t saved any items yet</h2>
 						</div>
 					) : (
-						<div> the items</div>
+						<div className="p-[10px] flex flex-wrap">
+							{favorite?.map((item) => (
+								<StandardProductCard product={item} />
+							))}
+						</div>
 					)}
 				</div>
 				<div className="mt-auto">
