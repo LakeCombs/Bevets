@@ -224,3 +224,33 @@ const orderByUserSlice = createSlice({
 export const { orderByUserRequest, orderByUserSuccess, orderByUserFailure } =
 	orderByUserSlice.actions;
 export const OrderByUserReducer = orderByUserSlice.reducer;
+
+const getLastOrderSlice = createSlice({
+	name: "last order slice",
+	initialState: {
+		order: {},
+		loading: false,
+		error: ""
+	},
+	reducers: {
+		lastOrderRequest: (state) => {
+			state.loading = true;
+			state.error = "";
+			state.order = {};
+		},
+		lastOrderSuccess: (state, { payload }) => {
+			state.loading = false;
+			state.error = "";
+			state.order = payload;
+		},
+		lastOrderFailure: (state, { payload }) => {
+			state.loading = false;
+			state.error = payload;
+			state.order = {};
+		}
+	}
+});
+
+export const { lastOrderFailure, lastOrderRequest, lastOrderSuccess } =
+	getLastOrderSlice.actions;
+export const lastOrderReducer = getLastOrderSlice.reducer;

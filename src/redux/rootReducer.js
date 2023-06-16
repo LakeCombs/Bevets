@@ -45,7 +45,8 @@ import {
 	getAllOrderReducer,
 	getOrderByIdReducer,
 	updateOrderReducer,
-	OrderByUserReducer
+	OrderByUserReducer,
+	lastOrderReducer
 } from "./reducers/orderSilce";
 
 const rootReducer = combineReducers({
@@ -95,7 +96,8 @@ const rootReducer = combineReducers({
 	orderById: getOrderByIdReducer,
 	updateOrder: updateOrderReducer,
 	deleteOrder: deleteOrderReducer,
-	orderByUser: OrderByUserReducer
+	orderByUser: OrderByUserReducer,
+	lastOrder: lastOrderReducer
 });
 
 export default rootReducer;

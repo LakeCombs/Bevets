@@ -22,7 +22,10 @@ import {
 	getAllOrderRequest,
 	resetOrderDetails,
 	resetUpdateOrder,
-	updateOrderSuccess
+	updateOrderSuccess,
+	lastOrderRequest,
+	lastOrderSuccess,
+	lastOrderFailure
 } from "../reducers/orderSilce";
 import {
 	getAllProductFailed,
@@ -104,6 +107,16 @@ export const deleteOrderAction = (id) => async (dispatch, getState) => {
 		dispatch(deleteOrderSuccess(data));
 	} catch (error) {
 		dispatch(deleteOrderFailure(RequestError(error)));
+	}
+};
+
+export const getLastOrderAction = () => async (dispatch) => {
+	try {
+		dispatch(lastOrderRequest());
+		const { data } = await api.get("/orders/last");
+		dispatch(lastOrderSuccess(data));
+	} catch (error) {
+		dispatch(lastOrderFailure(RequestError(error)));
 	}
 };
 

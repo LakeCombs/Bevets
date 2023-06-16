@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Avatar, Button, Input, Radio, Space, Spin } from "antd";
+import React, { useEffect, useState } from "react";
+import { Avatar, Button, Input, Radio, Select, Space, Spin } from "antd";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GoPrimitiveDot } from "react-icons/go";
 import SearchComponent from "../components/searchComponent";
@@ -24,6 +24,16 @@ const AdminOrderByIdScreen = () => {
 		loading: updateLoading,
 		error: updateError
 	} = useSelector((state) => state.updateOrder);
+	const [tracking, setTracking] = useState(
+		order?.order_tracking_status?.tracks || ""
+	);
+
+	const trackOptions = [
+		"Order Placed",
+		"Confirm Order",
+		"Dispatch",
+		"Delivered"
+	];
 
 	useEffect(() => {
 		dispatch(getOrderByIdAction(id));
@@ -54,7 +64,7 @@ const AdminOrderByIdScreen = () => {
 								<div className="flex flex-row items-center">
 									<p className="mr-[5px]">Delivery Status</p>
 									<p
-										className={`px-[7px] py-[5px] text-white w-[100px] text-center rounded-lg font-bold hover:cursor-pointer
+										className={`px-[2px] py-[3px] text-white w-[100px] text-center rounded-lg  hover:cursor-pointer
 						
                     ${
 											order?.delivery_status === "pending"
@@ -130,9 +140,6 @@ const AdminOrderByIdScreen = () => {
 							<div className="px-[10px] w-full border-b pb-[5px]">
 								<div className="flex w-full flex-row justify-between items-center mt-[10px] text-[12px]">
 									<p>Shipping Address</p>
-									{/* <p className="bg-green-500 px-[5px] hover:cursor-pointer py-[2px] rounded-lg text-white">
-										Edit
-									</p> */}
 								</div>
 								<div className="text-[10px] mt-[-10px]">
 									<p className="font-bold mt-[25px]">{`${order?.user?.firstname} ${order?.user?.lastname}`}</p>
@@ -141,6 +148,40 @@ const AdminOrderByIdScreen = () => {
 									<p className="">State: {order?.address?.state}</p>
 									<p className=""> ZipCode: {order?.address?.zipCode}</p>
 								</div>
+							</div>
+
+							<div className="px-[10px] w-full pb-[5px] mt-[10px] ">
+								<p className="font-semibold">Change Tracking Details</p>
+
+								<select
+									className="mt-[10px] w-full  rounded-md py-[5px]"
+									id="selectOption"
+									value={tracking
+										?.replace(/_/g, " ")
+										.replace(/\b\w/g, (c) => c.toUpperCase())}
+									onChange={(e) => {
+										setTracking(e.target.value);
+										dispatch(
+											updateOrderAction(id, {
+												[`order_tracking_status.${tracking
+													?.toLowerCase()
+													.replace(/\s+/g, "_")}`]: {
+													value: true,
+													date: moment().format("Do MMMM, YYYY")
+												}
+											})
+										);
+									}}>
+									<option value={tracking}>{tracking}</option>
+
+									{trackOptions
+										?.filter((track) => track !== tracking)
+										.map((option) => (
+											<option key={option} value={option}>
+												{option}
+											</option>
+										))}
+								</select>
 							</div>
 
 							{/* <div className="px-[10px] w-full pb-[5px]">

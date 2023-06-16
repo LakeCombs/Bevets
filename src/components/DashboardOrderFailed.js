@@ -91,6 +91,17 @@ const DashboardOrderFailed = ({ onClick }) => {
 					</p>
 				),
 				key: "2"
+			},
+			{
+				label: (
+					<p
+						onClick={() => {
+							navigate(`/admin/orders/${id}`);
+						}}>
+						Change Tracking Details
+					</p>
+				),
+				key: "3"
 			}
 		];
 	};
