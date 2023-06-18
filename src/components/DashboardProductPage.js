@@ -1,4 +1,4 @@
-import { Input, Table, Spin } from "antd";
+import { Input, Table, Spin, Dropdown } from "antd";
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsPencil } from "react-icons/bs";
@@ -10,7 +10,8 @@ import {
 	getAllProductAction,
 	createProductAction,
 	resetCreateProductAction,
-	DeleteProductAction
+	DeleteProductAction,
+	getProductByIdAction
 } from "../redux/actions/product.action";
 import {
 	allCategoryAction,
@@ -24,14 +25,23 @@ import {
 	uploadImageAction
 } from "../redux/actions/image.action";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DashboardProductPage = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
 	const {
 		products,
 		loading: allProductLoading,
 		error: allProductError
 	} = useSelector((state) => state.allProduct);
+
+	const {
+		product: productById,
+		loading: productByIdLoading,
+		error: productByIdError
+	} = useSelector * ((state) => state.productById);
 	const { categories } = useSelector((state) => state.allCategory);
 	const {
 		product,
@@ -151,7 +161,6 @@ const DashboardProductPage = () => {
 			// Handle the response from the API as needed
 		} catch (error) {
 			setUploadImageLoading(false);
-			console.error("Error:", error);
 			// Handle any errors that occurred during the API request
 		}
 	};
@@ -211,12 +220,69 @@ const DashboardProductPage = () => {
 		}
 	];
 
+	const items = (id) => {
+		return [
+			{
+				label: (
+					<p
+						onClick={() => {
+							navigate(`/admin/product/${id}`);
+						}}>
+						View Product
+					</p>
+				),
+				key: "0"
+			},
+			{
+				label: (
+					<p
+						onClick={() => {
+							navigate(`/dashboard`, {
+								state: {
+									page: "messages",
+									productid: id
+								}
+							});
+						}}>
+						Send Message
+					</p>
+				),
+				key: "1"
+			},
+
+			{
+				label: (
+					<p
+						onClick={() => {
+							navigate(`/admin/product/${id}`, {
+								state: {
+									edit: true
+								}
+							});
+						}}>
+						Edit Product
+					</p>
+				),
+				key: "3"
+			}
+		];
+	};
+
 	const data = [];
 	for (let index = 0; index < products?.length; index++) {
 		data.push({
-			key: products[index]?._id,
+			// key: <p>{products[index]?._id}</p>,
 			name: products[index]?.name,
-			itemNo: products[index]?._id?.slice(0, 4),
+			itemNo: (
+				<p
+					className="hover:cursor-pointer"
+					onClick={() => {
+						navigate(`/admin/product/${products[index]?._id}`);
+					}}>
+					{" "}
+					{products[index]?._id?.slice(0, 4)}{" "}
+				</p>
+			),
 			image: (
 				<img
 					alt=""
@@ -230,9 +296,16 @@ const DashboardProductPage = () => {
 			status: products[index]?.status,
 			action: (
 				<div className="flex flex-row justify-center">
-					<p className=" p-[10px] bg-green-500 hover:cursor-pointer rounded-full text-[12px] text-white mr-[4px]">
-						<BsPencil />
-					</p>
+					<Dropdown
+						menu={{
+							items: items(products[index]?._id)
+						}}
+						trigger={["click"]}>
+						<p className=" p-[10px] bg-green-500 hover:cursor-pointer rounded-full text-[12px] text-white mr-[4px]">
+							<BsPencil />
+						</p>
+					</Dropdown>
+
 					<p
 						className=" p-[10px] bg-[#E77D00]  hover:cursor-pointer rounded-full text-[12px] text-white"
 						onClick={() => dispatch(DeleteProductAction(products[index]?._id))}>

@@ -14,14 +14,17 @@ import DashboardCustomerPage from "../components/DashboardCustomerPage";
 import DashboardMessagePage from "../components/DashboardMessagePage";
 import DashboardReportPage from "../components/DashboardReportPage";
 import DashboardSettingsPage from "../components/DashboardSettingsPage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getProductByIdAction } from "../redux/actions/product.action";
 
 const Dashboard = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const { userInfo } = useSelector((state) => state.userLogin);
 	const [page, setPage] = useState("dashboard");
+
 	const Left = ({ icon, text, onClick }) => {
 		return (
 			<div
@@ -38,6 +41,7 @@ const Dashboard = () => {
 			window.history.back();
 		}
 	}, []);
+
 	return (
 		<div className="bg-primary-blue min-h-screen">
 			<DashboardHeader />
