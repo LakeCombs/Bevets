@@ -14,10 +14,12 @@ import OrderTrackingSession from "../components/OrderTrackingSession";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { Dropdown } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUserAction } from "../redux/actions/user.action";
 
 const Account = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [right, setRight] = useState("account");
 	const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -189,7 +191,14 @@ const Account = () => {
 							<hr />
 
 							<div className="py-[8px] px-[20px] flex   hover:cursor-pointer hover:font-bold font-semibold justify-center  items-center">
-								<p className="text-app-orange">LOGOUT</p>
+								<p
+									className="text-app-orange"
+									onClick={() => {
+										navigate("/");
+										dispatch(logoutUserAction());
+									}}>
+									LOGOUT
+								</p>
 							</div>
 						</div>
 					</div>
