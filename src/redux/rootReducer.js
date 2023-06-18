@@ -48,6 +48,11 @@ import {
 	OrderByUserReducer,
 	lastOrderReducer
 } from "./reducers/orderSilce";
+import {
+	allMessageReducer,
+	createMessageReducer,
+	messageByUserReducer
+} from "./reducers/messag.slice";
 
 const rootReducer = combineReducers({
 	//user reducers
@@ -97,7 +102,12 @@ const rootReducer = combineReducers({
 	updateOrder: updateOrderReducer,
 	deleteOrder: deleteOrderReducer,
 	orderByUser: OrderByUserReducer,
-	lastOrder: lastOrderReducer
+	lastOrder: lastOrderReducer,
+
+	//message
+	createMessage: createMessageReducer,
+	allMessages: allMessageReducer,
+	userMessages: messageByUserReducer
 });
 
 export default rootReducer;

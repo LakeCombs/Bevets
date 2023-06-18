@@ -233,22 +233,6 @@ const DashboardProductPage = () => {
 				),
 				key: "0"
 			},
-			{
-				label: (
-					<p
-						onClick={() => {
-							navigate(`/dashboard`, {
-								state: {
-									page: "messages",
-									productid: id
-								}
-							});
-						}}>
-						Send Message
-					</p>
-				),
-				key: "1"
-			},
 
 			{
 				label: (
@@ -263,7 +247,7 @@ const DashboardProductPage = () => {
 						Edit Product
 					</p>
 				),
-				key: "3"
+				key: "2"
 			}
 		];
 	};

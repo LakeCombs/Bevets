@@ -1,32 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GetMessageByUser } from "../redux/actions/message.action";
 
 const InboxSession = () => {
-	const messages = [1, 2, 3];
+	const dispatch = useDispatch();
+	const { messages, loading, error } = useSelector(
+		(state) => state.userMessages
+	);
 
-	const MessageLook = () => {
+	useEffect(() => {
+		dispatch(GetMessageByUser());
+	}, []);
+
+	const MessageLook = ({ message }) => {
 		return (
 			<div className="w-full border rounded-md p-[15px] mb-[15px]">
 				<div className="flex flex-row justify-between">
 					<p className="text-[12px]">12 may</p>
-					<p className="text-bright-blue  px-[10px] py-[8px] rounded-lg font-semibold">
+					{/* <p className="text-bright-blue  px-[10px] py-[8px] rounded-lg font-semibold">
 						{" "}
 						See details
-					</p>
+					</p> */}
 				</div>
-				<p className="font-semibold"> title</p>
+				<p className="font-semibold"> {message?.title}</p>
 
-				<p className="my-[10px]">
-					Benjamin (tel. 09074436460) will deliver your package
-					JE-B84-1256549962-0171 today. Please note that you can pay with your
-					card or bank transfer via JumiaPay at the time of delivery; simply
-					inform our delivery agent when your order is being delivered. Thank
-					you!.
-				</p>
+				<p className="my-[10px] text-[14px]">{message?.message}</p>
 
-				<div className="mt-[20px] broder p-[5px] border rounded-md flex flex-row items-start w-[80%]">
-					<img alt="" className=" h-[70px] w-[70px] mr-[10px] rounded-md" />
-					<p>Unisex Anti Blue Light Protective Computer Screen Glasses</p>
-				</div>
+				{message?.product && (
+					<div className="mt-[20px] broder p-[5px] border rounded-md flex flex-row items-start w-[80%]">
+						<img
+							alt=""
+							className=" h-[70px] w-[70px] mr-[10px] rounded-md"
+							src={message?.product?.images && message?.product?.images[0]}
+						/>
+						<div>
+							<p>
+								{message?.product?.name}, {message?.product?.category?.name}
+							</p>
+							<p>{message?.product?.category?.name}</p>
+						</div>
+					</div>
+				)}
 			</div>
 		);
 	};
@@ -48,11 +62,9 @@ const InboxSession = () => {
 				)}
 
 				<div className="flex-grow overflow-y-auto h-[150px] p-[10px]">
-					<MessageLook />
-					<MessageLook />
-					<MessageLook />
-					<MessageLook />
-					<MessageLook />
+					{messages?.map((message) => (
+						<MessageLook message={message} />
+					))}
 				</div>
 
 				<div className="mt-auto">
