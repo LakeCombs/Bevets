@@ -19,13 +19,13 @@ const LoginScreen = () => {
 
 	useEffect(() => {
 		if (userInfo?.role === "admin") {
-			navigate("/dashboard");
+			return navigate("/dashboard");
 		}
 
 		if (userInfo?._id) {
-			navigate("/") || redirect(-1);
+			return navigate("/");
 		}
-	}, [navigate, userInfo]);
+	}, [userInfo]);
 	return (
 		<div className="flex pt-[50px] flex-col bg-background h-screen items-center w-full">
 			<img
