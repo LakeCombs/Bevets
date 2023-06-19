@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetMessageByUser } from "../redux/actions/message.action";
+import { useNavigate } from "react-router-dom";
+import { Spin } from "antd";
 
 const InboxSession = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { messages, loading, error } = useSelector(
 		(state) => state.userMessages
 	);
@@ -32,6 +35,14 @@ const InboxSession = () => {
 							alt=""
 							className=" h-[70px] w-[70px] mr-[10px] rounded-md"
 							src={message?.product?.images && message?.product?.images[0]}
+							onClick={() => {
+								navigate(`/product/${message?.product?._id}`, {
+									state: {
+										categoryName: message?.product?.category?.name,
+										categoryId: message?.product?.category?._id
+									}
+								});
+							}}
 						/>
 						<div>
 							<p>
@@ -47,7 +58,7 @@ const InboxSession = () => {
 	return (
 		<div className="h-full flex flex-col">
 			<div className="py-3 w-full px-5 md:font-bold font-semibold">
-				<h2>MESSAGES</h2>
+				<h2>MESSAGES {loading && <Spin />}</h2>
 			</div>
 			<hr />
 

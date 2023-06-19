@@ -95,3 +95,36 @@ export const {
 	messageByUserFailure
 } = messageByUserSlice.actions;
 export const messageByUserReducer = messageByUserSlice.reducer;
+
+const deleteMessageSlice = createSlice({
+	name: "delete message",
+	initialState: {
+		message: {},
+		loading: false,
+		error: ""
+	},
+	reducers: {
+		deleteMessageRequest: (state) => {
+			state.loading = true;
+			state.error = "";
+			state.message = {};
+		},
+		deleteMessageSuccess: (state, action) => {
+			state.loading = false;
+			state.error = "";
+			state.message = action.payload;
+		},
+		deleteMessageFailure: (state, action) => {
+			state.loading = false;
+			state.error = action.payload;
+			state.message = {};
+		}
+	}
+});
+
+export const {
+	deleteMessageRequest,
+	deleteMessageSuccess,
+	deleteMessageFailure
+} = deleteMessageSlice.actions;
+export const deleteMessageReducer = deleteMessageSlice.reducer;

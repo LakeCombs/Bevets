@@ -8,6 +8,9 @@ import {
 	createMessageFailure,
 	createMessageRequest,
 	createMessageSuccess,
+	deleteMessageFailure,
+	deleteMessageRequest,
+	deleteMessageSuccess,
 	messageByUserFailure,
 	messageByUserRequest,
 	messageByUserSuccess
@@ -56,5 +59,22 @@ export const GetMessageByUser = () => async (dispatch, getState) => {
 		dispatch(messageByUserSuccess(data));
 	} catch (error) {
 		dispatch(messageByUserFailure(RequestError(error)));
+	}
+};
+
+export const DeleteMessageAction = (id) => async (dispatch, getState) => {
+	try {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		dispatch(deleteMessageRequest());
+		const { data } = await api.delete(
+			`/messages/${id}`,
+			headerConfig(userInfo)
+		);
+		dispatch(deleteMessageSuccess(data));
+	} catch (error) {
+		dispatch(deleteMessageFailure(RequestError(error)));
 	}
 };

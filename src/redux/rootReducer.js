@@ -51,6 +51,7 @@ import {
 import {
 	allMessageReducer,
 	createMessageReducer,
+	deleteMessageReducer,
 	messageByUserReducer
 } from "./reducers/messag.slice";
 
@@ -107,7 +108,8 @@ const rootReducer = combineReducers({
 	//message
 	createMessage: createMessageReducer,
 	allMessages: allMessageReducer,
-	userMessages: messageByUserReducer
+	userMessages: messageByUserReducer,
+	deleteMessage: deleteMessageReducer
 });
 
 export default rootReducer;

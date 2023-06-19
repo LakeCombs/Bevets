@@ -1,5 +1,5 @@
 import { Input, Spin } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserAction } from "../redux/actions/user.action";
 import { resetUpdateUser } from "../redux/reducers/user.slice";
@@ -8,6 +8,9 @@ import {
 	DeleteAddressAction,
 	UpdateAddressAction
 } from "../redux/actions/address.action";
+import { BiPen } from "react-icons/bi";
+import { BsPencil } from "react-icons/bs";
+import { api } from "../utils/apiInstance";
 
 const AccountSession = () => {
 	const dispatch = useDispatch();
@@ -37,12 +40,41 @@ const AccountSession = () => {
 	const [lastname, setLastname] = useState(userInfo?.lastname || "");
 	const [email, setEmail] = useState(userInfo?.email || "");
 	const [mobile, setMobile] = useState(userInfo?.mobile || "");
+	const [profile_picture, setProfile_picture] = useState(
+		userInfo?.profile_picture || ""
+	);
+	const [uploadImageLoading, setUploadImageLoading] = useState(false);
 
 	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
 	const [state, setState] = useState("");
 	const [zipCode, setZipCode] = useState("");
 	const [addressId, setAddressId] = useState("");
+	const inputRef = useRef(null);
+
+	const handleFileChange = async (e) => {
+		inputRef.current.click();
+
+		const fileObj = e.target.files && e.target.files[0];
+		if (!fileObj) {
+			return;
+		}
+
+		let formData = new FormData();
+		formData.append("image", fileObj, fileObj?.name);
+		try {
+			setUploadImageLoading(true);
+			const res = await api.post("/images", formData);
+			setProfile_picture(res?.data?.image);
+			setUploadImageLoading(false);
+			// Handle the response from the API as needed
+		} catch (error) {
+			setUploadImageLoading(false);
+			// Handle any errors that occurred during the API request
+		}
+	};
+
+	console.log("the profile picture ", profile_picture);
 
 	useEffect(() => {
 		if (user?._id) {
@@ -107,6 +139,10 @@ const AccountSession = () => {
 
 					{!updateUserDetails ? (
 						<div className="px-5 pt-2">
+							<img
+								className="border h-[50px] w-[50px] rounded-none"
+								src={userInfo?.profile_picture}
+							/>
 							<h2 className="font-semibold md:text-[15px] text-[12px]">
 								{`${userInfo?.firstname} ${userInfo?.lastname}`}
 							</h2>
@@ -115,6 +151,29 @@ const AccountSession = () => {
 						</div>
 					) : (
 						<div className="px-5 pt-2 flex flex-col">
+							<div className="w-full flex justify-center items-center flex-col">
+								<img
+									className="border h-[60px] w-[60px] rounded-full"
+									src={userInfo?.profile_picture}
+									alt=""
+								/>
+								<input
+									type="file"
+									ref={inputRef}
+									accept="image/*"
+									onChange={handleFileChange}
+									className="hidden"
+									src={profile_picture}
+								/>
+
+								<BsPencil
+									className="mt-[-20px] mr-[-30px] bg-bright-blue p-[5px] text-[25px] rounded-full text-white"
+									onClick={handleFileChange}
+								/>
+
+								{uploadImageLoading && <Spin />}
+							</div>
+
 							<p className="text-[10px]">First name</p>
 							<Input
 								value={firstname}
@@ -167,7 +226,8 @@ const AccountSession = () => {
 												firstname,
 												lastname,
 												email,
-												mobile
+												mobile,
+												profile_picture
 											})
 										);
 									}}>

@@ -2,26 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	GetAllMessageAction,
-	CreateMessageAction
+	CreateMessageAction,
+	DeleteMessageAction
 } from "../redux/actions/message.action";
 import { getAllProductAction } from "../redux/actions/product.action";
 import { getAllUserAction } from "../redux/actions/user.action";
 import { GetOrdersAction } from "../redux/actions/order.action";
-import { MdDeleteForever } from "react-icons/md";
+import { MdDelete, MdDeleteForever } from "react-icons/md";
 import { getTimeAgo } from "../utils/timeFormat";
-import { message } from "antd";
+import { Spin, Tooltip, message } from "antd";
+import { BiMessageError } from "react-icons/bi";
 
 const DashboardMessagePage = () => {
 	const dispatch = useDispatch();
 	const { products } = useSelector((state) => state.allProduct);
 	const { users } = useSelector((state) => state.allUser);
 	const { orders } = useSelector((state) => state.allOrder);
-	const { messages } = useSelector((state) => state.allMessages);
+	const { messages, loading: allMessageLoading } = useSelector(
+		(state) => state.allMessages
+	);
 	const {
 		message: createdMessage,
 		loading,
 		error
 	} = useSelector((state) => state.createMessage);
+	const { message: deletedMessage, loading: deleteLoading } = useSelector(
+		(state) => state.deleteMessage
+	);
 	const [title, setTitle] = useState("");
 	const [msg, setMsg] = useState("");
 	const [user, setUser] = useState("");
@@ -34,7 +41,6 @@ const DashboardMessagePage = () => {
 	const [messageApi, contextHolder] = message.useMessage();
 
 	const sendMessage = () => {
-		console.log("the sending messaging part is here");
 		dispatch(CreateMessageAction({ title, message: msg, product, user }));
 		setTitle("");
 		setMsg("");
@@ -50,6 +56,15 @@ const DashboardMessagePage = () => {
 			<div className="w-full border rounded-md p-[15px] mb-[15px]">
 				<div className="flex flex-row justify-between">
 					<p className="text-[12px]">{getTimeAgo(message?.createdAt)}</p>
+
+					<Tooltip title="Delete this message" trigger="hover">
+						<MdDelete
+							className="text-red-400 text-[20px] hover:cursor-pointer"
+							onClick={() => {
+								dispatch(DeleteMessageAction(message?._id));
+							}}
+						/>
+					</Tooltip>
 				</div>
 				<p className="font-semibold"> {message?.title}</p>
 
@@ -63,9 +78,7 @@ const DashboardMessagePage = () => {
 							src={message?.product?.images && message?.product?.images[0]}
 						/>
 						<div>
-							<p>
-								{message?.product?.name}, {message?.product?.category?.name}
-							</p>
+							<p>{message?.product?.name}</p>
 							<p>{message?.product?.category?.name}</p>
 						</div>
 					</div>
@@ -120,6 +133,26 @@ const DashboardMessagePage = () => {
 			dispatch(GetAllMessageAction());
 		}
 	}, [createdMessage]);
+
+	useEffect(() => {
+		if (createdMessage?._id) {
+			messageApi.open({
+				type: "success",
+				content: "Message sent successfully"
+			});
+			dispatch(GetAllMessageAction());
+		}
+	}, [createdMessage]);
+
+	useEffect(() => {
+		if (deletedMessage?._id) {
+			messageApi.open({
+				type: "success",
+				content: "Message deleted successfully"
+			});
+			dispatch(GetAllMessageAction());
+		}
+	}, [deletedMessage]);
 
 	return (
 		<div className="rounded-lg p-2">
@@ -268,9 +301,17 @@ const DashboardMessagePage = () => {
 			) : (
 				<>
 					<div className="flex-grow overflow-y-auto h-[700px] bg-background p-[10px]">
+						{allMessageLoading && <Spin />}
 						{messages?.map((message) => (
 							<MessageLook message={message} />
 						))}
+
+						{!messages?.length && (
+							<div className="flex flex-col w-full justify-center items-center">
+								<BiMessageError className="text-[50px] text-bright-blue" />
+								<p>You haven't sent any message</p>
+							</div>
+						)}
 					</div>
 				</>
 			)}
