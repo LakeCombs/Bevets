@@ -16,6 +16,7 @@ import {
 	getAllProductReducer,
 	productByCategoryReducer,
 	productByIdReducer,
+	regexSearchReducer,
 	updateProductReducer
 } from "./reducers/product.slice";
 import {
@@ -74,6 +75,7 @@ const rootReducer = combineReducers({
 	deleteProduct: deleteProductReducer,
 	productByCategory: productByCategoryReducer,
 	cart: cartReducer,
+	regexSearch: regexSearchReducer,
 
 	//category reducers
 	createCategory: createCategoryReducer,

@@ -21,11 +21,15 @@ import {
 	productByCategoryRequest,
 	productByCategorySuccess,
 	reduceItemInCart,
+	regexSearchFailed,
+	regexSearchRequest,
+	regexSearchSuccess,
 	removeFromCart,
 	removeFromFav,
 	resetCart,
 	resetCreateProduct,
 	resetDeleteProduct,
+	resetRegexSearch,
 	resetUpdateProduct,
 	updateProductFailed,
 	updateProductRequest,
@@ -111,6 +115,26 @@ export const DeleteProductAction = (id) => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch(deleteProductFailed(RequestError(error)));
 	}
+};
+
+export const RegexSearchAction = (input) => async (dispatch, getState) => {
+	try {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+		dispatch(regexSearchRequest());
+		const { data } = await api.get(
+			`/products/search/?search=${input}`,
+			headerConfig(userInfo)
+		);
+		dispatch(regexSearchSuccess(data));
+	} catch (error) {
+		dispatch(regexSearchFailed(RequestError(error)));
+	}
+};
+
+export const ResetRegexAction = () => (dispatch) => {
+	dispatch(resetRegexSearch());
 };
 
 export const resetDeleteProductAction = () => (dispatch) => {

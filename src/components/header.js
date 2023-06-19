@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { HiShoppingCart } from "react-icons/hi";
@@ -8,6 +8,10 @@ import { Dropdown, Badge } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserAction } from "../redux/actions/user.action";
+import {
+	RegexSearchAction,
+	ResetRegexAction
+} from "../redux/actions/product.action";
 
 const Header = () => {
 	const [search, setSearch] = useState("");
@@ -15,6 +19,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const { cartItems } = useSelector((state) => state.cart);
 	const { userInfo } = useSelector((state) => state.userLogin);
+	const { products } = useSelector((state) => state.regexSearch);
 
 	const cartCount = () => {
 		let qty = 0;
@@ -24,9 +29,40 @@ const Header = () => {
 		return qty;
 	};
 
-	const submit = (e) => {
-		e.preventDefault();
+	const dropDownItem = () => {
+		return products?.map((product) => {
+			return {
+				key: product._id,
+				label: (
+					<div
+						key={product?._id}
+						className="flex flex-row w-full"
+						onClick={() => {
+							navigate(`/product/${product._id}`, {
+								state: {
+									categoryName: product?.category?.name,
+									categoryId: product?.category?._id
+								}
+							});
+						}}>
+						<img
+							alt=""
+							src={product?.images && product?.images[0]}
+							className="h-[50px] w-[50px]"
+						/>{" "}
+						<div className="ml-[10px]">
+							<p>{product?.name}</p>
+							<p className="text-[12px] my-[-2px]">{product?.category?.name}</p>
+							<p className=" text-[10px]">
+								{product?.description?.slice(0, 20)}
+							</p>
+						</div>
+					</div>
+				)
+			};
+		});
 	};
+
 	const items = [
 		{
 			label: (
@@ -108,6 +144,16 @@ const Header = () => {
 			key: "3"
 		}
 	];
+
+	useEffect(() => {
+		if (search === "") {
+			return dispatch(ResetRegexAction());
+		}
+
+		if (search !== "") {
+			dispatch(RegexSearchAction(search));
+		}
+	}, [search]);
 	return (
 		<div className="py-[15px] flex items-center md:px-[70px] px-[30px] justify-between bg-app-blue  bg-primary-blue fixed top-0 z-40 mb-[100px] w-full shadow-sm">
 			<img
@@ -117,22 +163,23 @@ const Header = () => {
 					navigate("/");
 				}}
 			/>
+			<Dropdown
+				menu={{
+					items: dropDownItem()
+				}}>
+				<div className="items-center justify-between hidden w-5/12 bg-white md:flex rounded-3xl">
+					<input
+						onChange={(e) => setSearch(e.target.value)}
+						value={search}
+						className="md:h-[30px] h-[30px] w-full rounded-2xl px-3 border-none outline-none"
+						placeholder="Search products and categories"
+					/>
+					{/* <button className="  bg-bright-blue rounded-2xl h-[30px] md:h-[30px] md:px-[30px] px-[20px] text-white font-bold">
+						Search
+					</button> */}
+				</div>
+			</Dropdown>
 
-			<form
-				className="items-center justify-between hidden w-5/12 bg-white md:flex rounded-3xl"
-				type={submit}>
-				<input
-					onChange={(e) => setSearch(e.target.value)}
-					value={search}
-					className="md:h-[30px] h-[30px] w-full rounded-2xl px-3 border-none outline-none"
-					placeholder="Search products and categories"
-				/>
-				<button
-					className="  bg-bright-blue rounded-2xl h-[30px] md:h-[30px] md:px-[30px] px-[20px] text-white font-bold"
-					type="submit">
-					Search
-				</button>
-			</form>
 			<div className="md:flex hidden  justify-between md:w-[25%] w-[70%]  ml-[10%] items-center">
 				<Dropdown
 					menu={{ items }}

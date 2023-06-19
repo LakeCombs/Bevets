@@ -200,6 +200,45 @@ export const {
 } = productByCategorySlice.actions;
 export const productByCategoryReducer = productByCategorySlice.reducer;
 
+const regexSearchSlice = createSlice({
+	name: "regex search",
+	initialState: {
+		products: [],
+		loading: false,
+		error: ""
+	},
+	reducers: {
+		regexSearchRequest: (state) => {
+			state.loading = true;
+			state.error = "";
+			state.products = [];
+		},
+		regexSearchSuccess: (state, { payload }) => {
+			state.loading = false;
+			state.products = payload;
+			state.error = "";
+		},
+		regexSearchFailed: (state, { payload }) => {
+			state.loading = false;
+			state.error = payload;
+			state.products = [];
+		},
+		resetRegexSearch: (state) => {
+			state.loading = false;
+			state.products = [];
+			state.error = "";
+		}
+	}
+});
+
+export const {
+	regexSearchFailed,
+	regexSearchRequest,
+	regexSearchSuccess,
+	resetRegexSearch
+} = regexSearchSlice.actions;
+export const regexSearchReducer = regexSearchSlice.reducer;
+
 const cart = {
 	cartItems: Cookie.get("cartItems") ? JSON.parse(Cookie.get("cartItems")) : [],
 	favorite: Cookie.get("favorite") ? JSON.parse(Cookie.get("favorite")) : [],
