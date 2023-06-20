@@ -13,6 +13,7 @@ const MyOrderScreen = () => {
 	useEffect(() => {
 		dispatch(OrderByUserAction());
 	}, []);
+
 	return (
 		<div className="bg-background">
 			<Header />
@@ -60,7 +61,10 @@ const MyOrderScreen = () => {
 															<img
 																className=" h-[60px] w-[60px]"
 																alt=""
-																src={ord?.product?.images[0]}
+																src={
+																	ord?.product?.images &&
+																	ord?.product?.images[0]
+																}
 															/>{" "}
 															<div className="ml-[5px]">
 																<p>Name: {ord?.product?.name} </p>

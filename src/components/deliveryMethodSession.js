@@ -38,8 +38,10 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const [messageApi, contextHolder] = message.useMessage();
 
 	const totalPrice = cartItems?.reduce((accumulator, currectValue) => {
-		return accumulator + currectValue?.item?.price * currectValue?.qty;
+		return accumulator + currectValue?.product?.price * currectValue?.qty;
 	}, 0);
+
+	console.log("the cart is ", cartItems);
 
 	const SaveAddress = () => {
 		dispatch(
@@ -269,7 +271,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 							</p>
 							<p className=" mt-[5px] ">
 								Items available for pick up from{" "}
-								<span className="font-semibold">Monday 2 Jan</span>
+								<span className="font-semibold">3 days time</span>
 							</p>
 						</div>
 						<div className="mt-[10px]">
@@ -297,7 +299,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 							</p>
 							<p className=" mt-[5px] ">
 								Items available for pick up from{" "}
-								<span className="font-semibold">Monday 2 Jan</span>
+								<span className="font-semibold">3 days time</span>
 							</p>
 						</div>
 					</div>
@@ -336,7 +338,8 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								GHC
 								{cartItems?.reduce((accumulator, currectValue) => {
 									return (
-										accumulator + currectValue?.item?.price * currectValue?.qty
+										accumulator +
+										currectValue?.product?.price * currectValue?.qty
 									);
 								}, 0)}
 							</p>
@@ -360,7 +363,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								{cartItems?.reduce((accumulator, currectValue) => {
 									return (
 										accumulator +
-										currectValue?.item?.price * currectValue?.qty +
+										currectValue?.product?.price * currectValue?.qty +
 										deliveryFee
 									);
 								}, 0)}
@@ -390,14 +393,14 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 						<div className="flex mt-[15px] px-[20px] mb-[20px]  items-start ">
 							<img
 								alt={""}
-								src={product?.item?.images[0]}
+								src={product?.product?.images && product?.product?.images[0]}
 								className="h-[100px] w-[100px]"
 							/>
 
 							<div className="ml-[20px]">
 								<p>{product?.item?.name}</p>
 								<p className="text-app-orange mt-[13px]">
-									GHC {product?.item?.price}
+									GHC {product?.product?.price}
 								</p>
 								<p>Quantity: {product?.qty} </p>
 							</div>
@@ -411,7 +414,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 						GHC{" "}
 						{cartItems?.reduce((accumulator, currectValue) => {
 							return (
-								accumulator + currectValue?.item?.price * currectValue?.qty
+								accumulator + currectValue?.product?.price * currectValue?.qty
 							);
 						}, 0)}
 					</p>
@@ -431,7 +434,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 						GHC{" "}
 						{cartItems?.reduce((accumulator, currectValue) => {
 							return (
-								accumulator + currectValue?.item?.price * currectValue?.qty
+								accumulator + currectValue?.product?.price * currectValue?.qty
 							);
 						}, 0)}
 					</p>

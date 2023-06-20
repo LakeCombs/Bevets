@@ -119,7 +119,9 @@ const CartScreen = () => {
 													<span
 														className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
 														onClick={() => {
-															dispatch(AddToCartAction(product));
+															if (product?._id) {
+																dispatch(AddToCartAction(product));
+															}
 															dispatch(
 																updateUserAction(userInfo?._id, {
 																	cart: cartItems?.map((item) => {
@@ -161,7 +163,9 @@ const CartScreen = () => {
 												<span
 													className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
 													onClick={() => {
-														dispatch(AddToCartAction(product));
+														if (product?._id) {
+															dispatch(AddToCartAction(product));
+														}
 													}}>
 													+
 												</span>

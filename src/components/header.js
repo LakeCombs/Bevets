@@ -4,7 +4,7 @@ import { AiFillInfoCircle } from "react-icons/ai";
 import { HiShoppingCart } from "react-icons/hi";
 import { BsFillCollectionFill } from "react-icons/bs";
 import { MdFavorite } from "react-icons/md";
-import { Dropdown, Badge } from "antd";
+import { Dropdown, Badge, Tooltip } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserAction } from "../redux/actions/user.action";
@@ -32,13 +32,13 @@ const Header = () => {
 	const dropDownItem = () => {
 		return products?.map((product) => {
 			return {
-				key: product._id,
+				key: product?._id,
 				label: (
 					<div
 						key={product?._id}
 						className="flex flex-row w-full"
 						onClick={() => {
-							navigate(`/product/${product._id}`, {
+							navigate(`/product/${product?._id}`, {
 								state: {
 									categoryName: product?.category?.name,
 									categoryId: product?.category?._id
@@ -154,6 +154,7 @@ const Header = () => {
 			dispatch(RegexSearchAction(search));
 		}
 	}, [search]);
+
 	return (
 		<div className="py-[15px] flex items-center md:px-[70px] px-[30px] justify-between bg-app-blue  bg-primary-blue fixed top-0 z-40 mb-[100px] w-full shadow-sm">
 			<img
@@ -215,25 +216,41 @@ const Header = () => {
 			</div>
 			<div className="flex md:hidden w-[60%] justify-between items-center">
 				<p
-					className="flex flex-row items-center h3 hover:cursor-pointer"
+					className="flex flex-row items-center h3 hover:cursor-pointer hover:text-bright-blue"
 					onClick={() => {
 						navigate("/cart");
 					}}>
 					<span className="mr-2 text-black  text-[20px]">
 						<Badge count={cartCount()} color={"FF8A00"} size="small">
-							<HiShoppingCart className="text-[20px]" />
+							<Tooltip title="Cart">
+								<HiShoppingCart
+									className="text-[20px] hover:cursor-pointer hover:text-bright-blue"
+									onClick={() => {
+										navigate("/cart");
+									}}
+								/>
+							</Tooltip>
 						</Badge>
 					</span>
 				</p>
-				<p className="flex flex-row items-center h3 hover:cursor-pointer">
-					<span className="mr-2 text-black ">
-						<FaUserAlt />
-					</span>
-				</p>
+				<Dropdown
+					menu={{ items }}
+					trigger={["click"]}
+					overlayClassName={{ hover: "blue" }}>
+					<Tooltip title="Profile">
+						<p className="flex flex-row items-center h3 hover:cursor-pointer hover:text-bright-blue">
+							<span className="mr-2  ">
+								<FaUserAlt />
+							</span>
+						</p>
+					</Tooltip>
+				</Dropdown>
 
-				<p className="flex flex-row items-center h3 hover:cursor-pointer">
-					<span className="mr-2 text-black ">
-						<BsFillCollectionFill />
+				<p className="flex flex-row items-center h3 hover:cursor-pointer hover:text-bright-blue">
+					<span className="mr-2 ">
+						<Tooltip title="Order">
+							<BsFillCollectionFill onClick={() => navigate("/orders")} />
+						</Tooltip>
 					</span>
 				</p>
 			</div>

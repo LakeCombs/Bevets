@@ -8,6 +8,7 @@ import {
 	ResetOrderDetailsAction
 } from "../redux/actions/order.action";
 import { useNavigate } from "react-router-dom";
+import { ResetCartAction } from "../redux/actions/product.action.js";
 
 const PaymentMethodSession = ({ flip, setFlip }) => {
 	const dispatch = useDispatch();
@@ -30,6 +31,17 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 	const [checked, setChecked] = useState(false);
 	const [messageApi, contextHolder] = message.useMessage();
 
+	const orderItems = () => {
+		return cartItems.map((item) => {
+			if (item?.product?._id) {
+				return {
+					product: item?.product?._id,
+					qty: item?.qty
+				};
+			}
+		});
+	};
+
 	const ConfirmOrder = () => {
 		if (!paymentMethod) {
 			return messageApi.open({
@@ -42,12 +54,16 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 			CreateOrderAction({
 				address,
 				delivery_method,
-				items,
+				items: orderItems(),
 				payment_method,
 				total_price,
 				user
 			})
 		);
+
+		navigate("/orders");
+
+		dispatch(ResetCartAction());
 	};
 
 	useEffect(() => {
@@ -218,7 +234,7 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 									{cartItems?.reduce((accumulator, currectValue) => {
 										return (
 											accumulator +
-											currectValue?.item?.price * currectValue?.qty
+											currectValue?.product?.price * currectValue?.qty
 										);
 									}, 0)}
 								</p>
@@ -242,7 +258,7 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 									{cartItems?.reduce((accumulator, currectValue) => {
 										return (
 											accumulator +
-											currectValue?.item?.price * currectValue?.qty
+											currectValue?.product?.price * currectValue?.qty
 										);
 									}, 0)}
 								</p>
@@ -254,6 +270,8 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 							onClick={ConfirmOrder}>
 							CONFIRM ORDER
 						</button>
+
+						{createOrderLoading && <Spin size={"large"} />}
 					</div>
 				</div>
 			</div>
@@ -272,12 +290,12 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 						<div className="flex mt-[15px] px-[20px] mb-[20px]  items-start ">
 							<img
 								alt={""}
-								src={product?.item?.images[0]}
+								src={product?.product?.images && product?.product?.images[0]}
 								className="h-[100px] w-[100px]"
 							/>
 
 							<div className="ml-[20px]">
-								<p>{product?.item?.name}</p>
+								<p>{product?.product?.name}</p>
 								<p className="text-app-orange mt-[13px]">
 									GHC {product?.item?.price}
 								</p>
@@ -293,7 +311,7 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 						GHC{" "}
 						{cartItems?.reduce((accumulator, currectValue) => {
 							return (
-								accumulator + currectValue?.item?.price * currectValue?.qty
+								accumulator + currectValue?.product?.price * currectValue?.qty
 							);
 						}, 0)}
 					</p>
@@ -313,12 +331,16 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 						GHC{" "}
 						{cartItems?.reduce((accumulator, currectValue) => {
 							return (
-								accumulator + currectValue?.item?.price * currectValue?.qty
+								accumulator + currectValue?.product?.price * currectValue?.qty
 							);
 						}, 0)}
 					</p>
 				</div>
-				<button className="self-center w-[40%] py-[5px] text-white rounded-lg mt-[20px] mb-[10px] bg-bright-blue">
+				<button
+					className="self-center w-[40%] py-[5px] text-white rounded-lg mt-[20px] mb-[10px] bg-bright-blue"
+					onClick={() => {
+						navigate("/cart");
+					}}>
 					Modify Cart
 				</button>
 			</div>

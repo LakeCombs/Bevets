@@ -84,7 +84,10 @@ const BasicEssentialCard = ({ product }) => {
 
 				<button
 					onClick={() => {
-						dispatch(AddToCartAction(product));
+						if (product?._id) {
+							dispatch(AddToCartAction(product));
+						}
+
 						dispatch(
 							updateUserAction(userInfo?._id, {
 								cart: cartItems?.map((item) => {

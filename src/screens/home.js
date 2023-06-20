@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/header";
-import { Button, Input, Spin } from "antd";
+import { Button, Dropdown, Input, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import CardByCategories from "../components/cardByCategories";
 import BasicEssentialCard from "../components/basicEssentialCard";
@@ -8,14 +8,15 @@ import Footer from "../components/footer";
 import { useDispatch, useSelector } from "react-redux";
 import { allCategoryAction } from "../redux/actions/category.action";
 import {
-	AddToCartAction,
 	AddToFavAction,
+	RegexSearchAction,
+	ResetRegexAction,
 	getAllProductAction
 } from "../redux/actions/product.action";
 import HomeCarousel from "../components/homeCarousel";
 
 const HomeScreen = () => {
-	const navigate = useNavigate;
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const {
 		categories,
@@ -28,6 +29,8 @@ const HomeScreen = () => {
 		loading: productLoading,
 		error: productError
 	} = useSelector((state) => state.allProduct);
+	const { products: regexProducts } = useSelector((state) => state.regexSearch);
+
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [search, setSearch] = useState("");
@@ -54,6 +57,96 @@ const HomeScreen = () => {
 		return result;
 	};
 
+	const dropDownItem = () => {
+		return regexProducts?.map((product) => {
+			return {
+				key: product?._id,
+				label: (
+					<div
+						key={product?._id}
+						className="flex flex-row w-full"
+						onClick={() => {
+							navigate(`/product/${product?._id}`, {
+								state: {
+									categoryName: product?.category?.name,
+									categoryId: product?.category?._id
+								}
+							});
+						}}>
+						<img
+							alt=""
+							src={product?.images && product?.images[0]}
+							className="h-[50px] w-[50px]"
+						/>{" "}
+						<div className="ml-[10px]">
+							<p>{product?.name}</p>
+							<p className="text-[12px] my-[-2px]">{product?.category?.name}</p>
+							<p className=" text-[10px]">
+								{product?.description?.slice(0, 20)}
+							</p>
+						</div>
+					</div>
+				)
+			};
+		});
+	};
+
+	const items = [
+		{
+			key: "1",
+			label: (
+				<a
+					target="_blank"
+					rel="noopener noreferrer"
+					href="https://www.antgroup.com">
+					1st menu item
+				</a>
+			)
+		},
+		{
+			key: "2",
+			label: (
+				<a
+					target="_blank"
+					rel="noopener noreferrer"
+					href="https://www.aliyun.com">
+					2nd menu item (disabled)
+				</a>
+			),
+			disabled: true
+		},
+		{
+			key: "3",
+			label: (
+				<a
+					target="_blank"
+					rel="noopener noreferrer"
+					href="https://www.luohanacademy.com">
+					3rd menu item (disabled)
+				</a>
+			),
+			disabled: true
+		},
+		{
+			key: "4",
+			danger: true,
+			label: "a danger item"
+		}
+	];
+
+	console.log("the regex products is ", regexProducts);
+	console.log("the dropdown item", dropDownItem());
+
+	useEffect(() => {
+		if (search === "") {
+			return dispatch(ResetRegexAction());
+		}
+
+		if (search !== "") {
+			dispatch(RegexSearchAction(search));
+		}
+	}, [search]);
+
 	useEffect(() => {
 		dispatch(allCategoryAction());
 		dispatch(getAllProductAction());
@@ -63,21 +156,20 @@ const HomeScreen = () => {
 		<div className="min-h-screen md:bg-background bg-primary-blue">
 			<Header />
 			<div className="w-full md:hidden flex bg-app-orange h-[100px] mt-[50px] justify-center items-center">
-				<form
-					className="items-center justify-between flex mt-[30px]   md:flex w-3/4 bg-white rounded-3xl"
-					type={submit}>
-					<input
-						onChange={(e) => setSearch(e.target.value)}
-						value={search}
-						className="md:h-[30px] h-[30px] w-full rounded-2xl px-3 border-none outline-none bg-white"
-						placeholder="Search products and categories"
-					/>
-					<button
-						className="  bg-bright-blue rounded-2xl h-[30px] md:h-[30px] md:px-[30px] px-[20px] text-white font-bold"
-						type="submit">
-						Search
-					</button>
-				</form>
+				<Dropdown
+					menu={{
+						items: dropDownItem()
+						// items
+					}}>
+					<div className="items-center justify-between flex mt-[30px] md:flex w-3/4 bg-white rounded-3xl">
+						<input
+							onChange={(e) => setSearch(e.target.value)}
+							value={search}
+							className="md:h-[30px] h-[30px] w-full rounded-2xl px-3 border-none outline-none bg-white"
+							placeholder="Search products and categories"
+						/>
+					</div>
+				</Dropdown>
 			</div>
 			<div className="md:px-[50px] px-[20px]  min-h-full md:pt-[100px] pt-[40px]">
 				{/* Carousel session */}
@@ -98,7 +190,6 @@ const HomeScreen = () => {
 				</div>
 
 				{/* Horizontal list of items */}
-
 				<div className=" flex flex-row md:mt-[0px] mt-[10px] w-full scroll-m-8 scroll-auto snap-x overflow-x-auto whitespace-no-wrap">
 					{categoriesLoading && <Spin size="25px" />}
 					{categories &&

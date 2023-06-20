@@ -284,7 +284,6 @@ const cartSlice = createSlice({
 
 		resetCart: (state) => {
 			state.cartItems = [];
-			state.favorite = [];
 		},
 
 		addToRecently_viewed: (state, { payload }) => {

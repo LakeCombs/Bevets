@@ -19,7 +19,11 @@ const LoginScreen = () => {
 
 	useEffect(() => {
 		if (userInfo?.role === "admin") {
-			return navigate("/dashboard");
+			return navigate("/dashboard", {
+				state: {
+					page: ""
+				}
+			});
 		}
 
 		if (userInfo?._id) {

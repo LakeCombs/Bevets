@@ -8,13 +8,13 @@ const HomeCarousel = () => {
 		<>
 			<div className="w-full  bg-green-400 rounded-lg">
 				<Carousel autoplay={true}>
-					<div className=" h-[400px] w-[400px] md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col ">
+					<div className=" h-[400px] md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col ">
 						<img
 							src={"/assets/MacBook Pro 14_ - 1bg.png"}
 							className="h-full w-full"
 						/>
 
-						<div className="h-full w-full z-10 mt-[-300px] flex justify-center items-center flex-col pl-[40px]">
+						<div className="h-full w-full z-10 md:mt-[-330px] mt-[-400px]  flex justify-center items-center flex-col pl-[40px]">
 							<h1 className="text-[20px] text-white font-bold">
 								Save up to 20% This Christmas <br /> on items Purchased from our
 								shop
@@ -31,12 +31,12 @@ const HomeCarousel = () => {
 							</button>
 						</div>
 					</div>
-					<div className=" h-[400px] w-[400px] md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col ">
+					<div className=" h-[400px] md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col ">
 						<img
 							src={"/assets/MacBook Pro 14_ - 1bg2.png"}
 							className="h-full w-full"
 						/>
-						<div className="h-full w-full z-10 mt-[-300px] flex justify-center items-start flex-col pl-[40px]">
+						<div className="h-full w-full z-10 md:mt-[-330px] mt-[-400px]  flex justify-center items-start flex-col pl-[40px]">
 							<p className="font-bold">
 								<span className=" text-[40px]">Same Day</span>{" "}
 								<span className=" text-[40px] text-white mt-[-30px]">
@@ -48,13 +48,13 @@ const HomeCarousel = () => {
 							</p>
 						</div>
 					</div>{" "}
-					<div className=" h-[400px] w-[400px] md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col bg-hero3 object-fit">
+					<div className=" h-[400px] md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col bg-hero3 object-fit">
 						<img
 							src={"/assets/MacBook Pro 14_ - 1bg3.png"}
 							className="h-full w-full"
 						/>
 
-						<div className="h-full w-full z-10 mt-[-300px] flex justify-center items-start flex-col pl-[70px]">
+						<div className="h-full w-full z-10 md:mt-[-330px] mt-[-400px] flex justify-center items-start flex-col pl-[70px]">
 							<p className="font-bold text-[40px]">
 								<span className="  text-white">Get all</span>
 								<br />
@@ -66,7 +66,7 @@ const HomeCarousel = () => {
 							</p>
 						</div>
 					</div>{" "}
-					<div className=" h-[400px] w-[400px] md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col bg-hero4 object-fit">
+					<div className=" h-[400px]  md:h-[335px] w-full bg-blue-400 rounded-xl flex flex-col bg-hero4 object-fit">
 						<img
 							src={"/assets/MacBook Pro 14_ - 1bg4 (1).png"}
 							className="h-full w-full"

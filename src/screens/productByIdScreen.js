@@ -4,7 +4,7 @@ import Header from "../components/header";
 import ScreenWithPadding from "../components/ScreenWithPadding";
 import WideButton from "../components/wideButton";
 import StandardProductCard from "../components/standardProductCard";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsBasket3 } from "react-icons/bs";
 import {
@@ -13,12 +13,14 @@ import {
 	GetProductByCategoryAction,
 	AddToFavAction
 } from "../redux/actions/product.action";
-import { Spin } from "antd";
+import { Rate, Spin } from "antd";
 import Carousel from "../components/lib/Carousel.js";
 import { updateUserAction } from "../redux/actions/user.action";
+import { FaStar } from "react-icons/fa";
 
 const ProductByIdScreen = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const location = useLocation();
 	const { id } = useParams();
 	const { product, loading, error } = useSelector((state) => state.productById);
@@ -47,8 +49,8 @@ const ProductByIdScreen = () => {
 						</h3>
 						{error && <p className="text-red-400"> {error}</p>}
 					</div>
-					<div className="mt-[20px] w-full flex justify-between flex-col md:flex-row">
-						<div className="md:w-3/5 w-full md:h-auto h-[300px]  mr-[40px] ">
+					<div className="mt-[20px] w-full flex justify-start flex-col md:flex-row ">
+						<div className="md:w-3/5 w-full md:h-auto h-[250px]  mr-[40px] ">
 							<Carousel
 								data={product?.images?.map((image) => {
 									return {
@@ -58,7 +60,7 @@ const ProductByIdScreen = () => {
 								})}
 								time={1000}
 								width="850px"
-								height="500px"
+								height="450px"
 								// captionStyle={captionStyle}
 								radius="10px"
 								slideNumber={true}
@@ -75,58 +77,67 @@ const ProductByIdScreen = () => {
 								showNavBtn={true}
 								style={{
 									textAlign: "center",
-									maxWidth: "850px",
+									maxWidth: "700px",
 									margin: "40px auto"
 								}}
 							/>
-
-							{/* <img
-								src={product?.images[0]}
-								src={""}
-								className="w-full h-full object-cover bg-green-4000"
-								alt="img"
-							/> */}
 						</div>
-						<div className="md:w-2/5 w-full md:mt-0 mt-[20px] h-auto flex justify-start flex-col">
-							<h3 className="font-semibold  text-[15px]"> {product?.name}</h3>
-							<button className="bg-app-orange py-[6px] mt-[10px] rounded-lg text-[15px] hover:shadow-md">
-								Available for delivery
-							</button>
+						<div className="md:w-2/5 w-full  h-auto flex  items-start flex-col pt-[80px] md:mt-[0] mt-[300px]">
+							<h3 className="font-semibold  text-[15px]">
+								Name: {product?.name}
+							</h3>
 							<hr className="mt-[10px]" />
-
-							<h3 className="mt-[10px] text-[15px] family-poppins">Options</h3>
-
-							<select className="py-[10px] w-full font-[15px] family-poppins px-[5px] outline-none rounded-lg bg-white border-app-orange border">
-								<option>Select size</option>
-
-								{[1, 2, 3, 4].map((x) => (
-									<option value={x}>{x}</option>
-								))}
-							</select>
 							<br />
-
-							<select className="py-[10px] w-full font-[15px] family-poppins px-[5px] rounded-lg outline-none bg-white border-app-orange border">
-								<option>Select quantity</option>
-								{["starter pack", "mid level pack", "complete pack"].map(
-									(x) => (
-										<option value={x}>{x}</option>
+							<h2>Price: GHc {product?.price}</h2>
+							<br />
+							<h2>Brand: {product?.brand}</h2>
+							<br />
+							<h2 className=" flex flex-row items-center">
+								<span> Review:</span>
+								<span>
+									{" "}
+									{[...Array(`${product?.reviews}`)].map((_, index) => {
+										const isFilled = index < `${product?.reviews}`;
+										return (
+											<span key={index}>
+												{isFilled ? (
+													<FaStar color="#ffc107" />
+												) : (
+													<FaStar color="#e4e5e9" />
+												)}
+											</span>
+										);
+									})}
+								</span>
+							</h2>
+							<br />
+							<h2>
+								Status:{" "}
+								{product?.status
+									?.toLowerCase()
+									.split("_")
+									?.map(
+										(word) => word?.charAt(0)?.toUpperCase() + word?.slice(1)
 									)
-								)}
-							</select>
+									?.join(" ")}
+							</h2>
 
 							<WideButton
 								onClick={() => {
-									dispatch(AddToCartAction(product));
+									if (product?._id) {
+										dispatch(AddToCartAction(product));
+									}
 									dispatch(
 										updateUserAction(userInfo?._id, {
 											cart: cartItems?.map((item) => {
 												return {
-													product: item?.item?._id,
+													product: item?.product?._id,
 													qty: item?.qty
 												};
 											})
 										})
 									);
+									navigate("/cart");
 								}}
 								style={"rounded-lg bg-dark-blue mt-[50px] py-[3px]"}
 								text={"Add to Cart"}
@@ -166,7 +177,9 @@ const ProductByIdScreen = () => {
 							.map((d) => (
 								<StandardProductCard
 									addToCart={() => {
-										dispatch(AddToCartAction(d));
+										if (d?._id) {
+											dispatch(AddToCartAction(d));
+										}
 									}}
 									addToFav={() => {
 										dispatch(AddToFavAction(d));

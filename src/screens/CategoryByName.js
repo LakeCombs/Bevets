@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { BsBasket3 } from "react-icons/bs";
 import {
 	GetProductByCategoryAction,
-	AddToCartAction,
 	AddToFavAction
 } from "../redux/actions/product.action";
 import { productByCategoryReducer } from "../redux/reducers/product.slice";
