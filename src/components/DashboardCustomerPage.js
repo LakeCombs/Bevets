@@ -8,10 +8,6 @@ const DashboardCustomerPage = () => {
 	const dispatch = useDispatch();
 	const { users, loading, error } = useSelector((state) => state.allUser);
 
-	const rowSelection = {
-		selections: []
-	};
-
 	const columns = [
 		{
 			title: "Profile",
@@ -68,7 +64,7 @@ const DashboardCustomerPage = () => {
 				Manage Users {loading && <Spin className="ml-[10px]" />}{" "}
 			</div>
 
-			<Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+			<Table columns={columns} dataSource={data} />
 		</div>
 	);
 };

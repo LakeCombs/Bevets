@@ -12,9 +12,12 @@ import { MdDelete, MdDeleteForever } from "react-icons/md";
 import { getTimeAgo } from "../utils/timeFormat";
 import { Spin, Tooltip, message } from "antd";
 import { BiMessageError } from "react-icons/bi";
+import { useLocation } from "react-router-dom";
 
 const DashboardMessagePage = () => {
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const { page: passedPage } = location.state;
 	const { products } = useSelector((state) => state.allProduct);
 	const { users } = useSelector((state) => state.allUser);
 	const { orders } = useSelector((state) => state.allOrder);
@@ -153,6 +156,12 @@ const DashboardMessagePage = () => {
 			dispatch(GetAllMessageAction());
 		}
 	}, [deletedMessage]);
+
+	useEffect(() => {
+		if (passedPage) {
+			setPage(false);
+		}
+	}, [passedPage, location]);
 
 	return (
 		<div className="rounded-lg p-2">

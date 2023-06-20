@@ -22,8 +22,10 @@ import { getProductByIdAction } from "../redux/actions/product.action";
 const Dashboard = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const location = useLocation();
 	const { userInfo } = useSelector((state) => state.userLogin);
-	const [page, setPage] = useState("dashboard");
+	const { page: passedPage } = location.state;
+	const [page, setPage] = useState(passedPage || "dashboard");
 
 	const Left = ({ icon, text, onClick }) => {
 		return (
@@ -41,6 +43,12 @@ const Dashboard = () => {
 			window.history.back();
 		}
 	}, []);
+
+	useEffect(() => {
+		if (passedPage) {
+			setPage(passedPage);
+		}
+	}, [passedPage, location]);
 
 	return (
 		<div className="bg-primary-blue min-h-screen">

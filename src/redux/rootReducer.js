@@ -55,6 +55,7 @@ import {
 	deleteMessageReducer,
 	messageByUserReducer
 } from "./reducers/messag.slice";
+import { adminSearchReducer } from "./reducers/adminSearchSlice";
 
 const rootReducer = combineReducers({
 	//user reducers
@@ -111,7 +112,10 @@ const rootReducer = combineReducers({
 	createMessage: createMessageReducer,
 	allMessages: allMessageReducer,
 	userMessages: messageByUserReducer,
-	deleteMessage: deleteMessageReducer
+	deleteMessage: deleteMessageReducer,
+
+	//Admin Search
+	adminSearch: adminSearchReducer
 });
 
 export default rootReducer;

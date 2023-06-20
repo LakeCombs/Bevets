@@ -58,8 +58,6 @@ const AdminProductByIdScreen = () => {
 
 	const { edit: editProduct } = location.state;
 
-	console.log("edit product", editProduct);
-
 	const handleFileChange = async (e) => {
 		const fileObj = e.target.files && e.target.files[0];
 		if (!fileObj) {
