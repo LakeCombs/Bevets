@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductAction } from "../redux/actions/product.action";
+import { Spin } from "antd";
 
 const DashboardReportPage = () => {
 	const dispatch = useDispatch();
 	const { orders } = useSelector((state) => state.allOrder);
 	const { users } = useSelector((state) => state.allUser);
-	const { products } = useSelector((state) => state.allProduct);
+	const { products, loading } = useSelector((state) => state.allProduct);
 
 	useEffect(() => {
 		dispatch(getAllProductAction());
 	}, []);
 	return (
 		<div>
-			<h2 className="font-semibold"> App Report</h2>
+			<h2 className="font-semibold"> App Report {loading && <Spin />}</h2>
 
 			<div className="w-full bg-white rounded-md p-[10px] mt-[5px]">
 				<div>
