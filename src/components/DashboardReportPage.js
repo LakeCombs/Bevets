@@ -13,7 +13,7 @@ const DashboardReportPage = () => {
 	}, []);
 	return (
 		<div>
-			<h2>App Report</h2>
+			<h2 className="font-semibold"> App Report</h2>
 
 			<div className="w-full bg-white rounded-md p-[10px] mt-[5px]">
 				<div>
