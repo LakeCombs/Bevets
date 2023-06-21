@@ -250,7 +250,7 @@ const CartScreen = () => {
 
 				{/* Recently Viewed */}
 
-				<div className="mt-[35px] rounded-2xl w-full bg-white shadow-md">
+				{/* <div className="mt-[35px] rounded-2xl w-full bg-white shadow-md">
 					<div className="flex flex-row justify-between px-[15px] py-[10px] ">
 						<h2 className="text-[12px] md:text-[15px] font-bold">
 							Recommended for you
@@ -273,63 +273,8 @@ const CartScreen = () => {
 							key={Math.random() * 1000}
 							onClick={() => navigate("/categories/drinkl")}
 						/>
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1551782450-3939704166fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Savanna blue"}
-							price={"200.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1556881286-fc6915169721?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Curt"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1612078902883-77b82ae10aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEwfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Lemon Street Juice"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1498772776855-2248a3e740f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"Family ripe"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>{" "}
-						<StandardProductCard
-							addToCart={() => {}}
-							addToFav={() => {}}
-							description={""}
-							image={
-								"https://images.unsplash.com/photo-1576541720773-870ee9c61b6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60"
-							}
-							name={"orange dry"}
-							price={"100.00"}
-							key={Math.random() * 1000}
-						/>
 					</div>
-				</div>
+				</div> */}
 
 				<br />
 				<br />

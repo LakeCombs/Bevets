@@ -5,6 +5,9 @@ import {
 	adminSearchFailed,
 	adminSearchRequest,
 	adminSearchSuccess,
+	adminUpdateUserFailed,
+	adminUpdateUserRequest,
+	adminUpdateUserSuccess,
 	getSummaryFailed,
 	getSummaryRequest,
 	getSummarySuccess,
@@ -43,3 +46,21 @@ export const getSummaryAction = () => async (dispatch, getState) => {
 		dispatch(getSummaryFailed(RequestError(error)));
 	}
 };
+
+export const AdminUpdateUserAction =
+	(id, update) => async (dispatch, getState) => {
+		try {
+			const {
+				userLogin: { userInfo }
+			} = getState();
+			dispatch(adminUpdateUserRequest());
+			const { data } = await api.put(
+				`/admin/user/${id}`,
+				{ ...update },
+				headerConfig(userInfo)
+			);
+			dispatch(adminUpdateUserSuccess(data));
+		} catch (error) {
+			dispatch(adminUpdateUserFailed(RequestError(error)));
+		}
+	};

@@ -195,7 +195,7 @@ const DashboardComp = () => {
 					icon={<RxCounterClockwiseClock className="text-blue-600" />}
 					// icon2={<BiTrendingDown />}
 					number={orders
-						?.map((order) => order?.delivery_status === "pending")
+						?.filter((order) => order?.delivery_status === "pending")
 						?.length?.toLocaleString()}
 					// percent={"10%"}
 					percentColor={"text-green-400"}
@@ -210,7 +210,7 @@ const DashboardComp = () => {
 					// icon2={<BiTrendingDown />}
 
 					number={orders
-						?.map((order) => order?.delivery_status !== "success")
+						?.filter((order) => order?.delivery_status !== "success")
 						?.length?.toLocaleString()}
 					// percent={"12%"}
 					percentColor={"text-green-400"}

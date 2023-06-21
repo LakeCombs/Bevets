@@ -145,14 +145,20 @@ const HomeScreen = () => {
 				{/* Top Selling */}
 				<div className="w-full flex justify-between mt-[20px] mb-[30px]">
 					<h2 className=" font-inter session-header ">
-						Basic <span className="text-app-orange">Essentials</span>
+						All <span className="text-app-orange">Product</span>
 					</h2>
 
 					<Link className="text-app-orange ">{/* See all */}</Link>
 				</div>
 
-				<div className="w-full justify-between  flex-col lg:flex-row flex  ">
-					<div className="bg-white md:bg-transparent rounded-3xl p-[10px]">
+				<div className="w-full flex justify-around flex-wrap  flex-col lg:flex-row   ">
+					{products?.map((product) => (
+						<BasicEssentialCard product={product} />
+					))}
+				</div>
+
+				{/*<div className="w-full justify-between  flex-col lg:flex-row flex  ">
+				<div className="bg-white md:bg-transparent rounded-3xl p-[10px]">
 						<div className="flex flex-row justify-between items-center">
 							<h2 className="session-header font-[700] font-inter mb-[20px]">
 								Top <span className="text-app-orange">Selling</span>
@@ -168,8 +174,7 @@ const HomeScreen = () => {
 							})}
 						</div>
 					</div>
-					<div className=" bg-white md:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
-						{/* <div className="bg-white bg:bg-transparent rounded-3xl p-[10px] mt-[20px] mb-[20px] md:mt-0 "> */}
+					 <div className=" bg-white md:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
 						<div className="bg-white md:bg-transparent">
 							<h2 className="session-header font-inter mb-[20px]">
 								Trending <span className="text-app-orange ">Products</span>
@@ -191,8 +196,8 @@ const HomeScreen = () => {
 								return <BasicEssentialCard product={product} />;
 							})}
 						</div>
-					</div>
-				</div>
+					</div> 
+				</div>*/}
 
 				<div className="rounded-2xl mt-[30px] w-full bg-bright-blue px-[10px]  py-[20px]">
 					<div className="w-full flex flex-col justify-center items-center ">

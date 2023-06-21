@@ -1,12 +1,19 @@
-import { Spin, Table } from "antd";
+import { Dropdown, Spin, Table } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUserAction } from "../redux/actions/user.action";
+import {
+	getAllUserAction,
+	updateUserAction
+} from "../redux/actions/user.action";
+import { BsPencil } from "react-icons/bs";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { AdminUpdateUserAction } from "../redux/actions/adminSearch";
 
 const DashboardCustomerPage = () => {
 	const dispatch = useDispatch();
 	const { users, loading, error } = useSelector((state) => state.allUser);
+	const { user } = useSelector((state) => state.adminUpdateUser);
 
 	const columns = [
 		{
@@ -32,8 +39,48 @@ const DashboardCustomerPage = () => {
 		{
 			title: "Role",
 			dataIndex: "role"
+		},
+		{
+			title: "Action",
+			dataIndex: "action"
 		}
 	];
+
+	const items = ({ user }) => {
+		return [
+			{
+				label: (
+					<p>
+						{user?.role === "admin" ? (
+							<span
+								onClick={() => {
+									dispatch(
+										AdminUpdateUserAction(user?._id, {
+											role: "user"
+										})
+									);
+								}}>
+								Remove as Admin
+							</span>
+						) : (
+							<soan
+								onClick={() => {
+									dispatch(
+										AdminUpdateUserAction(user?._id, {
+											role: "admin"
+										})
+									);
+								}}>
+								Make Admin
+							</soan>
+						)}
+					</p>
+				),
+
+				key: "0"
+			}
+		];
+	};
 
 	const data = [];
 	for (let index = 0; index < users?.length; index++) {
@@ -51,13 +98,33 @@ const DashboardCustomerPage = () => {
 			lastname: users[index]?.lastname,
 			email: users[index]?.email,
 			phone: users[index]?.mobile,
-			role: users[index]?.role
+			role: users[index]?.role,
+			action: (
+				<div className="flex flex-row justify-center">
+					<Dropdown
+						menu={{
+							items: items({ user: users[index] })
+						}}
+						trigger={["click"]}>
+						<p className=" p-[10px] bg-green-500 hover:cursor-pointer rounded-full text-[12px] text-white mr-[4px]">
+							<BsPencil />
+						</p>
+					</Dropdown>
+				</div>
+			)
 		});
 	}
 
 	useEffect(() => {
 		dispatch(getAllUserAction());
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (user?._id) {
+			dispatch(getAllUserAction());
+		}
+	}, [user]);
+
 	return (
 		<div>
 			<div className="border-b  p-[8px]">
