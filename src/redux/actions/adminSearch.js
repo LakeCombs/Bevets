@@ -5,6 +5,9 @@ import {
 	adminSearchFailed,
 	adminSearchRequest,
 	adminSearchSuccess,
+	getSummaryFailed,
+	getSummaryRequest,
+	getSummarySuccess,
 	resetadminSearch
 } from "../reducers/adminSearchSlice";
 
@@ -26,4 +29,17 @@ export const adminSearchAction = (input) => async (dispatch, getState) => {
 
 export const ResetAminSearchAction = () => (dispatch) => {
 	dispatch(resetadminSearch());
+};
+
+export const getSummaryAction = () => async (dispatch, getState) => {
+	try {
+		dispatch(getSummaryRequest());
+		const {
+			userLogin: { userInfo }
+		} = getState();
+		const { data } = await api.get(`/admin/summary`, headerConfig(userInfo));
+		dispatch(getSummarySuccess(data));
+	} catch (error) {
+		dispatch(getSummaryFailed(RequestError(error)));
+	}
 };

@@ -10,14 +10,41 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUserAction } from "../redux/actions/user.action";
 import { GetOrdersAction } from "../redux/actions/order.action";
 import { Spin } from "antd";
+import {
+	Chart as ChartJS,
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend
+} from "chart.js";
+
+import { Bar } from "react-chartjs-2";
+import { getSummaryAction } from "../redux/actions/adminSearch";
+
+ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend
+);
 
 const DashboardComp = () => {
 	const dispatch = useDispatch();
 	const { users, loading } = useSelector((state) => state.allUser);
+	const {
+		loading: summaryLoading,
+		summary,
+		error
+	} = useSelector((state) => state.summary);
 	const { orders, loading: orderLoading } = useSelector(
 		(state) => state.allOrder
 	);
 
+	console.log("the order is ", orders);
 	const NotificationPane = ({ icon, bg, text, value, textcolor }) => {
 		return (
 			<div className="flex flex-row mb-[10px] border-b pb-[5px]">
@@ -130,6 +157,7 @@ const DashboardComp = () => {
 	useEffect(() => {
 		dispatch(getAllUserAction());
 		dispatch(GetOrdersAction());
+		dispatch(getSummaryAction());
 	}, []);
 
 	return (
@@ -196,20 +224,35 @@ const DashboardComp = () => {
 				<div className="w-[400px] h-[300px] bg-white rounded-lg m-[8px] p-[20px]">
 					<p className="font-bold mb-[10px]">Sales Overview</p>
 					<div className="w-full h-[240px]">
-						<Chart data={data} axes={axes} />
+						{/* <Chart data={data} axes={axes} /> */}
+
+						<Bar
+							data={{
+								labels: summary?.salesData?.map((x) => x._id),
+								datasets: [
+									{
+										label: "Sales",
+										backgroundColor: "rgba(162, 222, 208, 1)",
+										data: summary?.salesData?.map((x) => x?.totalSales)
+									}
+								]
+							}}
+							options={{
+								legend: { display: true, position: "right" }
+							}}></Bar>
 					</div>
 				</div>
 
-				<div className="w-[400px] h-[300px] bg-white rounded-lg m-[8px] p-[20px]">
+				{/* <div className="w-[400px] h-[300px] bg-white rounded-lg m-[8px] p-[20px]">
 					<p className="font-bold mb-[10px]">Orders Overview</p>
 					<div className="w-full h-[240px]">
 						<Chart data={data} axes={axes} />
 					</div>
-				</div>
+				</div> */}
 			</div>
 
 			<div className="mt-[20px] w-full flex justify-evenly flex-wrap">
-				<div className="w-[400px] bg-white rounded-lg p-[10px]">
+				{/* <div className="w-[400px] bg-white rounded-lg p-[10px]">
 					<p className="font-bold">Best Selling Products</p>
 					<BestSellingSample
 						bgcolor={"bg-orange-500"}
@@ -246,9 +289,9 @@ const DashboardComp = () => {
 						title={"Geisha Mackeral"}
 						key={2000 * Math.random()}
 					/>
-				</div>
+				</div> */}
 
-				<div className="w-[400px] m-[5px] bg-white rounded-lg p-[10px] bg-purple">
+				{/* <div className="w-[400px] m-[5px] bg-white rounded-lg p-[10px] bg-purple">
 					<h2 className="font-bold">Notification</h2>
 
 					<div>
@@ -300,7 +343,7 @@ const DashboardComp = () => {
 							text={"Mabel Owen’s goods was delivered"}
 						/>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

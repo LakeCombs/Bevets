@@ -53,3 +53,29 @@ export const {
 	resetadminSearch
 } = adminSearchSlice.actions;
 export const adminSearchReducer = adminSearchSlice.reducer;
+
+const summarySlice = createSlice({
+	name: "summary ",
+	initialState: {
+		loading: false,
+		error: "",
+		summary: {}
+	},
+	reducers: {
+		getSummaryRequest: (state) => {
+			state.loading = true;
+		},
+
+		getSummarySuccess: (state, { payload }) => {
+			state.loading = false;
+			state.summary = payload;
+		},
+		getSummaryFailed: (state, { payload }) => {
+			state.loading = false;
+			state.error = payload;
+		}
+	}
+});
+export const { getSummaryFailed, getSummaryRequest, getSummarySuccess } =
+	summarySlice.actions;
+export const summaryReducer = summarySlice.reducer;
