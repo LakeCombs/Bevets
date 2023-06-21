@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Chart } from "react-charts/dist/react-charts.development";
 import { AiOutlineQuestion } from "react-icons/ai";
 import { BiTrendingDown } from "react-icons/bi";
@@ -6,8 +6,18 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { IoIosPeople, IoIosTrendingUp } from "react-icons/io";
 import { RxCounterClockwiseClock } from "react-icons/rx";
 import { TbCurrencyCent, TbTruckDelivery } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUserAction } from "../redux/actions/user.action";
+import { GetOrdersAction } from "../redux/actions/order.action";
+import { Spin } from "antd";
 
 const DashboardComp = () => {
+	const dispatch = useDispatch();
+	const { users, loading } = useSelector((state) => state.allUser);
+	const { orders, loading: orderLoading } = useSelector(
+		(state) => state.allOrder
+	);
+
 	const NotificationPane = ({ icon, bg, text, value, textcolor }) => {
 		return (
 			<div className="flex flex-row mb-[10px] border-b pb-[5px]">
@@ -106,17 +116,35 @@ const DashboardComp = () => {
 			</div>
 		);
 	};
+
+	const totalRevenue = orders?.reduce((accumulator, currentValue) => {
+		if (currentValue?.delivery_status === "success") {
+			const orderRevenue = currentValue?.items?.reduce((acc, cv) => {
+				return acc + (cv?.product?.price || 0);
+			}, 0);
+			return accumulator + orderRevenue;
+		}
+		return accumulator;
+	}, 0);
+
+	useEffect(() => {
+		dispatch(getAllUserAction());
+		dispatch(GetOrdersAction());
+	}, []);
+
 	return (
 		<div>
-			<h2 className="font-extrabold text-[20px]">Dashboard</h2>
+			<h2 className="font-extrabold text-[20px]">
+				Dashboard {(loading || orderLoading) && <Spin />}
+			</h2>
 			<div className="w-full flex h-auto flex-row flex-wrap items-start  mt-[20px]">
 				<DataCard
 					bg={"bg-green-300"}
-					from={"up from yesterday"}
+					// from={"up from yesterday"}
 					icon={<FaRegMoneyBillAlt className="text-green-600" />}
-					icon2={<BiTrendingDown />}
-					number={"$2345"}
-					percent={"13%"}
+					// icon2={<BiTrendingDown />}
+					number={`GHc ${totalRevenue?.toLocaleString()}`}
+					// percent={"13%"}
 					percentColor={"text-red-400"}
 					title={"Total revenue"}
 					key={1000 * Math.random()}
@@ -124,11 +152,11 @@ const DashboardComp = () => {
 
 				<DataCard
 					bg={"bg-orange-300"}
-					from={"up from yesterday"}
+					// from={"up from yesterday"}
 					icon={<IoIosPeople className="text-orange-500" />}
-					icon2={<IoIosTrendingUp />}
-					number={"2,200"}
-					percent={"1%"}
+					// icon2={<IoIosTrendingUp />}
+					number={users?.length?.toLocaleString()}
+					// percent={"1%"}
 					percentColor={"text-green-400"}
 					title={"Customer"}
 					key={1000 * Math.random()}
@@ -136,11 +164,13 @@ const DashboardComp = () => {
 
 				<DataCard
 					bg={"bg-blue-300"}
-					from={"up from yesterday"}
+					// from={"up from yesterday"}
 					icon={<RxCounterClockwiseClock className="text-blue-600" />}
-					icon2={<BiTrendingDown />}
-					number={"1,200"}
-					percent={"10%"}
+					// icon2={<BiTrendingDown />}
+					number={orders
+						?.map((order) => order?.delivery_status === "pending")
+						?.length?.toLocaleString()}
+					// percent={"10%"}
 					percentColor={"text-green-400"}
 					title={"Pending Orders"}
 					key={1000 * Math.random()}
@@ -148,11 +178,14 @@ const DashboardComp = () => {
 
 				<DataCard
 					bg={"bg-purple-300"}
-					from={"up from yesterday"}
+					// from={"up from yesterday"}
 					icon={<TbTruckDelivery className="text-purple-600" />}
-					icon2={<BiTrendingDown />}
-					number={"500"}
-					percent={"12%"}
+					// icon2={<BiTrendingDown />}
+
+					number={orders
+						?.map((order) => order?.delivery_status !== "success")
+						?.length?.toLocaleString()}
+					// percent={"12%"}
 					percentColor={"text-green-400"}
 					title={"Pending Deliveries"}
 					key={1000 * Math.random()}

@@ -85,11 +85,11 @@ const Dashboard = () => {
 						text={"Report"}
 						onClick={() => setPage("report")}
 					/>
-					<Left
+					{/* <Left
 						icon={<FiSettings />}
 						text={"Settings"}
 						onClick={() => setPage("settings")}
-					/>
+					/> */}
 				</div>
 
 				<div className="p-[20px] w-full rounded-lg pl-[240px]">
@@ -99,7 +99,7 @@ const Dashboard = () => {
 					{page === "customer" && <DashboardCustomerPage />}
 					{page === "messages" && <DashboardMessagePage />}
 					{page === "report" && <DashboardReportPage />}
-					{page === "settings" && <DashboardSettingsPage />}
+					{/* {page === "settings" && <DashboardSettingsPage />} */}
 				</div>
 			</div>
 		</div>
