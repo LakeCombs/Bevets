@@ -8,7 +8,6 @@ import Footer from "../components/footer";
 import { useDispatch, useSelector } from "react-redux";
 import { allCategoryAction } from "../redux/actions/category.action";
 import {
-	AddToFavAction,
 	RegexSearchAction,
 	ResetRegexAction,
 	getAllProductAction
@@ -21,14 +20,9 @@ const HomeScreen = () => {
 	const {
 		categories,
 		error: categoriesError,
-		loading,
 		categoriesLoading
 	} = useSelector((state) => state.allCategory);
-	const {
-		products,
-		loading: productLoading,
-		error: productError
-	} = useSelector((state) => state.allProduct);
+	const { products } = useSelector((state) => state.allProduct);
 	const { products: regexProducts } = useSelector((state) => state.regexSearch);
 
 	const [email, setEmail] = useState("");
@@ -39,20 +33,10 @@ const HomeScreen = () => {
 		e.preventDefault();
 	};
 
-	const submit = () => {};
-
 	var getMeRandomElements = (prod) => {
 		var result = [];
 		for (var i = 0; i < 4; i++) {
 			result.push(products[Math.floor(Math.random() * prod?.length)]);
-		}
-		return result;
-	};
-
-	const ShowCategories = (cat) => {
-		let result = [];
-		for (var i = 0; i < 5; i++) {
-			result.push(products[Math.floor(Math.random() * cat?.length)]);
 		}
 		return result;
 	};
@@ -90,52 +74,6 @@ const HomeScreen = () => {
 			};
 		});
 	};
-
-	const items = [
-		{
-			key: "1",
-			label: (
-				<a
-					target="_blank"
-					rel="noopener noreferrer"
-					href="https://www.antgroup.com">
-					1st menu item
-				</a>
-			)
-		},
-		{
-			key: "2",
-			label: (
-				<a
-					target="_blank"
-					rel="noopener noreferrer"
-					href="https://www.aliyun.com">
-					2nd menu item (disabled)
-				</a>
-			),
-			disabled: true
-		},
-		{
-			key: "3",
-			label: (
-				<a
-					target="_blank"
-					rel="noopener noreferrer"
-					href="https://www.luohanacademy.com">
-					3rd menu item (disabled)
-				</a>
-			),
-			disabled: true
-		},
-		{
-			key: "4",
-			danger: true,
-			label: "a danger item"
-		}
-	];
-
-	console.log("the regex products is ", regexProducts);
-	console.log("the dropdown item", dropDownItem());
 
 	useEffect(() => {
 		if (search === "") {

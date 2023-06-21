@@ -49,7 +49,6 @@ const createOrderSlice = createSlice({
 	},
 	reducers: {
 		createOrderSuccess: (state, { payload }) => {
-			console.log("the payload send here is ", payload);
 			state.order = payload
 				? payload?.map((item) => {
 						return {

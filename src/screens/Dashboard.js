@@ -5,7 +5,6 @@ import { BsGraphUpArrow, BsHandbag } from "react-icons/bs";
 import { RiInboxArchiveLine } from "react-icons/ri";
 import { IoIosPeople } from "react-icons/io";
 import { AiOutlineMail } from "react-icons/ai";
-import { FiSettings } from "react-icons/fi";
 import { useState } from "react";
 import DashboardComp from "../components/DashboardComp";
 import DashboardProductPage from "../components/DashboardProductPage";
@@ -13,15 +12,12 @@ import DashboardOrderPage from "../components/DashboardOrderPage";
 import DashboardCustomerPage from "../components/DashboardCustomerPage";
 import DashboardMessagePage from "../components/DashboardMessagePage";
 import DashboardReportPage from "../components/DashboardReportPage";
-import DashboardSettingsPage from "../components/DashboardSettingsPage";
-import { useDispatch, useSelector } from "react-redux";
+// import DashboardSettingsPage from "../components/DashboardSettingsPage";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getProductByIdAction } from "../redux/actions/product.action";
+import { useLocation } from "react-router-dom";
 
 const Dashboard = () => {
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
 	const location = useLocation();
 	const { userInfo } = useSelector((state) => state.userLogin);
 	const { page: passedPage } = location.state;
@@ -42,7 +38,7 @@ const Dashboard = () => {
 		if (userInfo?.role !== "admin") {
 			window.history.back();
 		}
-	}, []);
+	}, [userInfo]);
 
 	useEffect(() => {
 		if (passedPage) {

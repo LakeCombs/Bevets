@@ -29,20 +29,20 @@ const DashboardReportPage = () => {
 					<h2 className="my-[10px] text-[20px]">
 						Pending Orders:{" "}
 						{orders
-							?.map((order) => order?.delivery_status === "pending")
+							?.filter((order) => order?.delivery_status === "pending")
 							?.length?.toLocaleString()}
 					</h2>
 					<h2 className="my-[10px] text-[20px]">
 						Completed Orders:{" "}
 						{orders
-							?.map((order) => order?.delivery_status === "success")
+							?.filter((order) => order?.delivery_status === "success")
 							?.length?.toLocaleString()}
 					</h2>
 
 					<h2 className="my-[10px] text-[20px]">
 						Failed Orders:{" "}
 						{orders
-							?.map((order) => order?.delivery_status === "failure")
+							?.filter((order) => order?.delivery_status === "failure")
 							?.length?.toLocaleString()}
 					</h2>
 

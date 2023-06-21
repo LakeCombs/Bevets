@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState } from "react";
-import { Checkbox, message } from "antd";
+import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import WideButton from "./wideButton";
@@ -10,8 +10,6 @@ import {
 	DeleteAddressAction
 } from "../redux/actions/address.action";
 import { useEffect } from "react";
-import { resetAddAddress } from "../redux/reducers/addressSlice";
-import { current } from "@reduxjs/toolkit";
 import { OrderDetailsAction } from "../redux/actions/order.action";
 
 const DeliveryMethodSession = ({ flip, setFlip }) => {
@@ -20,11 +18,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const [deliveryFee, setDeliveryFee] = useState(0);
 	const { cartItems } = useSelector((state) => state.cart);
 	const { userInfo } = useSelector((state) => state.userLogin);
-	const {
-		address: Addr,
-		loading,
-		error
-	} = useSelector((state) => state.addAddress);
+	const { address: Addr, error } = useSelector((state) => state.addAddress);
 	const { address: DelAddr } = useSelector((state) => state.removeAddress);
 	const [deliveryPrice, setDeiveryPrice] = useState(0);
 	const [editAddress, setEditAddress] = useState(false);
@@ -40,8 +34,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const totalPrice = cartItems?.reduce((accumulator, currectValue) => {
 		return accumulator + currectValue?.product?.price * currectValue?.qty;
 	}, 0);
-
-	console.log("the cart is ", cartItems);
 
 	const SaveAddress = () => {
 		dispatch(

@@ -44,7 +44,6 @@ const DashboardComp = () => {
 		(state) => state.allOrder
 	);
 
-	console.log("the order is ", orders);
 	const NotificationPane = ({ icon, bg, text, value, textcolor }) => {
 		return (
 			<div className="flex flex-row mb-[10px] border-b pb-[5px]">

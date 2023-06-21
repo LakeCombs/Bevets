@@ -74,8 +74,6 @@ const AccountSession = () => {
 		}
 	};
 
-	console.log("the profile picture ", profile_picture);
-
 	useEffect(() => {
 		if (user?._id) {
 			setUpdateUserDetails(false);

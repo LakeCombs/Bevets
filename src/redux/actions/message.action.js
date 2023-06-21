@@ -34,7 +34,6 @@ export const CreateMessageAction = (message) => async (dispatch, getState) => {
 };
 
 export const GetAllMessageAction = () => async (dispatch, getState) => {
-	console.log("All Message Action");
 	try {
 		const {
 			userLogin: { userInfo }
