@@ -146,12 +146,15 @@ const DashboardComp = () => {
 	const totalRevenue = orders?.reduce((accumulator, currentValue) => {
 		if (currentValue?.delivery_status === "success") {
 			const orderRevenue = currentValue?.items?.reduce((acc, cv) => {
-				return acc + (cv?.product?.price || 0);
+				console.log("the cv is ", cv);
+				return acc + cv?.product?.price * cv?.qty;
 			}, 0);
 			return accumulator + orderRevenue;
 		}
 		return accumulator;
 	}, 0);
+
+	console.log("the orders are ", orders);
 
 	useEffect(() => {
 		dispatch(getAllUserAction());
