@@ -204,17 +204,21 @@ const CartScreen = () => {
 							</div>
 							<hr className="hidden md:flex" />
 
-							<button
-								className=" md:flex hidden w-[50%] justify-center align-center rounded-lg bg-bright-blue py-[5px] text-white font-semibold  mt-[20px] self-center hover:shadow-md "
-								onClick={() => {
-									if (!userInfo?._id) {
-										navigate("/login");
-									} else {
-										navigate("/delivery");
-									}
-								}}>
-								CHECKOUT
-							</button>
+							{cartItems?.length ? (
+								<button
+									className=" md:flex hidden w-[50%] justify-center align-center rounded-lg bg-bright-blue py-[5px] text-white font-semibold  mt-[20px] self-center hover:shadow-md "
+									onClick={() => {
+										if (!userInfo?._id) {
+											navigate("/login");
+										} else {
+											navigate("/delivery");
+										}
+									}}>
+									CHECKOUT
+								</button>
+							) : (
+								<></>
+							)}
 						</div>
 					</div>
 				)}
@@ -224,14 +228,17 @@ const CartScreen = () => {
 						style={"bg-app-orange rounded-lg hover:shadow-md"}
 						text={"CONTINUE SHOPPING"}
 					/>
-
-					<WideButton
-						onClick={() => {
-							navigate("/delivery");
-						}}
-						style={"bg-bright-blue rounded-lg mt-[8px] hover:shadow-md"}
-						text={"CHECKOUT"}
-					/>
+					{cartItems?.length ? (
+						<WideButton
+							onClick={() => {
+								navigate("/delivery");
+							}}
+							style={"bg-bright-blue rounded-lg mt-[8px] hover:shadow-md"}
+							text={"CHECKOUT"}
+						/>
+					) : (
+						<></>
+					)}
 				</div>
 				<div className="mt-[35px] rounded-2xl w-full bg-white shadow-md">
 					<div className="flex flex-row justify-between px-[15px] py-[10px] ">

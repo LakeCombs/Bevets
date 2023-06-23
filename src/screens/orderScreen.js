@@ -19,7 +19,7 @@ const MyOrderScreen = () => {
 			<Header />
 			<ScreenWithPadding>
 				<div className=" min-h-screen pb-[20px]">
-					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full">
+					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full md:mt-0 mt-[70px]">
 						<h3 className="font-bold family-poppins">My Orders</h3>
 					</div>
 

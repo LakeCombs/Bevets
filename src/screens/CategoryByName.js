@@ -32,18 +32,18 @@ const CategoryByName = () => {
 			<Header />
 			<ScreenWithPadding>
 				<div className=" min-h-screen">
-					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full">
+					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full md:mt-0 mt-[70px]">
 						<h3 className="font-bold family-poppins">
 							Home > Categories > {name} {loading && <Spin />}
 						</h3>
 					</div>
 
-					<div className="mt-[15px] font-bold family-poppins">
+					{/* <div className="mt-[15px] font-bold family-poppins">
 						<h3>
 							{name} {error && <p className="text-red-400"> {error}</p>}
 						</h3>
 						<hr />
-					</div>
+					</div> */}
 
 					{!products?.length && !loading && (
 						<div className="pt-[50px] flex flex-col justify-center items-center">
@@ -56,7 +56,7 @@ const CategoryByName = () => {
 						</div>
 					)}
 
-					<div className="flex justify-around flex-wrap">
+					<div className="flex justify-around flex-wrap mt-[10px]">
 						{products?.map((product) => (
 							<StandardProductCard product={product} />
 						))}

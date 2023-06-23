@@ -22,7 +22,7 @@ const HomeScreen = () => {
 		error: categoriesError,
 		categoriesLoading
 	} = useSelector((state) => state.allCategory);
-	const { products } = useSelector((state) => state.allProduct);
+	const { products, loading } = useSelector((state) => state.allProduct);
 	const { products: regexProducts } = useSelector((state) => state.regexSearch);
 
 	const [email, setEmail] = useState("");
@@ -120,6 +120,7 @@ const HomeScreen = () => {
 						<span className="text-app-orange session-header">
 							by Categories
 						</span>
+						{categoriesLoading && <Spin />}
 					</h2>
 
 					<Link className="text-app-orange session-header" to="/categories">
@@ -145,7 +146,8 @@ const HomeScreen = () => {
 				{/* Top Selling */}
 				<div className="w-full flex justify-between mt-[20px] mb-[30px]">
 					<h2 className=" font-inter session-header ">
-						All <span className="text-app-orange">Product</span>
+						All <span className="text-app-orange">Product</span>{" "}
+						{loading && <Spin />}
 					</h2>
 
 					<Link className="text-app-orange ">{/* See all */}</Link>

@@ -126,7 +126,7 @@ const Account = () => {
 	return (
 		<div>
 			<Header />
-			<div className="mt-[50px] bg-background pt-[50px] w-full">
+			<div className="mt-[50px] bg-background  flex flex-col min-h-screen pt-[50px] w-full ">
 				<div className="px-[50px] h-auto flex flex-row justify-between w-full">
 					<div className=" md:w-[30%] md:flex hidden flex-col">
 						<div className=" w-[100%] flex flex-col bg-white">
@@ -204,7 +204,7 @@ const Account = () => {
 					</div>
 					<div className="md:hidden flex">
 						<Dropdown menu={{ items }} trigger={["click"]}>
-							<BiMenuAltLeft className="text-[20px] ml-[-20px]" />
+							<BiMenuAltLeft className="text-[20px] ml-[-20px] hover:text-bright-blue font-bold hover:cursor-pointer" />
 						</Dropdown>
 					</div>
 					<div className=" w-full h-auto md:w-[70%] bg-white ml-[15px]">
@@ -216,7 +216,9 @@ const Account = () => {
 					</div>
 				</div>
 
-				<Footer />
+				<div className="bottom-0  ">
+					<Footer />
+				</div>
 			</div>
 		</div>
 	);
