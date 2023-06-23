@@ -1,5 +1,5 @@
 import { Checkbox, Dropdown, Table } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	GetOrdersAction,
@@ -21,6 +21,7 @@ const DashboardOrderPending = ({ onClick }) => {
 	const pendingOrders = orders?.filter(
 		(order) => order?.delivery_status === "pending"
 	);
+	const [reverseOrder, setReverseOrder] = useState([]);
 
 	const columns = [
 		{
@@ -162,6 +163,12 @@ const DashboardOrderPending = ({ onClick }) => {
 			dispatch(ResetUpdateOrderAction());
 		}
 	}, [order?._id]);
+
+	useEffect(() => {
+		if (orders) {
+			setReverseOrder([...pendingOrders]?.reverse());
+		}
+	}, [orders]);
 
 	return (
 		<div className="w-full bg-white rounded-md p-[10px]">

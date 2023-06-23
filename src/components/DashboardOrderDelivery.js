@@ -1,5 +1,5 @@
 import { Checkbox, Dropdown, Spin, Table } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import {
@@ -17,6 +17,7 @@ const DashboardOrderDelivery = ({ onClick }) => {
 	const { orders, loading: ordersLoading } = useSelector(
 		(state) => state.allOrder
 	);
+	const [reverseOrder, setReverseOrder] = useState([]);
 
 	const deliveredOrders = orders?.filter(
 		(order) => order?.delivery_status === "success"
@@ -107,46 +108,46 @@ const DashboardOrderDelivery = ({ onClick }) => {
 	};
 
 	const data = [];
-	for (let index = 0; index < deliveredOrders?.length; index++) {
+	for (let index = 0; index < reverseOrder?.length; index++) {
 		data.push({
 			orderNo: (
 				<p
 					onClick={() => {
-						navigate(`/admin/orders/${orders[index]?._id}`);
+						navigate(`/admin/orders/${reverseOrder[index]?._id}`);
 					}}
 					className="hover:cursor-pointer">
 					{" "}
-					{deliveredOrders[index]?._id?.slice(0, 5)}
+					{reverseOrder[index]?._id?.slice(0, 5)}
 				</p>
 			),
-			createdAt: moment(deliveredOrders[index]?.createdAt).format("YYYY-MM-DD"),
-			user: `${deliveredOrders[index]?.user?.firstname} ${orders[index]?.user?.lastname}`,
-			total_price: `GHc ${deliveredOrders[index]?.total_price}`,
-			payment_method: deliveredOrders[index]?.payment_method,
-			delivery_method: deliveredOrders[index]?.delivery_method,
+			createdAt: moment(reverseOrder[index]?.createdAt).format("YYYY-MM-DD"),
+			user: `${reverseOrder[index]?.user?.firstname} ${reverseOrder[index]?.user?.lastname}`,
+			total_price: `GHc ${reverseOrder[index]?.total_price}`,
+			payment_method: reverseOrder[index]?.payment_method,
+			delivery_method: reverseOrder[index]?.delivery_method,
 			status: (
 				<span
 					className={`${
-						deliveredOrders[index]?.delivery_status === "pending"
+						reverseOrder[index]?.delivery_status === "pending"
 							? "text-orange-400"
 							: ""
 					} ${
-						deliveredOrders[index]?.delivery_status === "success"
+						reverseOrder[index]?.delivery_status === "success"
 							? "text-green-500"
 							: ""
 					} 
 					
-					${deliveredOrders[index]?.delivery_status === "failed" ? "text-red-500" : ""}
+					${reverseOrder[index]?.delivery_status === "failed" ? "text-red-500" : ""}
 					
 					`}>
-					{deliveredOrders[index]?.delivery_status}
+					{reverseOrder[index]?.delivery_status}
 				</span>
 			),
 			actions: (
 				<button className="bg-bright-blue text-white rounded-lg py-[5px] px-[5px]">
 					<Dropdown
 						menu={{
-							items: items(deliveredOrders[index]?._id)
+							items: items(reverseOrder[index]?._id)
 						}}
 						trigger={["click"]}>
 						<BiDotsVertical />
@@ -162,6 +163,12 @@ const DashboardOrderDelivery = ({ onClick }) => {
 			dispatch(ResetUpdateOrderAction());
 		}
 	}, [order?._id]);
+
+	useEffect(() => {
+		if (orders) {
+			setReverseOrder([...deliveredOrders]?.reverse());
+		}
+	}, [orders]);
 
 	return (
 		<div className="w-full bg-white rounded-md p-[10px]">

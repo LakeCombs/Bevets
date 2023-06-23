@@ -73,7 +73,7 @@ const InboxSession = () => {
 				)}
 
 				<div className="flex-grow overflow-y-auto h-[150px] p-[10px]">
-					{messages?.map((message) => (
+					{[...messages]?.reverse()?.map((message) => (
 						<MessageLook message={message} />
 					))}
 				</div>

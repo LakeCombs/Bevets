@@ -309,7 +309,7 @@ const DashboardMessagePage = () => {
 				<>
 					<div className="flex-grow overflow-y-auto h-[700px] bg-background p-[10px]">
 						{allMessageLoading && <Spin />}
-						{messages?.map((message) => (
+						{[...messages]?.reverse()?.map((message) => (
 							<MessageLook message={message} />
 						))}
 

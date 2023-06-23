@@ -132,8 +132,9 @@ const HomeScreen = () => {
 				<div className=" flex flex-row md:mt-[0px] mt-[10px] w-full scroll-m-8 scroll-auto snap-x overflow-x-auto whitespace-no-wrap">
 					{categoriesLoading && <Spin size="25px" />}
 					{categories &&
-						categories
-							.slice(0, 6)
+						[...categories]
+							?.reverse()
+							?.slice(0, 6)
 							?.map((cat) => <CardByCategories cat={cat} />)}
 
 					{categoriesError && (
@@ -153,8 +154,8 @@ const HomeScreen = () => {
 					<Link className="text-app-orange ">{/* See all */}</Link>
 				</div>
 
-				<div className="w-full flex justify-around flex-wrap  flex-col lg:flex-row   ">
-					{products?.map((product) => (
+				<div className="w-full flex justify-around flex-wrap  flex-row ">
+					{[...products]?.reverse()?.map((product) => (
 						<BasicEssentialCard product={product} />
 					))}
 				</div>
