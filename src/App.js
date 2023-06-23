@@ -25,6 +25,7 @@ import MyOrderScreen from "./screens/orderScreen";
 import OrderByIdScreen from "./screens/orderByIdScreen";
 import AdminOrderByIdScreen from "./screens/adminOrderByIdScreen";
 import AdminProductByIdScreen from "./screens/adminProductByIdScreen";
+import GenerateInvoice from "./screens/generateInvoice";
 
 function App() {
 	return (
@@ -57,6 +58,7 @@ function App() {
 				<Route path="/order/:id" element={<OrderByIdScreen />} />
 				<Route path="/admin/orders/:id" element={<AdminOrderByIdScreen />} /> }
 				<Route path="/admin/product/:id" element={<AdminProductByIdScreen />} />
+				<Route path="/invoice/:id" element={<GenerateInvoice />} />
 			</Routes>
 		</Router>
 	);

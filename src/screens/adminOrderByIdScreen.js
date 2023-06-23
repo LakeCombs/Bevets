@@ -246,7 +246,11 @@ const AdminOrderByIdScreen = () => {
 							<div className="rounded-lg bg-background border mt-[10px] p-[15px] w-full ">
 								<div className="w-full flex flex-row justify-between items-center">
 									<p className="font-bold text-[12px]"> Invoice</p>
-									<p className="text-[12px] border px-[5px] py-[3px] hover:cursor-pointer bg-white">
+									<p
+										className="text-[12px] border px-[5px] py-[3px] hover:cursor-pointer bg-white"
+										onClick={() => {
+											navigate(`/invoice/${id}`);
+										}}>
 										Generate
 									</p>
 								</div>
