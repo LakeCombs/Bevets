@@ -32,7 +32,6 @@ const CategoryByName = () => {
 			<Header />
 			<ScreenWithPadding>
 				<div className=" min-h-screen">
-					<h2>Get Product By Categories</h2>
 					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full md:mt-0 mt-[70px]">
 						<h3 className="font-bold family-poppins">
 							Home > Categories > {name} {loading && <Spin />}
