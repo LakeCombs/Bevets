@@ -193,7 +193,7 @@ const OrderSession = () => {
 						{!openOrder?.length && !loading ? (
 							<div className="flex justify-center w-full h-full items-center flex-col">
 								<img alt="" src={"/assets/order.svg"} />
-								<h2 className="">You haven’t placed any orders yet</h2>
+								<h2 className="">You haven’t placed any new orders yet</h2>
 							</div>
 						) : (
 							<Table columns={columns} dataSource={data} />

@@ -28,12 +28,7 @@ const AdminOrderByIdScreen = () => {
 		order?.order_tracking_status?.tracks || ""
 	);
 
-	const trackOptions = [
-		"Order Placed",
-		"Confirm Order",
-		"Dispatch",
-		"Delivered"
-	];
+	const trackOptions = ["Confirm Order", "Dispatch", "Delivered"];
 
 	useEffect(() => {
 		dispatch(getOrderByIdAction(id));
@@ -103,7 +98,7 @@ const AdminOrderByIdScreen = () => {
 										<p className=" w-[30px] h-[25px] py-[2px] border text-center">
 											{item?.qty}
 										</p>
-										<p>GHc ${item?.product?.price}</p>
+										<p>GHc ${item?.product?.price?.toLocaleString()}</p>
 									</div>
 								);
 							})}
@@ -237,7 +232,7 @@ const AdminOrderByIdScreen = () => {
 								</div> */}
 								<div className="flex flex-row mt-[20px] justify-between items-center font-semibold w-full mb-[3px]">
 									<p>Total</p>
-									<p> GHC {order?.total_price}</p>
+									<p> GHC {order?.total_price?.toLocaleString()}</p>
 								</div>
 							</div>
 						</div>
@@ -316,9 +311,9 @@ const AdminOrderByIdScreen = () => {
 									);
 								}
 							}}>
-							{order?.delivery_status !== "success"
-								? "Mark as delivered"
-								: "Delivered"}
+							{order?.delivery_status === "success"
+								? "Delivered"
+								: "Mark as delivered"}
 						</button>
 					</div>
 				</div>

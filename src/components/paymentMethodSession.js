@@ -231,12 +231,14 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 								<p>Subtotal</p>
 								<p>
 									GHC{" "}
-									{cartItems?.reduce((accumulator, currectValue) => {
-										return (
-											accumulator +
-											currectValue?.product?.price * currectValue?.qty
-										);
-									}, 0)}
+									{cartItems
+										?.reduce((accumulator, currectValue) => {
+											return (
+												accumulator +
+												currectValue?.product?.price * currectValue?.qty
+											);
+										}, 0)
+										?.toLocaleString()}
 								</p>
 							</div>
 							<div className="flex w-full justify-between my-[5px]">
@@ -255,12 +257,14 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 								<p className="font-bold">Total</p>
 								<p className="text-app-orange font-bold">
 									GHC{" "}
-									{cartItems?.reduce((accumulator, currectValue) => {
-										return (
-											accumulator +
-											currectValue?.product?.price * currectValue?.qty
-										);
-									}, 0)}
+									{cartItems
+										?.reduce((accumulator, currectValue) => {
+											return (
+												accumulator +
+												currectValue?.product?.price * currectValue?.qty
+											);
+										}, 0)
+										?.toLocaleString()}
 								</p>
 							</div>
 						</div>
@@ -297,7 +301,7 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 							<div className="ml-[20px]">
 								<p>{product?.product?.name}</p>
 								<p className="text-app-orange mt-[13px]">
-									GHC {product?.item?.price}
+									GHC {product?.item?.price?.toLocaleString()}
 								</p>
 								<p>Quantity: {product?.qty} </p>
 							</div>
@@ -309,11 +313,13 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 					<p>Subtotal</p>
 					<p>
 						GHC{" "}
-						{cartItems?.reduce((accumulator, currectValue) => {
-							return (
-								accumulator + currectValue?.product?.price * currectValue?.qty
-							);
-						}, 0)}
+						{cartItems
+							?.reduce((accumulator, currectValue) => {
+								return (
+									accumulator + currectValue?.product?.price * currectValue?.qty
+								);
+							}, 0)
+							?.toLocaleString()}
 					</p>
 				</div>
 				<div className="flex justify-between mt-[10px]">
@@ -329,11 +335,13 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 					<p className="font-bold">Total</p>
 					<p className="text-app-orange font-bold">
 						GHC{" "}
-						{cartItems?.reduce((accumulator, currectValue) => {
-							return (
-								accumulator + currectValue?.product?.price * currectValue?.qty
-							);
-						}, 0)}
+						{cartItems
+							?.reduce((accumulator, currectValue) => {
+								return (
+									accumulator + currectValue?.product?.price * currectValue?.qty
+								);
+							}, 0)
+							?.toLocaleString()}
 					</p>
 				</div>
 				<button

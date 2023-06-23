@@ -68,7 +68,7 @@ const CartScreen = () => {
 												<div className="ml-[10px]">
 													<h3>{product?.name}</h3>
 													<p className="flex md:hidden text-app-orange">
-														GhC {product?.price}
+														GhC {product?.price?.toLocaleString()}
 													</p>
 													<p className="text-[#00000066] text-[10px]">
 														{product?.description}
@@ -141,7 +141,9 @@ const CartScreen = () => {
 
 										<div className="flex-col hidden md:flex">
 											<div className="flex flex-col items-end justify-end">
-												<h1 className="font-semibold">GHc {product?.price}</h1>
+												<h1 className="font-semibold">
+													GHc {product?.price?.toLocaleString()}
+												</h1>
 												{/* <p>
 													<span className="font-light mr-[3px]">
 														GHc {item?.price}
@@ -190,12 +192,14 @@ const CartScreen = () => {
 								</div>
 								<h1 className="font-bold text-[15px]">
 									GHc{" "}
-									{cartItems?.reduce((accumulator, currentValue) => {
-										return (
-											accumulator +
-											currentValue?.product?.price * currentValue.qty
-										);
-									}, 0)}
+									{cartItems
+										?.reduce((accumulator, currentValue) => {
+											return (
+												accumulator +
+												currentValue?.product?.price * currentValue.qty
+											);
+										}, 0)
+										.toLocaleString()}
 								</h1>
 							</div>
 							<hr className="hidden md:flex" />

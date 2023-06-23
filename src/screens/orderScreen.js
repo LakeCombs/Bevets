@@ -68,7 +68,10 @@ const MyOrderScreen = () => {
 															/>{" "}
 															<div className="ml-[5px]">
 																<p>Name: {ord?.product?.name} </p>
-																<p>Price:GHc {ord?.product?.price} </p>
+																<p>
+																	Price:GHc{" "}
+																	{ord?.product?.price?.toLocaleString()}{" "}
+																</p>
 																<p>Qty: {ord?.qty}</p>
 															</div>
 														</div>
@@ -78,12 +81,14 @@ const MyOrderScreen = () => {
 
 											<td className="px-6 py-4">
 												GHc{" "}
-												{order?.items?.reduce((accumulator, currentValue) => {
-													return (
-														accumulator +
-														currentValue?.product?.price * currentValue?.qty
-													);
-												}, 0)}
+												{order?.items
+													?.reduce((accumulator, currentValue) => {
+														return (
+															accumulator +
+															currentValue?.product?.price * currentValue?.qty
+														);
+													}, 0)
+													?.toLocaleString()}
 											</td>
 
 											<td

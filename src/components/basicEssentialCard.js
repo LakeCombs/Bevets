@@ -79,7 +79,7 @@ const BasicEssentialCard = ({ product }) => {
 				</p> */}
 
 				<p className=" font-semibold md:text-[15px]  text-[15px]  text-black sm:mt-3 mt-0 ">
-					GHC {product?.price}
+					GHC {product?.price?.toLocaleString()}
 				</p>
 
 				<button

@@ -43,14 +43,17 @@ const OrderByIdScreen = () => {
 									<div className="ml-[15px]">
 										<p>Name: {product?.product?.name}</p>
 										<p>Description: {product?.product?.description}</p>
-										<p>Price: GHc {product?.product?.price}</p>
+										<p>
+											Price: GHc {product?.product?.price?.toLocaleString()}
+										</p>
+										<p>Quantity: {product?.qty}</p>
 									</div>
 								</div>
 							);
 						})}
 
 						<p className="font-semibold mt-[20px]">
-							Total Price:GHc {order?.total_price}
+							Total Price:GHc {order?.total_price?.toLocaleString()}
 						</p>
 
 						<h2 className="mt-[20px] font-bold"> Contact User</h2>
