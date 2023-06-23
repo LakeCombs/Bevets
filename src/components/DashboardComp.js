@@ -146,12 +146,15 @@ const DashboardComp = () => {
 	const totalRevenue = orders?.reduce((accumulator, currentValue) => {
 		if (currentValue?.delivery_status === "success") {
 			const orderRevenue = currentValue?.items?.reduce((acc, cv) => {
-				return acc + (cv?.product?.price || 0);
+				console.log("the cv is ", cv);
+				return acc + cv?.product?.price * cv?.qty;
 			}, 0);
 			return accumulator + orderRevenue;
 		}
 		return accumulator;
 	}, 0);
+
+	console.log("the orders are ", orders);
 
 	useEffect(() => {
 		dispatch(getAllUserAction());
@@ -195,7 +198,7 @@ const DashboardComp = () => {
 					icon={<RxCounterClockwiseClock className="text-blue-600" />}
 					// icon2={<BiTrendingDown />}
 					number={orders
-						?.map((order) => order?.delivery_status === "pending")
+						?.filter((order) => order?.delivery_status === "pending")
 						?.length?.toLocaleString()}
 					// percent={"10%"}
 					percentColor={"text-green-400"}
@@ -210,7 +213,7 @@ const DashboardComp = () => {
 					// icon2={<BiTrendingDown />}
 
 					number={orders
-						?.map((order) => order?.delivery_status !== "success")
+						?.filter((order) => order?.delivery_status !== "success")
 						?.length?.toLocaleString()}
 					// percent={"12%"}
 					percentColor={"text-green-400"}

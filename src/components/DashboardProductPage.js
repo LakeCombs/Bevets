@@ -1,4 +1,4 @@
-import { Input, Table, Spin, Dropdown } from "antd";
+import { Input, Table, Spin, Dropdown, DatePicker } from "antd";
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsPencil } from "react-icons/bs";
@@ -6,6 +6,7 @@ import { MdDelete, MdOutlineDeleteOutline } from "react-icons/md";
 import { message } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AiFillDelete } from "react-icons/ai";
 import {
 	getAllProductAction,
 	createProductAction,
@@ -16,6 +17,7 @@ import {
 import {
 	allCategoryAction,
 	createCategoryAction,
+	deleteCategoryAction,
 	resetcreateCategoryAction
 } from "../redux/actions/category.action";
 import { api } from "../utils/apiInstance";
@@ -68,14 +70,15 @@ const DashboardProductPage = () => {
 		loading: loadingCategory,
 		error: errorCategory
 	} = useSelector((state) => state.createCategory);
+	const { category: deletedCat } = useSelector((state) => state.deleteCategory);
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState("all");
 	const [name, setName] = useState("");
-	const [cat, setCat] = useState("");
-	const [itemNumber, setItemNumber] = useState();
-	const [brand, setBrand] = useState();
+	const [category, setCategory] = useState("");
+	const [code, setCode] = useState("");
+	const [brand, setBrand] = useState("");
 	const [price, setPrice] = useState();
-	const [expire, setExpire] = useState();
+	const [expiry, setExpiry] = useState("");
 	const [quantity, setQuantity] = useState();
 	const [description, setDescription] = useState("");
 	const [images, setImages] = useState([]);
@@ -91,7 +94,7 @@ const DashboardProductPage = () => {
 		if (!name) {
 			return messageApi.warning("Please provide a product name");
 		}
-		if (!cat) {
+		if (!category) {
 			return messageApi.warning("Please select a product category");
 		}
 
@@ -110,13 +113,13 @@ const DashboardProductPage = () => {
 		dispatch(
 			createProductAction({
 				name,
-				category: cat,
+				category,
 				price,
-				expire,
+				expiry,
 				description,
 				images,
 				quantity,
-				code: itemNumber,
+				code,
 				brand
 			})
 		);
@@ -138,8 +141,8 @@ const DashboardProductPage = () => {
 		dispatch(
 			createCategoryAction({
 				name,
-				desc: description,
-				image: images[0]?.image
+				description,
+				image: images[0]
 			})
 		);
 	};
@@ -165,16 +168,29 @@ const DashboardProductPage = () => {
 		}
 	};
 
-	const CategoryCard = ({ count, name, src, onClick, key }) => {
+	const CategoryCard = ({ data }) => {
 		return (
 			<div
 				className="rounded-xl shadow-md bg-white p-[20px] w-[250px]  h-[150px] hover:cursor-pointer "
 				onClick={onclick}
-				key={key}>
-				<img alt="" src={src} className="h-[70px] w-[70px] mb-[15px]" />
+				key={data?._id}>
+				<div className="flex flex-row w-full justify-between">
+					<img
+						alt=""
+						src={data?.image}
+						className="h-[70px] w-[70px] mb-[15px]"
+					/>
 
-				<p className="font-bold text-[15px] text-black">{name}</p>
-				<p className="text-[10px] text-text-gray">{count} Products</p>
+					<AiFillDelete
+						className="text-red-400 text-[20px] hover:cursor-pointer"
+						onClick={() => {
+							dispatch(deleteCategoryAction(data?._id));
+						}}
+					/>
+				</div>
+
+				<p className="font-bold text-[15px] text-black">{data?.name}</p>
+				<p className="text-[10px] text-text-gray">{data?.description}</p>
 			</div>
 		);
 	};
@@ -313,8 +329,11 @@ const DashboardProductPage = () => {
 		if (createCat?._id) {
 			dispatch(allCategoryAction());
 			messageApi.success("a new category have been created");
-			setPage("categories");
 			dispatch(resetcreateCategoryAction());
+			setName("");
+			setDescription("");
+			setImages([]);
+			setPage("categories");
 		}
 	}, [createCat, dispatch, messageApi]);
 
@@ -329,9 +348,24 @@ const DashboardProductPage = () => {
 			dispatch(getAllProductAction());
 			messageApi.success("a new product have been created");
 			dispatch(resetCreateProductAction());
+			setName("");
+			setDescription("");
+			setImages([]);
+			setPrice("");
+			setCategory("");
+			setBrand("");
+			setCode("");
+			setExpiry("");
+			setQuantity("");
 			setPage("all");
 		}
 	}, [dispatch, messageApi, product]);
+
+	useEffect(() => {
+		if (deletedCat?._id) {
+			dispatch(allCategoryAction());
+		}
+	}, [deletedCat]);
 
 	return (
 		<div className="rounded-lg p-2">
@@ -396,14 +430,7 @@ const DashboardProductPage = () => {
 			{page === "categories" && (
 				<div className="  flex-wrap justify-start mt-[20px] md:grid grid-cols-4 gap-4 flex">
 					{categories?.map((cat) => {
-						return (
-							<CategoryCard
-								name={cat?.name}
-								key={cat?._id}
-								count={cat?.desc}
-								src={cat?.image}
-							/>
-						);
+						return <CategoryCard data={cat} />;
 					})}
 				</div>
 			)}
@@ -445,6 +472,7 @@ const DashboardProductPage = () => {
 									<MdDelete
 										className="text-red-500 text-[20px]"
 										onClick={() => {
+											setImages(images.filter((img) => img !== image));
 											dispatch(deleteImageByfileNameAction(image));
 										}}
 									/>
@@ -463,9 +491,10 @@ const DashboardProductPage = () => {
 							/>
 							<label className="mt-[15px]">Category Name</label>
 							<select
-								value={cat}
+								value={category}
 								className="px-[5px] border rounded-lg outline-none mt-[4px]"
-								onChange={(e) => setCat(e.target.value)}>
+								onChange={(e) => setCategory(e.target.value)}>
+								<option>Select a Category</option>
 								{categories &&
 									categories?.map((cate) => {
 										return (
@@ -478,10 +507,10 @@ const DashboardProductPage = () => {
 
 							<div className="flex flex-row w-full justify-between mt-[15px]">
 								<div className="w-[50%] mr-[3px] flex flex-col">
-									<label>Item Number</label>
+									<label>Code</label>
 									<input
-										value={itemNumber}
-										onChange={(e) => setItemNumber(e.target.value)}
+										value={code}
+										onChange={(e) => setCode(e.target.value)}
 										className="px-[5px] border rounded-lg outline-none mt-[4px]"
 									/>
 								</div>
@@ -506,10 +535,18 @@ const DashboardProductPage = () => {
 
 								<div className="w-[30%] mx-[3px] flex flex-col">
 									<label>Expiry</label>
-									<input
+									{/* <input
 										value={expire}
 										onChange={(e) => setExpire(e.target.value)}
 										className="px-[5px] border rounded-lg outline-none mt-[4px]"
+									/> */}
+
+									<DatePicker
+										value={expiry}
+										onChange={(dateString) => {
+											console.log(dateString);
+											setExpiry(dateString);
+										}}
 									/>
 								</div>
 
@@ -584,6 +621,7 @@ const DashboardProductPage = () => {
 									<MdDelete
 										className="text-red-500 text-[20px]"
 										onClick={() => {
+											setImages(images.filter((img) => img !== image));
 											dispatch(deleteImageByfileNameAction(image));
 										}}
 									/>

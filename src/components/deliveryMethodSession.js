@@ -328,17 +328,21 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 							<p>Subtotal</p>
 							<p>
 								GHC
-								{cartItems?.reduce((accumulator, currectValue) => {
-									return (
-										accumulator +
-										currectValue?.product?.price * currectValue?.qty
-									);
-								}, 0)}
+								{cartItems
+									?.reduce((accumulator, currectValue) => {
+										return (
+											accumulator +
+											currectValue?.product?.price * currectValue?.qty
+										);
+									}, 0)
+									?.toLocaleString()}
 							</p>
 						</div>
 						<div className="flex w-full justify-between my-[5px]">
 							<p>Delivery Fee</p>
-							<p className="font-semibold">GHC {deliveryFee}</p>
+							<p className="font-semibold">
+								GHC {deliveryFee?.toLocaleString()}
+							</p>
 						</div>
 						{/* <div className="flex w-full justify-between">
 							<p>Discount</p>
@@ -352,13 +356,15 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 							<p className="font-bold">Total</p>
 							<p className="text-app-orange font-bold">
 								GHC
-								{cartItems?.reduce((accumulator, currectValue) => {
-									return (
-										accumulator +
-										currectValue?.product?.price * currectValue?.qty +
-										deliveryFee
-									);
-								}, 0)}
+								{cartItems
+									?.reduce((accumulator, currectValue) => {
+										return (
+											accumulator +
+											currectValue?.product?.price * currectValue?.qty +
+											deliveryFee
+										);
+									}, 0)
+									?.toLocaleString()}
 							</p>
 						</div>
 					</div>
@@ -374,9 +380,11 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 				{" "}
 				<h2 className="font-bold ml-[15px] text-[12px] md:text-[15px] my-[5px] ">
 					YOUR ORDER (
-					{cartItems?.reduce((accumulator, currentValue) => {
-						return accumulator + currentValue?.qty;
-					}, 0)}
+					{cartItems
+						?.reduce((accumulator, currentValue) => {
+							return accumulator + currentValue?.qty;
+						}, 0)
+						?.toLocaleString()}
 					) items
 				</h2>
 				<hr />
@@ -392,7 +400,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 							<div className="ml-[20px]">
 								<p>{product?.item?.name}</p>
 								<p className="text-app-orange mt-[13px]">
-									GHC {product?.product?.price}
+									GHC {product?.product?.price?.toLocaleString()}
 								</p>
 								<p>Quantity: {product?.qty} </p>
 							</div>
@@ -404,16 +412,18 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 					<p>Subtotal</p>
 					<p>
 						GHC{" "}
-						{cartItems?.reduce((accumulator, currectValue) => {
-							return (
-								accumulator + currectValue?.product?.price * currectValue?.qty
-							);
-						}, 0)}
+						{cartItems
+							?.reduce((accumulator, currectValue) => {
+								return (
+									accumulator + currectValue?.product?.price * currectValue?.qty
+								);
+							}, 0)
+							?.toLocaleString()}
 					</p>
 				</div>
 				<div className="flex justify-between mt-[10px]">
 					<p>Delivery Fee</p>
-					<p>GHC {deliveryPrice}</p>
+					<p>GHC {deliveryPrice?.toLocaleString()}</p>
 				</div>
 				{/* <div className="flex justify-between mt-[10px] mb-[5px]">
 					<p>Discount</p>
@@ -424,11 +434,13 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 					<p className="font-bold">Total</p>
 					<p className="text-app-orange font-bold">
 						GHC{" "}
-						{cartItems?.reduce((accumulator, currectValue) => {
-							return (
-								accumulator + currectValue?.product?.price * currectValue?.qty
-							);
-						}, 0)}
+						{cartItems
+							?.reduce((accumulator, currectValue) => {
+								return (
+									accumulator + currectValue?.product?.price * currectValue?.qty
+								);
+							}, 0)
+							?.toLocaleString()}
 					</p>
 				</div>
 				<button

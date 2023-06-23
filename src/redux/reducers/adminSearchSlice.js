@@ -79,3 +79,36 @@ const summarySlice = createSlice({
 export const { getSummaryFailed, getSummaryRequest, getSummarySuccess } =
 	summarySlice.actions;
 export const summaryReducer = summarySlice.reducer;
+
+const adminUpdateUserSlice = createSlice({
+	name: "admin update user ",
+	initialState: {
+		loading: false,
+		error: "",
+		user: {}
+	},
+	reducers: {
+		adminUpdateUserRequest: (state) => {
+			state.loading = true;
+			state.error = "";
+			state.user = {};
+		},
+
+		adminUpdateUserSuccess: (state, { payload }) => {
+			state.loading = false;
+			state.user = payload;
+			state.error = "";
+		},
+		adminUpdateUserFailed: (state, { payload }) => {
+			state.loading = false;
+			state.error = payload;
+			state.user = {};
+		}
+	}
+});
+export const {
+	adminUpdateUserRequest,
+	adminUpdateUserSuccess,
+	adminUpdateUserFailed
+} = adminUpdateUserSlice.actions;
+export const adminUpdateUserReducer = adminUpdateUserSlice.reducer;

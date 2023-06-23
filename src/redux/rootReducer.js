@@ -57,6 +57,7 @@ import {
 } from "./reducers/messag.slice";
 import {
 	adminSearchReducer,
+	adminUpdateUserReducer,
 	summaryReducer
 } from "./reducers/adminSearchSlice";
 
@@ -119,7 +120,8 @@ const rootReducer = combineReducers({
 
 	//Admin Search
 	adminSearch: adminSearchReducer,
-	summary: summaryReducer
+	summary: summaryReducer,
+	adminUpdateUser: adminUpdateUserReducer
 });
 
 export default rootReducer;

@@ -19,7 +19,7 @@ const MyOrderScreen = () => {
 			<Header />
 			<ScreenWithPadding>
 				<div className=" min-h-screen pb-[20px]">
-					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full">
+					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full md:mt-0 mt-[70px]">
 						<h3 className="font-bold family-poppins">My Orders</h3>
 					</div>
 
@@ -68,7 +68,10 @@ const MyOrderScreen = () => {
 															/>{" "}
 															<div className="ml-[5px]">
 																<p>Name: {ord?.product?.name} </p>
-																<p>Price:GHc {ord?.product?.price} </p>
+																<p>
+																	Price:GHc{" "}
+																	{ord?.product?.price?.toLocaleString()}{" "}
+																</p>
 																<p>Qty: {ord?.qty}</p>
 															</div>
 														</div>
@@ -78,12 +81,14 @@ const MyOrderScreen = () => {
 
 											<td className="px-6 py-4">
 												GHc{" "}
-												{order?.items?.reduce((accumulator, currentValue) => {
-													return (
-														accumulator +
-														currentValue?.product?.price * currentValue?.qty
-													);
-												}, 0)}
+												{order?.items
+													?.reduce((accumulator, currentValue) => {
+														return (
+															accumulator +
+															currentValue?.product?.price * currentValue?.qty
+														);
+													}, 0)
+													?.toLocaleString()}
 											</td>
 
 											<td

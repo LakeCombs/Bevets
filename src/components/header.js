@@ -110,7 +110,7 @@ const Header = () => {
 							<span className="mr-2 text-black">
 								<FaUserAlt />
 							</span>
-							My Account
+							{userInfo?._id ? "My Account" : "Login"}
 						</p>
 					)}
 				</>

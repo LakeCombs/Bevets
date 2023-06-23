@@ -75,8 +75,15 @@ export const updateCategoryAction =
 
 export const deleteCategoryAction = (id) => async (dispatch, getState) => {
 	try {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
 		dispatch(deleteCategoryRequest());
-		const { data } = await api.delete(`/categories/${id}`);
+		const { data } = await api.delete(
+			`/categories/${id}`,
+			headerConfig(userInfo)
+		);
 		dispatch(deleteCategorySuccess(data));
 	} catch (error) {
 		dispatch(deleteCategoryFailed(RequestError(error)));

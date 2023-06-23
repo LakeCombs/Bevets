@@ -221,8 +221,6 @@ const DashboardMessagePage = () => {
 									);
 								})}
 							</select>
-
-							<p className="ml-[10px]">Send to all User</p>
 						</div>
 					</div>
 					<div className="mt-[10px] bg-background ">

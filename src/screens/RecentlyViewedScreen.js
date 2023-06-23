@@ -18,12 +18,12 @@ const RecentlyViewedScreen = () => {
 						</h3>
 					</div> */}
 
-					<div className="mt-[15px] font-bold family-poppins">
+					<div className="md:mt-[15px] font-bold family-poppins mt-[70px]">
 						<h3>RECENTLY VIEWED</h3>
 					</div>
 
 					{!recently_viewed?.length && (
-						<div className="mt-[15px] family-poppins justify-center items-center flex flex-col text-center mt-[40px]">
+						<div className=" family-poppins justify-center items-center flex flex-col text-center mt-[40px]">
 							<GrView className="text-[70px]" />
 							<p>NO RECENTLY VIEWED</p>
 						</div>

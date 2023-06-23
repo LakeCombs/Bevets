@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { allCategoryAction } from "../redux/actions/category.action";
-import { Rate, Spin } from "antd";
+import { DatePicker, Rate, Spin, message } from "antd";
 import { api } from "../utils/apiInstance";
 import {
 	deleteImageByfileNameAction,
@@ -41,20 +41,21 @@ const AdminProductByIdScreen = () => {
 	} = useSelector((state) => state.updateProduct);
 
 	const [edit, setEdit] = useState(false);
-	const [name, setNane] = useState(product?.name || "");
-	const [price, setPrice] = useState(product?.price || "");
-	const [description, setDescription] = useState(product?.description || "");
-	const [images, setImages] = useState(product?.images || []);
-	const [rating, setRating] = useState(product?.rating || 0);
-	const [category, setCategory] = useState(product?.category?.name || "");
-	const [quantity, setQuantity] = useState(product?.quantity || 0);
-	const [batch, setBatch] = useState(product?.batch || 0);
-	const [brand, setBrand] = useState(product?.brand?.name || "");
-	const [status, setStatus] = useState(product?.status || "");
-	const [expiry, setExpiry] = useState(product?.expiry || "");
-	const [sold, setSold] = useState(product?.sold || "");
+	const [name, setNane] = useState("");
+	const [price, setPrice] = useState("");
+	const [description, setDescription] = useState("");
+	const [images, setImages] = useState([]);
+	const [rating, setRating] = useState(0);
+	const [category, setCategory] = useState("");
+	const [quantity, setQuantity] = useState("");
+	const [batch, setBatch] = useState("");
+	const [brand, setBrand] = useState("");
+	const [status, setStatus] = useState("");
+	const [expiry, setExpiry] = useState("");
+	const [sold, setSold] = useState("");
 	const inputRef = useRef(null);
 	const [uploadImageLoading, setUploadImageLoading] = useState(false);
+	const [messageApi, contextHolder] = message.useMessage();
 
 	const { edit: editProduct } = location.state;
 
@@ -80,6 +81,29 @@ const AdminProductByIdScreen = () => {
 	};
 
 	const UpdateProduct = () => {
+		if (!name) {
+			return messageApi.warning("Please provide a product name");
+		}
+		if (!category) {
+			return messageApi.warning("Please select a product category");
+		}
+
+		if (!price) {
+			return messageApi.warning("Please provide a product price");
+		}
+
+		if (!description) {
+			return messageApi.warning("Please provide a product description");
+		}
+
+		if (!images) {
+			return messageApi.warning("Please add a product image");
+		}
+
+		if (!expiry) {
+			return messageApi.warning("Please add an expiry date");
+		}
+
 		dispatch(
 			updateProductAction(id, {
 				name,
@@ -103,7 +127,11 @@ const AdminProductByIdScreen = () => {
 
 	useEffect(() => {
 		if (updatedProduct?._id) {
-			navigate("/dashboard");
+			navigate("/dashboard", {
+				state: {
+					page: "product"
+				}
+			});
 			dispatch(resetUpdateProduct());
 		}
 	}, [updatedProduct]);
@@ -114,14 +142,36 @@ const AdminProductByIdScreen = () => {
 			setEdit(editProduct);
 		}
 	}, [editProduct]);
+
+	useEffect(() => {
+		if (product?._id) {
+			setNane(product?.name);
+			setCategory(product?.Category?._id);
+			setImages(product?.images);
+			setPrice(product?.price);
+			setQuantity(product?.quantity);
+			setBrand(product?.brand);
+			setDescription(product?.description);
+			setBatch(product?.batch);
+			setSold(product?.sold);
+			setStatus(product?.status);
+			setExpiry(product?.expiry);
+		}
+	}, [product]);
+
 	return (
 		<div className="h-screen md:bg-background bg-primary-blue ">
+			{contextHolder}
 			<DashboardHeader />
 			<ScreenWithPadding>
 				{edit ? (
-					<h2 className="font-semibold text-[20px]">Update Product</h2>
+					<h2 className="font-semibold text-[20px]">
+						Update Product {loading && <Spin />}
+					</h2>
 				) : (
-					<h2 className="font-semibold text-[20px]">Product Details</h2>
+					<h2 className="font-semibold text-[20px]">
+						Product Details {loading && <Spin />}{" "}
+					</h2>
 				)}
 				{!edit ? (
 					<div className="rounded-lg mt-[10px] bg-white p-[15px] flex flex-row w-full">
@@ -182,9 +232,14 @@ const AdminProductByIdScreen = () => {
 
 									<div className="w-[30%] mx-[3px] flex flex-col">
 										<label>Expiry</label>
-										<p className="px-[5px] border rounded-lg outline-none mt-[4px]">
-											{product?.expire}
-										</p>
+
+										<DatePicker
+											value={expiry}
+											onChange={(dateString) => {
+												console.log(dateString);
+												setExpiry(dateString);
+											}}
+										/>
 									</div>
 
 									<div className="w-[30%] ml-[3px] flex flex-col">
@@ -300,6 +355,7 @@ const AdminProductByIdScreen = () => {
 										value={category}
 										className="px-[5px] border rounded-lg outline-none mt-[4px]"
 										onChange={(e) => setCategory(e.target.value)}>
+										<option>Select a Category</option>
 										{categories &&
 											categories?.map((cate) => {
 												return (
@@ -340,10 +396,11 @@ const AdminProductByIdScreen = () => {
 
 										<div className="w-[30%] mx-[3px] flex flex-col">
 											<label>Expiry</label>
-											<input
-												value={expiry}
-												onChange={(e) => setExpiry(e.target.value)}
-												className="px-[5px] border rounded-lg outline-none mt-[4px]"
+											<DatePicker
+												onChange={(dateString) => {
+													console.log(dateString);
+													setExpiry(dateString);
+												}}
 											/>
 										</div>
 
