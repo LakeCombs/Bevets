@@ -277,7 +277,11 @@ const DashboardProductPage = () => {
 				<p
 					className="hover:cursor-pointer"
 					onClick={() => {
-						navigate(`/admin/product/${products[index]?._id}`);
+						navigate(`/admin/product/${products[index]?._id}`, {
+							state: {
+								edit: true
+							}
+						});
 					}}>
 					{" "}
 					{products[index]?._id?.slice(0, 4)}{" "}
