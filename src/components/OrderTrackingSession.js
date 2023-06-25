@@ -18,6 +18,7 @@ const OrderTrackingSession = () => {
 	const openOrder = orders?.filter(
 		(order) => order?.delivery_status !== "success"
 	);
+	const [reverseOrder, setReverseOrder] = useState([]);
 
 	const [track, setTrack] = useState(false);
 	const OrderTip = ({ title, time, color }) => {
@@ -66,44 +67,50 @@ const OrderTrackingSession = () => {
 	];
 
 	const data = [];
-	for (let index = 0; index < openOrder?.length; index++) {
+	for (let index = 0; index < reverseOrder?.length; index++) {
 		data.push({
 			orderNo: (
 				<p
 					onClick={() => {
 						setTrack(!track);
-						dispatch(getOrderByIdAction(`${openOrder[index]?._id}`));
+						dispatch(getOrderByIdAction(`${reverseOrder[index]?._id}`));
 					}}
 					className="hover:cursor-pointer">
 					{" "}
-					{openOrder[index]?._id?.slice(0, 5)}
+					{reverseOrder[index]?._id?.slice(0, 5)}
 				</p>
 			),
-			createdAt: moment(openOrder[index]?.createdAt).format("YYYY-MM-DD"),
-			user: `${openOrder[index]?.user?.firstname} ${openOrder[index]?.user?.lastname}`,
-			total_price: `GHc ${openOrder[index]?.total_price}`,
-			payment_method: openOrder[index]?.payment_method,
-			delivery_method: openOrder[index]?.delivery_method,
+			createdAt: moment(reverseOrder[index]?.createdAt).format("YYYY-MM-DD"),
+			user: `${reverseOrder[index]?.user?.firstname} ${reverseOrder[index]?.user?.lastname}`,
+			total_price: `GHc ${reverseOrder[index]?.total_price}`,
+			payment_method: reverseOrder[index]?.payment_method,
+			delivery_method: reverseOrder[index]?.delivery_method,
 			status: (
 				<span
 					className={`${
-						openOrder[index]?.delivery_status === "pending"
+						reverseOrder[index]?.delivery_status === "pending"
 							? "text-orange-400"
 							: ""
 					} ${
-						openOrder[index]?.delivery_status === "success"
+						reverseOrder[index]?.delivery_status === "success"
 							? "text-green-500"
 							: ""
 					} 
 					
-					${openOrder[index]?.delivery_status === "failed" ? "text-red-500" : ""}
+					${reverseOrder[index]?.delivery_status === "failed" ? "text-red-500" : ""}
 					
 					`}>
-					{openOrder[index]?.delivery_status}
+					{reverseOrder[index]?.delivery_status}
 				</span>
 			)
 		});
 	}
+
+	useEffect(() => {
+		if (orders) {
+			setReverseOrder([...orders]?.reverse());
+		}
+	}, [orders]);
 
 	return (
 		<div className="h-full flex flex-col">

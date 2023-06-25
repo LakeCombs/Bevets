@@ -27,6 +27,7 @@ const AdminOrderByIdScreen = () => {
 	const [tracking, setTracking] = useState(
 		order?.order_tracking_status?.tracks || ""
 	);
+	const [orderStatus, setOrderStatus] = useState("Set to delivered");
 
 	const trackOptions = ["Confirm Order", "Dispatch", "Delivered"];
 
@@ -40,6 +41,12 @@ const AdminOrderByIdScreen = () => {
 			dispatch(ResetUpdateOrderAction());
 		}
 	}, []);
+
+	useEffect(() => {
+		if (order?.delivery_status === "success") {
+			setOrderStatus("Delivered");
+		}
+	}, [order]);
 
 	return (
 		<div className="min-h-screen md:bg-background bg-primary-blue">
@@ -315,9 +322,7 @@ const AdminOrderByIdScreen = () => {
 									);
 								}
 							}}>
-							{order?.delivery_status === "success"
-								? "Delivered"
-								: "Mark as delivered"}
+							{orderStatus}
 						</button>
 					</div>
 				</div>

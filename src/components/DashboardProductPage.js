@@ -87,6 +87,7 @@ const DashboardProductPage = () => {
 	const onSelectChange = (newSelectedRowKeys) => {
 		setSelectedRowKeys(newSelectedRowKeys);
 	};
+	const [reverseProduct, setReverseProduct] = useState([]);
 	const [messageApi, contextHolder] = message.useMessage();
 	const inputRef = useRef(null);
 
@@ -269,36 +270,42 @@ const DashboardProductPage = () => {
 	};
 
 	const data = [];
-	for (let index = 0; index < products?.length; index++) {
+	for (let index = 0; index < reverseProduct?.length; index++) {
 		data.push({
 			// key: <p>{products[index]?._id}</p>,
-			name: products[index]?.name,
+			name: reverseProduct[index]?.name,
 			itemNo: (
 				<p
 					className="hover:cursor-pointer"
 					onClick={() => {
-						navigate(`/admin/product/${products[index]?._id}`);
+						navigate(`/admin/product/${reverseProduct[index]?._id}`, {
+							state: {
+								edit: true
+							}
+						});
 					}}>
 					{" "}
-					{products[index]?._id?.slice(0, 4)}{" "}
+					{reverseProduct[index]?._id?.slice(0, 4)}{" "}
 				</p>
 			),
 			image: (
 				<img
 					alt=""
 					className="h-[50px] w-[50px]"
-					src={products[index]?.images && products[index]?.images[0]}
+					src={
+						reverseProduct[index]?.images && reverseProduct[index]?.images[0]
+					}
 				/>
 			),
-			price: products[index]?.price,
-			category: products[index]?.category?.name,
-			reviews: products[index]?.reviews,
-			status: products[index]?.status,
+			price: reverseProduct[index]?.price,
+			category: reverseProduct[index]?.category?.name,
+			reviews: reverseProduct[index]?.reviews,
+			status: reverseProduct[index]?.status,
 			action: (
 				<div className="flex flex-row justify-center">
 					<Dropdown
 						menu={{
-							items: items(products[index]?._id)
+							items: items(reverseProduct[index]?._id)
 						}}
 						trigger={["click"]}>
 						<p className=" p-[10px] bg-green-500 hover:cursor-pointer rounded-full text-[12px] text-white mr-[4px]">
@@ -308,7 +315,9 @@ const DashboardProductPage = () => {
 
 					<p
 						className=" p-[10px] bg-[#E77D00]  hover:cursor-pointer rounded-full text-[12px] text-white"
-						onClick={() => dispatch(DeleteProductAction(products[index]?._id))}>
+						onClick={() =>
+							dispatch(DeleteProductAction(reverseProduct[index]?._id))
+						}>
 						{deletedImageLoading ? (
 							<Spin size={"small"} />
 						) : (
@@ -366,6 +375,10 @@ const DashboardProductPage = () => {
 			dispatch(allCategoryAction());
 		}
 	}, [deletedCat]);
+
+	useEffect(() => {
+		setReverseProduct([...products]?.reverse());
+	}, [products]);
 
 	return (
 		<div className="rounded-lg p-2">
@@ -428,8 +441,8 @@ const DashboardProductPage = () => {
 				</div>
 			)}{" "}
 			{page === "categories" && (
-				<div className="  flex-wrap justify-start mt-[20px] md:grid grid-cols-4 gap-4 flex">
-					{categories?.map((cat) => {
+				<div className="  flex-wrap justify-start mt-[20px] md:grid grid-cols-3 gap-4 flex">
+					{[...categories]?.reverse()?.map((cat) => {
 						return <CategoryCard data={cat} />;
 					})}
 				</div>

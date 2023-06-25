@@ -30,7 +30,7 @@ const RecentlyViewedScreen = () => {
 					)}
 
 					<div className="flex justify-around flex-wrap">
-						{recently_viewed.map((product) => (
+						{[...recently_viewed]?.reverse()?.map((product) => (
 							<StandardProductCard product={product} />
 						))}
 					</div>

@@ -56,6 +56,7 @@ const AdminProductByIdScreen = () => {
 	const inputRef = useRef(null);
 	const [uploadImageLoading, setUploadImageLoading] = useState(false);
 	const [messageApi, contextHolder] = message.useMessage();
+	const [categoryName, setCategoryName] = useState("");
 
 	const { edit: editProduct } = location.state;
 
@@ -98,10 +99,6 @@ const AdminProductByIdScreen = () => {
 
 		if (!images) {
 			return messageApi.warning("Please add a product image");
-		}
-
-		if (!expiry) {
-			return messageApi.warning("Please add an expiry date");
 		}
 
 		dispatch(
@@ -156,6 +153,7 @@ const AdminProductByIdScreen = () => {
 			setSold(product?.sold);
 			setStatus(product?.status);
 			setExpiry(product?.expiry);
+			setCategoryName(product?.category?.name);
 		}
 	}, [product]);
 
@@ -360,7 +358,7 @@ const AdminProductByIdScreen = () => {
 											categories?.map((cate) => {
 												return (
 													<option key={cate?._id} value={cate?._id}>
-														{cate?.name}
+														{cate?.name || categoryName}
 													</option>
 												);
 											})}

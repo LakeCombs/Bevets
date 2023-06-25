@@ -11,6 +11,7 @@ const createCategorySlice = createSlice({
 	reducers: {
 		createCategoryRequest: (state) => {
 			state.loading = true;
+			state.category = {};
 		},
 		createCategorySuccess: (state, { payload }) => {
 			state.category = payload;
@@ -19,6 +20,7 @@ const createCategorySlice = createSlice({
 		createCategoryFailed: (state, { payload }) => {
 			state.error = payload;
 			state.loading = false;
+			state.category = {};
 		},
 		resetcreateCategory: (state) => {
 			state.category = {};
@@ -75,6 +77,7 @@ const categoryByIdSlice = createSlice({
 	reducers: {
 		categoryByIdRequest: (state) => {
 			state.loading = true;
+			state.category = {};
 		},
 		categoryByIdSuccess: (state, { payload }) => {
 			state.category = payload;
@@ -83,6 +86,7 @@ const categoryByIdSlice = createSlice({
 		categoryByIdFailed: (state, { payload }) => {
 			state.error = payload;
 			state.loading = false;
+			state.category = {};
 		}
 	}
 });
@@ -102,6 +106,7 @@ const updateCategorySlice = createSlice({
 	reducers: {
 		updateCategoryRequest: (state) => {
 			state.loading = true;
+			state.category = {};
 		},
 		updateCategorySuccess: (state, { payload }) => {
 			state.category = payload;
@@ -110,6 +115,7 @@ const updateCategorySlice = createSlice({
 		updateCategoryFailed: (state, { payload }) => {
 			state.error = payload;
 			state.loading = false;
+			state.category = {};
 		}
 	}
 });

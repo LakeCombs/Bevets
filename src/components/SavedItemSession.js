@@ -19,7 +19,7 @@ const SavedItemSession = () => {
 						</div>
 					) : (
 						<div className="p-[10px] flex flex-wrap">
-							{favorite?.map((item) => (
+							{[...favorite]?.reverse()?.map((item) => (
 								<StandardProductCard product={item} />
 							))}
 						</div>

@@ -1,5 +1,5 @@
 import { Dropdown, Spin, Table } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,6 +14,7 @@ const DashboardCustomerPage = () => {
 	const dispatch = useDispatch();
 	const { users, loading, error } = useSelector((state) => state.allUser);
 	const { user } = useSelector((state) => state.adminUpdateUser);
+	const [reverseOrder, setReverseOrder] = useState([]);
 
 	const columns = [
 		{
@@ -83,27 +84,27 @@ const DashboardCustomerPage = () => {
 	};
 
 	const data = [];
-	for (let index = 0; index < users?.length; index++) {
+	for (let index = 0; index < reverseOrder?.length; index++) {
 		data.push({
-			key: users[index]?._id,
-			image: users[index]?.name,
-			firstname: users[index]?.firstname,
+			key: reverseOrder?.[index]?._id,
+			image: reverseOrder[index]?.name,
+			firstname: reverseOrder[index]?.firstname,
 			image: (
 				<img
 					alt=""
 					className="h-[50px] w-[50px]"
-					src={users[index]?.profile_picture}
+					src={reverseOrder[index]?.profile_picture}
 				/>
 			),
-			lastname: users[index]?.lastname,
-			email: users[index]?.email,
-			phone: users[index]?.mobile,
-			role: users[index]?.role,
+			lastname: reverseOrder[index]?.lastname,
+			email: reverseOrder[index]?.email,
+			phone: reverseOrder[index]?.mobile,
+			role: reverseOrder[index]?.role,
 			action: (
 				<div className="flex flex-row justify-center">
 					<Dropdown
 						menu={{
-							items: items({ user: users[index] })
+							items: items({ user: reverseOrder[index] })
 						}}
 						trigger={["click"]}>
 						<p className=" p-[10px] bg-green-500 hover:cursor-pointer rounded-full text-[12px] text-white mr-[4px]">
@@ -124,6 +125,12 @@ const DashboardCustomerPage = () => {
 			dispatch(getAllUserAction());
 		}
 	}, [user]);
+
+	useEffect(() => {
+		if (users) {
+			setReverseOrder([...users]?.reverse());
+		}
+	}, [users]);
 
 	return (
 		<div>
