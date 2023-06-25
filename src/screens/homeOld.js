@@ -264,24 +264,24 @@ const HomeScreen = () => {
 					className="hidden md:block h-[60px]"
 				/>
 
-				<div className=" w-full ml-0 md:ml-[50px]">
-					<h2 className="text-white text-[20px] font-bold md:text-[30px] family-poppins">
-						GET LATEST UPDATES FROM US
-					</h2>
-					<h3 className="text-white text-[15px] family-poppins">
-						Subscribe to our newsletter to get updated on latest offers!
-					</h3>
+				{/*<div className=" w-full ml-0 md:ml-[50px]">*/}
+				{/*	<h2 className="text-white text-[20px] font-bold md:text-[30px] family-poppins">*/}
+				{/*		GET LATEST UPDATES FROM US*/}
+				{/*	</h2>*/}
+				{/*	<h3 className="text-white text-[15px] family-poppins">*/}
+				{/*		Subscribe to our newsletter to get updated on latest offers!*/}
+				{/*	</h3>*/}
 
-					<div className="flex flex-row mt-[30px]">
-						<Input
-							className="md:w-[40%] w-[75%] mr-[10px] rounded-3xl"
-							placeholder="Enter your email address"
-						/>{" "}
-						<button className="shadow-md hover:cursor-pointer rounded-3xl bg-bright-blue outline-none border-none py-[5px] px-[15px] text-[15px] md:text-[20px] text-white">
-							Subscribe
-						</button>
-					</div>
-				</div>
+				{/*	<div className="flex flex-row mt-[30px]">*/}
+				{/*		<Input*/}
+				{/*			className="md:w-[40%] w-[75%] mr-[10px] rounded-3xl"*/}
+				{/*			placeholder="Enter your email address"*/}
+				{/*		/>{" "}*/}
+				{/*		<button className="shadow-md hover:cursor-pointer rounded-3xl bg-bright-blue outline-none border-none py-[5px] px-[15px] text-[15px] md:text-[20px] text-white">*/}
+				{/*			Subscribe*/}
+				{/*		</button>*/}
+				{/*	</div>*/}
+				{/*</div>*/}
 			</div>
 			<Footer />
 		</div>

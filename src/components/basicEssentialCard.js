@@ -26,7 +26,8 @@ const BasicEssentialCard = ({ product }) => {
 
 	return (
 		<div
-			className="flex sm:flex-row rounded-lg sm:rounded-3xl flex-col sm:m-[16px]  items-center sm:justify-between bg-bright-blue font-mont sm:h-[180px] h-[200px] w-[130px] sm:w-[270px] m-[5px]  px-[10px] sm:py-[5px]   sm:mt-[10px] "
+			// className="rounded-3xl  w-[180px] h-[200px] flex items-center flex-col bg-bright-blue md:bg-primary-blue m-[6px] px-[10px] py-[6px] pt-[4px] hover:cursor-pointer hover:shadow-md  "
+			className="flex sm:flex-row rounded-lg sm:rounded-3xl flex-col sm:m-[16px]  items-center sm:justify-between md:bg-blue-100 font-mont sm:h-[180px] h-[200px] w-[130px] sm:w-[270px] m-[5px]  px-[10px] sm:py-[5px]   sm:mt-[10px] "
 			key={product?._id}>
 			<span className="flex sm:hidden self-end my-[3px] ">
 				{favorite?.find((prod) => prod?._id === product?._id) ? (

@@ -20,7 +20,7 @@ import { useLocation } from "react-router-dom";
 const Dashboard = () => {
 	const location = useLocation();
 	const { userInfo } = useSelector((state) => state.userLogin);
-	const { page: passedPage } = location.state;
+	const passedPage = location.state ? location.state.page : null;
 	const [page, setPage] = useState(passedPage || "dashboard");
 
 	const Left = ({ icon, text, onClick }) => {
