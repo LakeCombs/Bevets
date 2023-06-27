@@ -9,7 +9,7 @@ import { userRegisterAction } from "../redux/actions/user.action";
 const RegisterScreen = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { userInfo, loading, error } = useSelector(
+	const { userInfo, error } = useSelector(
 		(state) => state.userRegister
 	);
 	const [firstName, setFirstName] = useState("");
@@ -39,9 +39,9 @@ const RegisterScreen = () => {
 	return (
 		<div className="flex pt-[50px] flex-col bg-background h-screen items-center w-full">
 			<img
-				src={"/public/assets/logo.png"}
 				alt="bevets"
-				className="h-[60px] w-[130px]"
+				src={"/assets/logo.png"}
+				className="w-[120px] md:mt-0 "
 			/>
 			<h3 className="font-bold text-[20px] mt-[30px] ">Sign up Details</h3>
 			<p className="mt-[15px] mb-[20px]">
@@ -93,12 +93,9 @@ const RegisterScreen = () => {
 
 				<p className="mt-[20px] text-[12px] text-center md:text-[15px] family-poppins">
 					Already have an account?{" "}
-					<a
-						className="text-app-orange"
-						href="/login"
-						onClick={() => navigate("/login")}>
+					<button className="text-app-orange" onClick={()=>  navigate('/login')}>
 						Login
-					</a>
+					</button>
 				</p>
 			</form>
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Input, Spin } from "antd";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoginAction } from "../redux/actions/user.action";
 import { useEffect } from "react";
@@ -39,10 +39,10 @@ const LoginScreen = () => {
 			/>
 
 			<h1 className="mt-[20px] font-extrabold text-[20px] family-inter">
-				Welcome back!
+				Welcome!
 			</h1>
 			<p className="mt-[20px] text-[15px] family-inter">
-				Log back into your Bevets account
+				Log in to your Bevets account
 			</p>
 
 			<form
@@ -79,12 +79,9 @@ const LoginScreen = () => {
 
 			<p className="mt-[20px] text-[12px] md:text-[15px] family-poppins">
 				Don't have an account?{" "}
-				<a
-					className="text-app-orange"
-					href="/signup"
-					onClick={() => navigate("/signup")}>
+				<button className="text-app-orange" onClick={()=>  navigate('/signup')}>
 					Sign up
-				</a>
+				</button>
 			</p>
 
 			<p className="text-app-orange mt-[20px] text-[12px] md:text-[15px] family-poppins cursor-pointer">
