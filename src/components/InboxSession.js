@@ -57,12 +57,12 @@ const InboxSession = () => {
 	};
 	return (
 		<div className="h-full flex flex-col">
-			<div className="py-3 w-full px-5 md:font-bold font-semibold">
+			<div className="py-3 w-full px-5 md:font-bold font-semibold md:text-[15px] text-[13px] ">
 				<h2>MESSAGES {loading && <Spin />}</h2>
 			</div>
 			<hr />
 
-			<div className="flex h-[100%] flex-col justify-center items-bet">
+			<div className="flex h-[100%] flex-col justify-center mt-[10px]">
 				{!messages?.length && (
 					<div className="flex-grow">
 						<div className="flex justify-center w-full h-full items-center flex-col">
@@ -81,7 +81,9 @@ const InboxSession = () => {
 				<div className="mt-auto">
 					<hr />
 					<div className="py-3 px-5 flex justify-center items-end ">
-						<h2 className="text-app-orange font-semibold">START SHOPPING</h2>
+						<h2 className="text-app-orange font-semibold md:text-[15px] text-[12px]">
+							START SHOPPING
+						</h2>
 					</div>
 				</div>
 			</div>

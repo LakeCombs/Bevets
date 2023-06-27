@@ -32,6 +32,7 @@ import {
 	getAllProductRequest,
 	getAllProductSuccess
 } from "../reducers/product.slice";
+import Cookie from "js-cookie";
 
 export const CreateOrderAction = (orderData) => async (dispatch, getState) => {
 	try {
@@ -137,6 +138,7 @@ export const OrderByUserAction = () => async (dispatch, getState) => {
 };
 
 export const OrderDetailsAction = (payload) => (dispatch) => {
+	Cookie.remove("cartItems");
 	dispatch(updateOrderDetails(payload));
 };
 

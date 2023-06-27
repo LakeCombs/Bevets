@@ -4,6 +4,7 @@ import ScreenWithPadding from "../components/ScreenWithPadding";
 import { useDispatch, useSelector } from "react-redux";
 import { OrderByUserAction } from "../redux/actions/order.action";
 import { useNavigate } from "react-router-dom";
+import { Spin } from "antd";
 
 const MyOrderScreen = () => {
 	const dispatch = useDispatch();
@@ -20,7 +21,9 @@ const MyOrderScreen = () => {
 			<ScreenWithPadding>
 				<div className=" min-h-screen pb-[20px]">
 					<div className="bg-primary-blue rounded px-[5px] py-[8px] w-full md:mt-0 mt-[70px]">
-						<h3 className="font-bold family-poppins">My Orders</h3>
+						<h3 className="font-bold family-poppins">
+							My Orders {loading && <Spin />}
+						</h3>
 					</div>
 
 					<div className="container mx-auto px-4 py-8">
@@ -43,7 +46,7 @@ const MyOrderScreen = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{orders?.map((order) => (
+									{[...orders]?.reverse()?.map((order) => (
 										<tr
 											onClick={() => {
 												navigate(`/order/${order?._id}`);
@@ -57,7 +60,7 @@ const MyOrderScreen = () => {
 											<td className="px-6 py-4">
 												{order?.items?.map((ord) => {
 													return (
-														<div className="flex flex-row">
+														<div className="flex md:flex-row flex-col">
 															<img
 																className=" h-[60px] w-[60px]"
 																alt=""
@@ -66,7 +69,7 @@ const MyOrderScreen = () => {
 																	ord?.product?.images[0]
 																}
 															/>{" "}
-															<div className="ml-[5px]">
+															<div className="md:ml-[5px] ml-0">
 																<p>Name: {ord?.product?.name} </p>
 																<p>
 																	Price:GHc{" "}

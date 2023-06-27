@@ -12,72 +12,72 @@ const OrderSession = () => {
 	const [open, setOpen] = useState(true);
 	const { orders, loading, error } = useSelector((state) => state.orderByUser);
 
-	const openOrder = orders?.filter(
-		(order) => order?.delivery_status !== "success"
-	);
+	const openOrder = [...orders]
+		?.reverse()
+		?.filter((order) => order?.delivery_status !== "success");
 
-	const closedOrder = orders?.filter(
-		(order) => order?.delivery_status === "success"
-	);
+	const closedOrder = [...orders]
+		?.reverse()
+		?.filter((order) => order?.delivery_status === "success");
 
 	const columns = [
 		{
-			title: "Order No",
+			title: <p className="md:text-[13px] text-[10px]">Order No</p>,
 			dataIndex: "orderNo"
 		},
 		{
-			title: "Date",
+			title: <p className="md:text-[13px] text-[10px]">Date</p>,
 			dataIndex: "createdAt"
 		},
 		{
-			title: "Customer",
+			title: <p className="md:text-[13px] text-[10px]">Customer</p>,
 			dataIndex: "user"
 		},
 		{
-			title: "Price",
+			title: <p className="md:text-[13px] text-[10px]">Price</p>,
 			dataIndex: "total_price"
 		},
 		{
-			title: "Payment Method",
+			title: <p className="md:text-[13px] text-[10px]">Payment Method</p>,
 			dataIndex: "payment_method"
 		},
 		{
-			title: "Delivery Method",
+			title: <p className="md:text-[13px] text-[10px]">Delivery Method</p>,
 			dataIndex: "delivery_method"
 		},
 		{
-			title: "Order status",
+			title: <p className="md:text-[13px] text-[10px]">Order status</p>,
 			dataIndex: "status"
 		}
 	];
 
 	const columns2 = [
 		{
-			title: "Order No",
+			title: <p className="md:text-[13px] text-[10px]">Order No</p>,
 			dataIndex: "orderNo"
 		},
 		{
-			title: "Date",
+			title: <p className="md:text-[13px] text-[10px]">Date</p>,
 			dataIndex: "createdAt"
 		},
 		{
-			title: "Customer",
+			title: <p className="md:text-[13px] text-[10px]">Customer</p>,
 			dataIndex: "user"
 		},
 		{
-			title: "Price",
+			title: <p className="md:text-[13px] text-[10px]">Price</p>,
 			dataIndex: "total_price"
 		},
 		{
-			title: "Payment Method",
+			title: <p className="md:text-[13px] text-[10px]">Payment Method</p>,
 			dataIndex: "payment_method"
 		},
 		{
-			title: "Delivery Method",
+			title: <p className="md:text-[13px] text-[10px]">Delivery Method</p>,
 			dataIndex: "delivery_method"
 		},
 		{
-			title: "Order status",
+			title: <p className="md:text-[13px] text-[10px]">Order status</p>,
 			dataIndex: "status"
 		}
 	];
@@ -87,6 +87,7 @@ const OrderSession = () => {
 		data.push({
 			orderNo: (
 				<p
+					className="md:text-[13px] text-[10px]"
 					onClick={() => {
 						navigate(`/order/${openOrder[index]?._id}`);
 					}}
@@ -95,11 +96,32 @@ const OrderSession = () => {
 					{openOrder[index]?._id?.slice(0, 5)}
 				</p>
 			),
-			createdAt: moment(openOrder[index]?.createdAt).format("YYYY-MM-DD"),
-			user: `${openOrder[index]?.user?.firstname} ${openOrder[index]?.user?.lastname}`,
-			total_price: `GHc ${openOrder[index]?.total_price}`,
-			payment_method: openOrder[index]?.payment_method,
-			delivery_method: openOrder[index]?.delivery_method,
+			createdAt: (
+				<p className="md:text-[13px] text-[10px]">
+					{moment(openOrder[index]?.createdAt).format("YYYY-MM-DD")}
+				</p>
+			),
+			user: (
+				<p className="md:text-[13px] text-[10px]">
+					{openOrder[index]?.user?.firstname} {openOrder[index]?.user?.lastname}
+				</p>
+			),
+			total_price: (
+				<p className="md:text-[13px] text-[10px]">
+					GHc ${openOrder[index]?.total_price?.toLocaleString()}
+				</p>
+			),
+			payment_method: (
+				<p className="md:text-[13px] text-[10px]">
+					{" "}
+					{openOrder[index]?.payment_method}{" "}
+				</p>
+			),
+			delivery_method: (
+				<p className="md:text-[13px] text-[10px]">
+					{openOrder[index]?.delivery_method}
+				</p>
+			),
 			status: (
 				<span
 					className={`${
@@ -113,7 +135,7 @@ const OrderSession = () => {
 					} 
 					
 					${openOrder[index]?.delivery_status === "failed" ? "text-red-500" : ""}
-					
+					md:text-[13px] text-[10px]
 					`}>
 					{openOrder[index]?.delivery_status}
 				</span>
@@ -166,7 +188,7 @@ const OrderSession = () => {
 	return (
 		<div className="h-full flex flex-col">
 			<div className="py-3 w-full px-5 md:font-bold font-semibold">
-				<h2>ORDERS</h2>
+				<h2 className="text-[12px] md:text-[14px]">ORDERS</h2>
 			</div>
 			<hr />
 
@@ -174,14 +196,14 @@ const OrderSession = () => {
 				<h2
 					className={`${
 						open ? "text-app-orange border-b-app-orange" : "text-app-gray"
-					} px-5 h-full hover:cursor-pointer`}
+					} px-5 h-full hover:cursor-pointer text-[11px] md:text-[14px]`}
 					onClick={() => setOpen(true)}>
 					OPEN ORDERS
 				</h2>
 				<h2
 					className={`${
 						!open ? "text-app-orange border-app-orange" : "text-app-gray"
-					} px-5 h-full hover:cursor-pointer`}
+					} px-5 h-full hover:cursor-pointer text-[11px] md:text-[14px]`}
 					onClick={() => setOpen(false)}>
 					CLOSED ORDERS
 				</h2>
@@ -215,12 +237,16 @@ const OrderSession = () => {
 								<h2 className="">You haven’t closed placed any orders yet</h2>
 							</div>
 						) : (
-							<Table columns={columns2} dataSource={data2} />
+							<Table
+								columns={columns2}
+								dataSource={data2}
+								rowClassName="overlay-x-auto max-w-full"
+							/>
 						)}
 					</div>
 					<div className="mt-auto">
 						<hr />
-						<div className="py-3 px-5 flex justify-center items-end ">
+						<div className="py-3 px-5 flex justify-center items-end text-[14px]">
 							<h2
 								className="text-app-orange font-semibold hover:cursor-pointer"
 								onClick={() => {
