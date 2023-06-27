@@ -135,49 +135,6 @@ const HomeScreen = () => {
                     ))}
                 </div>
 
-                <div className="w-full justify-between  flex-col lg:flex-row flex  ">
-                    <div className="bg-white md:bg-transparent rounded-3xl p-[10px]">
-                        <div className="flex flex-row justify-between items-center">
-                            <h2 className="session-header font-[700] font-inter mb-[20px]">
-                                Top <span className="text-app-orange">Selling</span>
-                            </h2>
-                            <h3 className="md:hidden flex text-app-orange font-[600] ">
-                                See all >
-                            </h3>
-                        </div>
-
-                        <div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
-                            {getMeRandomElements(products)?.map((product) => {
-                                return <BasicEssentialCard product={product} />;
-                            })}
-                        </div>
-                    </div>
-                    <div className=" bg-white md:bg-transparent rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
-                        {/* <div className="bg-white bg:bg-transparent rounded-3xl p-[10px] mt-[20px] mb-[20px] md:mt-0 "> */}
-                        <div className="bg-white md:bg-transparent">
-                            <h2 className="session-header font-inter mb-[20px]">
-                                Trending <span className="text-app-orange ">Products</span>
-                            </h2>
-                            <div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
-                                {getMeRandomElements(products)?.map((product) => {
-                                    return <BasicEssentialCard product={product} />;
-                                })}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="md:bg-transparent bg-white  rounded-3xl p-[10px] md:mt-0 md:mb-0 mt-[20px] mb-[20px]">
-                        <h2 className=" session-header font-inter mb-[20px]">
-                            Basic <span className="text-app-orange  ">Essentials</span>
-                        </h2>
-                        <div className="flex lg:flex-col flex-row justify-around h-auto  w-full  flex-wrap">
-                            {getMeRandomElements(products)?.map((product) => {
-                                return <BasicEssentialCard product={product} />;
-                            })}
-                        </div>
-                    </div>
-                </div>
-
                 <div className="rounded-2xl mt-[30px] w-full bg-bright-blue px-[10px]  py-[20px]">
                     <div className="w-full flex flex-col justify-center items-center ">
                         <h2 className="h1 text-white mr-0 md:mr-[200px]  family-poppins font-bold">
@@ -194,6 +151,7 @@ const HomeScreen = () => {
 							</span>
                         </h5>
                     </div>
+
                     <div className="md:flex md:justify-between md:mt-[-20px]  md:flex-row flex-col justify-center items-center mt-[30px] h-auto hidden">
                         <img
                             src={"/assets/Delivery-pana.png"}
