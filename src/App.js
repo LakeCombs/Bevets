@@ -27,6 +27,8 @@ import AdminOrderByIdScreen from "./screens/adminOrderByIdScreen";
 import AdminProductByIdScreen from "./screens/adminProductByIdScreen";
 import GenerateInvoice from "./screens/generateInvoice";
 
+import "antd/dist/reset.css";
+
 function App() {
 	return (
 		<Router>

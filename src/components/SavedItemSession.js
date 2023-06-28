@@ -6,7 +6,7 @@ const SavedItemSession = () => {
 	const { favorite } = useSelector((state) => state.cart);
 	return (
 		<div className="h-full flex flex-col">
-			<div className="py-3 w-full px-5 md:font-bold font-semibold">
+			<div className="py-3 w-full px-5 md:font-bold font-semibold md:text-[15px] text-[13px] ">
 				<h2>SAVED ITEMS</h2>
 			</div>
 			<hr />
@@ -25,10 +25,12 @@ const SavedItemSession = () => {
 						</div>
 					)}
 				</div>
-				<div className="mt-auto">
+				<div className="mt-[20px]">
 					<hr />
 					<div className="py-3 px-5 flex justify-center items-end ">
-						<h2 className="text-app-orange font-semibold">START SHOPPING</h2>
+						<h2 className="text-app-orange font-semibold md:text-[15px] text-[13px] ">
+							START SHOPPING
+						</h2>
 					</div>
 				</div>
 			</div>

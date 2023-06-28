@@ -28,7 +28,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const [zipCode, setZipCode] = useState("");
 	const [selectedAddress, setSelectedAddress] = useState("");
 	const [deliveryMethod, setDeliveryMethod] = useState("Door Delivery");
-	const [selectedDelivery, setSelectedDelivery] = useState(false);
 	const [messageApi, contextHolder] = message.useMessage();
 
 	const totalPrice = cartItems?.reduce((accumulator, currectValue) => {
@@ -239,7 +238,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 						<br />
 
 						<div>
-							<p className="font-[500]">
+							{/* <p className="font-[500]">
 								<span className="mr-[5px]">
 									<input
 										type="checkbox"
@@ -260,22 +259,20 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								<span className="font-light">
 									collect your items at our pickup station (Cheaper option)
 								</span>
-							</p>
+							</p> 
 							<p className=" mt-[5px] ">
 								Items available for pick up from{" "}
 								<span className="font-semibold">3 days time</span>
-							</p>
+							</p>*/}
 						</div>
 						<div className="mt-[10px]">
 							<p className="font-[500]">
 								<span className="mr-[5px]">
 									<input
 										type="checkbox"
-										value={"Door Delivery"}
-										checked={selectedDelivery}
+										value={deliveryMethod}
+										checked={true}
 										onChange={(e) => {
-											setDeliveryMethod("Door Delivery");
-											setSelectedDelivery(!selectedDelivery);
 											dispatch(
 												OrderDetailsAction({
 													delivery_method: deliveryMethod

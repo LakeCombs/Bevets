@@ -109,7 +109,7 @@ const AccountSession = () => {
 	return (
 		<div>
 			<div className="py-3 w-full px-5 md:font-bold font-semibold">
-				<h2>ACCCOUNT OVERVIEW</h2>
+				<h2 className="md:text-[15px] text-[13px] ">ACCCOUNT OVERVIEW</h2>
 			</div>
 			<hr />
 			<div className=" flex-wrap p-5 flex justify-between gap-4">
@@ -118,12 +118,14 @@ const AccountSession = () => {
 						updateUserDetails ? "h-auto" : "h-[170px]"
 					} border rounded-lg`}>
 					<div className="py-3 w-full px-5 md:font-bold font-semibold flex  justify-between">
-						<h2 className="font-semibold">Account Details</h2>
+						<h2 className="font-semibold md:text-[15px] text-[13px] ">
+							Account Details
+						</h2>
 						{error && <p className="text-red-400">{error}</p>}
 
 						{!updateUserDetails ? (
 							<p
-								className="text-app-orange hover:cursor-pointer"
+								className="text-app-orange hover:cursor-pointer md:text-[15px] text-[13px]"
 								onClick={() => {
 									setUpdateUserDetails(true);
 								}}>
@@ -238,7 +240,7 @@ const AccountSession = () => {
 
 				<div className="w-full md:w-[320px]  h-auto  border rounded-lg">
 					<div className="py-3 w-full px-5 md:font-bold font-semibold flex  justify-between">
-						<h2 className="font-semibold">
+						<h2 className="font-semibold md:text-[15px] text-[13px]">
 							Address Details{" "}
 							{(addAddressLoading ||
 								deleteAddressLoading ||
@@ -253,7 +255,7 @@ const AccountSession = () => {
 
 						{!addAddress && (
 							<p
-								className="text-app-orange hover:cursor-pointer"
+								className="text-app-orange hover:cursor-pointer md:text-[15px] text-[13px]"
 								onClick={() => {
 									setAddAddress(true);
 								}}>
@@ -438,7 +440,9 @@ const AccountSession = () => {
 
 				<div className="w-full md:w-[320px] h-[170px] border rounded-lg">
 					<div className="py-3 w-full px-5 md:font-bold font-semibold flex  justify-between">
-						<h2 className="font-semibold">NEWSLETTER PREFERENCE</h2>
+						<h2 className="font-semibold md:text-[15px] text-[13px]">
+							NEWSLETTER PREFERENCE
+						</h2>
 					</div>
 					<hr />
 					<div className="px-5 pt-2">
@@ -446,7 +450,7 @@ const AccountSession = () => {
 							You are currently not subscribed to any of our newsletters.
 						</p>
 					</div>
-					<h2 className="text-app-orange px-5 align-end cursor-pointer">
+					<h2 className="text-app-orange px-5 align-end cursor-pointer md:text-[15px] text-[13px]">
 						EDIT NEWSLETTER PREFERENCE
 					</h2>
 				</div>

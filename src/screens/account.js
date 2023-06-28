@@ -127,7 +127,7 @@ const Account = () => {
 		<div>
 			<Header />
 			<div className="mt-[50px] bg-background  flex flex-col min-h-screen pt-[50px] w-full ">
-				<div className="px-[50px] h-auto flex flex-row justify-between w-full">
+				<div className="md:px-[50px] px-[15px] h-auto flex flex-row justify-between w-full">
 					<div className=" md:w-[30%] md:flex hidden flex-col">
 						<div className=" w-[100%] flex flex-col bg-white">
 							<div
@@ -202,17 +202,19 @@ const Account = () => {
 							</div>
 						</div>
 					</div>
-					<div className="md:hidden flex">
-						<Dropdown menu={{ items }} trigger={["click"]}>
-							<BiMenuAltLeft className="text-[20px] ml-[-20px] hover:text-bright-blue font-bold hover:cursor-pointer" />
-						</Dropdown>
-					</div>
-					<div className=" w-full h-auto md:w-[70%] bg-white ml-[15px]">
-						{right === "account" && <AccountSession />}
-						{right === "inbox" && <InboxSession />}
-						{right === "order" && <OrderSession />}
-						{right === "saved_items" && <SavedItemSession />}
-						{right === "order_tracking" && <OrderTrackingSession />}
+					<div className="flex flex-col w-full md:w-[70%]">
+						<div className="md:hidden flex  mr-[-20px] mb-[10px]">
+							<Dropdown menu={{ items }} trigger={["click"]}>
+								<BiMenuAltLeft className="text-[20px]  hover:text-bright-blue font-bold hover:cursor-pointer" />
+							</Dropdown>
+						</div>
+						<div className="  h-auto  bg-white ml-[0px] md:ml-[15px]">
+							{right === "account" && <AccountSession />}
+							{right === "inbox" && <InboxSession />}
+							{right === "order" && <OrderSession />}
+							{right === "saved_items" && <SavedItemSession />}
+							{right === "order_tracking" && <OrderTrackingSession />}
+						</div>
 					</div>
 				</div>
 
