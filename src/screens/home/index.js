@@ -196,6 +196,9 @@ const HomeScreen = () => {
                     alt="bevets"
                     src={"/assets/logo.png"}
                     className="hidden md:block h-[60px]"
+                    onClick={() => {
+                        navigate("/");
+                    }}
                 />
 
                 {/*<div className=" w-full ml-0 md:ml-[50px]">*/}

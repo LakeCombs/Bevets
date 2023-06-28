@@ -221,8 +221,7 @@ const DashboardHeader = () => {
 
 	return (
 		<div className="w-full py-[10px] px-[20px] z-10 top-0 fixed bg-white flex justify-between items-center">
-			<img src={"/assets/logo.png"} alt="logo" />
-
+			<img src={"/assets/logo.png"} onClick={() => {navigate("/")}} alt="logo" />
 			<Dropdown
 				menu={{
 					items: dropDownItem()

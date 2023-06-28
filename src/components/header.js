@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaUserAlt } from "react-icons/fa";
+import {FaUserAlt, FaWarehouse} from "react-icons/fa";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { HiShoppingCart } from "react-icons/hi";
 import { BsFillCollectionFill } from "react-icons/bs";
@@ -213,6 +213,18 @@ const Header = () => {
 					</span>
 					Cart
 				</p>
+
+				{userInfo?.role === 'admin' && (
+					<p
+						className="flex flex-row items-center h3 hover:cursor-pointer"
+						onClick={() => navigate("/dashboard")}>
+						<span className="mr-2 text-black ">
+							<FaWarehouse />
+						</span>
+						Dashboard
+					</p>
+				)}
+
 			</div>
 			<div className="flex md:hidden w-[60%] justify-between items-center">
 				<p
