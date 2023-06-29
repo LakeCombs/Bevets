@@ -80,8 +80,9 @@ const getAllProductSlice = createSlice({
 		},
 		getAllProductSuccess: (state, { payload }) => {
 			state.loading = false;
-			state.products = payload;
+			state.products = Array.isArray(payload) ? payload : [];
 			state.error = "";
+			console.log({ payload });
 		},
 		getAllProductFailed: (state, { payload }) => {
 			state.loading = false;
@@ -183,7 +184,7 @@ const productByCategorySlice = createSlice({
 		},
 		productByCategorySuccess: (state, { payload }) => {
 			state.loading = false;
-			state.products = payload;
+			state.products = Array.isArray(payload) ? payload : [];
 			state.error = "";
 		},
 		productByCategoryFailed: (state, { payload }) => {

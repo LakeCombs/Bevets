@@ -47,8 +47,7 @@ const AccountSession = () => {
 
 	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
-	const [state, setState] = useState("");
-	const [zipCode, setZipCode] = useState("");
+	const [landMark, setLandMark] = useState("");
 	const [addressId, setAddressId] = useState("");
 	const inputRef = useRef(null);
 
@@ -90,8 +89,7 @@ const AccountSession = () => {
 			setAddAddress(false);
 			setAddress("");
 			setCity("");
-			setState("");
-			setZipCode("");
+			setLandMark("");
 		}
 	}, [addedAddress?._id]);
 
@@ -100,8 +98,7 @@ const AccountSession = () => {
 			setEditAddress(false);
 			setAddress("");
 			setCity("");
-			setState("");
-			setZipCode("");
+			setLandMark("");
 			setAddressId("");
 		}
 	}, [updatedAddress?._id]);
@@ -112,11 +109,8 @@ const AccountSession = () => {
 				<h2 className="md:text-[15px] text-[13px] ">ACCCOUNT OVERVIEW</h2>
 			</div>
 			<hr />
-			<div className=" flex-wrap p-5 flex justify-between gap-4">
-				<div
-					className={` w-full md:w-[320px] ${
-						updateUserDetails ? "h-auto" : "h-[170px]"
-					} border rounded-lg`}>
+			<div className=" flex-wrap p-5 flex  md:flex-row  flex-col">
+				<div className=" w-full md:w-[45%] m-[3px] border rounded-lg h b-auto">
 					<div className="py-3 w-full px-5 md:font-bold font-semibold flex  justify-between">
 						<h2 className="font-semibold md:text-[15px] text-[13px] ">
 							Account Details
@@ -140,20 +134,20 @@ const AccountSession = () => {
 					{!updateUserDetails ? (
 						<div className="px-5 pt-2">
 							<img
-								className="border h-[50px] w-[50px] rounded-none"
+								className="border h-[80px] w-[80px] rounded-none"
 								src={userInfo?.profile_picture}
 							/>
-							<h2 className="font-semibold md:text-[15px] text-[12px]">
+							<h2 className="font-semibold mt-[10px] md:text-[15px] text-[12px]">
 								{`${userInfo?.firstname} ${userInfo?.lastname}`}
 							</h2>
-							<p className="md:text-[12px] text-[10px]">{userInfo?.email}</p>
-							<p className="md:text-[12px] text-[10px]">{userInfo?.mobile}</p>
+							<p className="md:text-[12px] text-[12px]">{userInfo?.email}</p>
+							<p className="md:text-[12px] text-[12px]">{userInfo?.mobile}</p>
 						</div>
 					) : (
 						<div className="px-5 pt-2 flex flex-col">
 							<div className="w-full flex justify-center items-center flex-col">
 								<img
-									className="border h-[60px] w-[60px] rounded-full"
+									className="border h-[70px] w-[0px] rounded-full"
 									src={userInfo?.profile_picture}
 									alt=""
 								/>
@@ -238,7 +232,7 @@ const AccountSession = () => {
 					)}
 				</div>
 
-				<div className="w-full md:w-[320px]  h-auto  border rounded-lg">
+				<div className="w-full md:w-[45%] m-[3px]  h-auto  border rounded-lg">
 					<div className="py-3 w-full px-5 md:font-bold font-semibold flex  justify-between">
 						<h2 className="font-semibold md:text-[15px] text-[13px]">
 							Address Details{" "}
@@ -284,24 +278,15 @@ const AccountSession = () => {
 								}}
 								className="mb-[5px]"
 							/>
-
-							<p className="text-[10px]">State</p>
+							<p className="text-[10px]">Land Mark</p>
 							<Input
-								value={state}
+								value={landMark}
 								onChange={(e) => {
-									setState(e.target.value);
+									setLandMark(e.target.value);
 								}}
 								className="mb-[5px]"
 							/>
 
-							<p className="text-[10px]">ZipCode</p>
-							<Input
-								value={zipCode}
-								onChange={(e) => {
-									setZipCode(e.target.value);
-								}}
-								className="mb-[5px]"
-							/>
 							<div className="mt-[10px] mb-[10px] justify-between w-full flex flex-row">
 								<button
 									className="bg-red-400 text-white px-[15px] py-[8px] rounded-lg"
@@ -317,9 +302,7 @@ const AccountSession = () => {
 										dispatch(
 											AddAddressAction({
 												address,
-												city,
-												state,
-												zipCode
+												city
 											})
 										);
 									}}>
@@ -341,9 +324,7 @@ const AccountSession = () => {
 										<br />
 										City: {add?.city}
 										<br />
-										State: {add?.state}
-										<br />
-										ZipCode: {add?.zipCode}
+										Land Mark: {add?.landMark}
 									</p>
 
 									<div className="pt-[20px]">
@@ -353,8 +334,7 @@ const AccountSession = () => {
 												setEditAddress(true);
 												setAddress(add?.address);
 												setCity(add?.city);
-												setState(add?.state);
-												setZipCode(add?.zipCode);
+												setLandMark(add?.landMark);
 												setAddressId(add?._id);
 											}}>
 											Edit
@@ -392,23 +372,15 @@ const AccountSession = () => {
 									className="mb-[5px]"
 								/>
 
-								<p className="text-[10px]">State</p>
+								<p className="text-[10px]">Land Mark</p>
 								<Input
-									value={state}
+									value={landMark}
 									onChange={(e) => {
-										setState(e.target.value);
+										setLandMark(e.target.value);
 									}}
 									className="mb-[5px]"
 								/>
 
-								<p className="text-[10px]">ZipCode</p>
-								<Input
-									value={zipCode}
-									onChange={(e) => {
-										setZipCode(e.target.value);
-									}}
-									className="mb-[5px]"
-								/>
 								<div className="mt-[10px] mb-[10px] justify-between w-full flex flex-row">
 									<button
 										className="bg-red-400 text-white px-[15px] py-[8px] rounded-lg"
@@ -425,8 +397,7 @@ const AccountSession = () => {
 												UpdateAddressAction(addressId, {
 													address,
 													city,
-													state,
-													zipCode
+													landMark
 												})
 											);
 										}}>
@@ -438,7 +409,7 @@ const AccountSession = () => {
 					</div>
 				</div>
 
-				<div className="w-full md:w-[320px] h-[170px] border rounded-lg">
+				{/* <div className="w-full md:w-[320px] h-[170px] border rounded-lg">
 					<div className="py-3 w-full px-5 md:font-bold font-semibold flex  justify-between">
 						<h2 className="font-semibold md:text-[15px] text-[13px]">
 							NEWSLETTER PREFERENCE
@@ -453,7 +424,7 @@ const AccountSession = () => {
 					<h2 className="text-app-orange px-5 align-end cursor-pointer md:text-[15px] text-[13px]">
 						EDIT NEWSLETTER PREFERENCE
 					</h2>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

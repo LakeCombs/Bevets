@@ -245,7 +245,9 @@ const CartScreen = () => {
 						<h2 className="text-[12px] md:text-[15px] font-bold">
 							Recently viewed
 						</h2>
-						<Link className="text-app-orange  text-[12px] md:text-[15px] font-bold">
+						<Link
+							to="/recently_viewed"
+							className="text-app-orange  text-[12px] md:text-[15px] font-bold">
 							See All >
 						</Link>
 					</div>

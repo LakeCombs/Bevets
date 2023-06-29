@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-	baseURL: "https://bevet-api.onrender.com/api"
-	// baseURL: "http://localhost:2002/api"
+	// baseURL: "https://api.bevetsgh.com/api"
+	baseURL: process.env.REACT_APP_API
+	// baseURL: "http://localhost:4001/api"
 });

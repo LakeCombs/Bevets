@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomeScreen from "./screens/home";
+import HomeScreen from "./screens/home/index";
 import LoginScreen from "./screens/loginScreen";
 import RegisterScreen from "./screens/registerScreen";
 import LoginWithPhone from "./screens/loginWithPhone";
