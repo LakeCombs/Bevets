@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { FaUserAlt } from "react-icons/fa";
-import { AiOutlineMail } from "react-icons/ai";
+import { AiOutlineMail, AiOutlinePoweroff } from "react-icons/ai";
 import { RiInboxArchiveLine, RiMailSendLine } from "react-icons/ri";
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import { GiBackwardTime } from "react-icons/gi";
@@ -93,35 +93,41 @@ const Account = () => {
 			),
 			key: "6"
 		},
-		{
-			type: "divider"
-		},
+		// {
+		// 	type: "divider"
+		// }
 
 		{
 			label: (
-				<div className="py-[8px] px-[20px] flex   hover:cursor-pointer font-semibold hover:bg-primary-blue items-center">
-					<p>Newsletter</p>
+				<div
+					className="py-[8px] px-[20px] flex justify-center items-center  hover:cursor-pointer font-semibold bg-primary-blue "
+					onClick={() => {
+						navigate("/");
+						dispatch(logoutUserAction());
+					}}>
+					<AiOutlinePoweroff className="text-[15px] mr-[20px]" />
+					<p>Logout</p>
 				</div>
 			),
 			key: "7"
-		},
-		{
-			label: (
-				<div className="py-[8px] px-[20px] flex   hover:cursor-pointer font-semibold hover:bg-primary-blue items-center">
-					<p>Address Book</p>
-				</div>
-			),
-			key: "8"
-		},
-
-		{
-			label: (
-				<div className="py-[8px] px-[20px] flex   hover:cursor-pointer font-semibold hover:bg-primary-blue items-center">
-					<p>Close Account</p>
-				</div>
-			),
-			key: "9"
 		}
+		// {
+		// 	label: (
+		// 		<div className="py-[8px] px-[20px] flex   hover:cursor-pointer font-semibold hover:bg-primary-blue items-center">
+		// 			<p>Address Book</p>
+		// 		</div>
+		// 	),
+		// 	key: "8"
+		// },
+
+		// {
+		// 	label: (
+		// 		<div className="py-[8px] px-[20px] flex   hover:cursor-pointer font-semibold hover:bg-primary-blue items-center">
+		// 			<p>Close Account</p>
+		// 		</div>
+		// 	),
+		// 	key: "9"
+		// }
 	];
 	return (
 		<div>
@@ -174,7 +180,7 @@ const Account = () => {
 						</div>
 
 						<div className="mt-[20px] bg-white">
-							<div className="py-[8px] px-[20px] flex   hover:cursor-pointer font-semibold hover:bg-primary-blue items-center">
+							{/* <div className="py-[8px] px-[20px] flex   hover:cursor-pointer font-semibold hover:bg-primary-blue items-center">
 								<p>Newsletter</p>
 							</div>
 
@@ -186,13 +192,13 @@ const Account = () => {
 							</div>
 							<div className="py-[8px] px-[20px] flex   hover:cursor-pointer font-semibold hover:bg-primary-blue items-center">
 								<p>Account Management</p>
-							</div>
+							</div> */}
 
 							<hr />
 
-							<div className="py-[8px] px-[20px] flex   hover:cursor-pointer hover:font-bold font-semibold justify-center  items-center">
+							<div className=" pt-[8px] px-[20px] flex   hover:cursor-pointer hover:font-bold font-semibold justify-center  items-center">
 								<p
-									className="text-app-orange"
+									className="text-app-orange "
 									onClick={() => {
 										navigate("/");
 										dispatch(logoutUserAction());

@@ -24,8 +24,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const [editAddress, setEditAddress] = useState(false);
 	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
-	const [state, setState] = useState("");
-	const [zipCode, setZipCode] = useState("");
+	const [landMark, setLandMark] = useState("");
 	const [selectedAddress, setSelectedAddress] = useState("");
 	const [deliveryMethod, setDeliveryMethod] = useState("Door Delivery");
 	const [messageApi, contextHolder] = message.useMessage();
@@ -39,8 +38,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 			AddAddressAction({
 				address,
 				city,
-				state,
-				zipCode
+				landMark
 			})
 		);
 	};
@@ -68,13 +66,16 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 		(add) => add?._id === selectedAddress
 	);
 
+	console.log("the check address is ", CheckAddress);
+
 	useEffect(() => {
-		setAddress("");
-		setCity("");
-		setState("");
-		setZipCode("");
-		setEditAddress(true);
-	}, [Addr, dispatch]);
+		if (Addr?._id) {
+			setAddress("");
+			setCity("");
+			setLandMark("");
+			setEditAddress(true);
+		}
+	}, [Addr]);
 
 	useEffect(() => {
 		dispatch(
@@ -123,13 +124,11 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 											</p>
 											<div className="flex h-[60px] pt-[10px] flex-col justify-between">
 												<span
-													className={`text-green-500 font-bold  px-[10px] ${
-														CheckAddress ? "bg-green-500" : "bg-none"
-													} cursor-pointer hover:bg-gray-300  ${
+													className={` px-[10px] ${
 														CheckAddress
-															? "text-white py-[3px] font-bold text-[15px]"
-															: "text-green-400 text-[10px]"
-													} `}
+															? "bg-green-500 text-white font-bold text-15px py-[4px]"
+															: "bg-white text-green-400 text-10px"
+													} cursor-pointer hover:bg-gray-300 `}
 													onClick={() => {
 														setSelectedAddress(address?._id);
 														dispatch(
@@ -153,10 +152,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 										</p>
 
 										<p className=" mt-[5px] text-[11px]">
-											State: {address?.state}
-										</p>
-										<p className=" mt-[5px] text-[11px]">
-											ZipCode: {address?.zipCode}
+											Land Mark: {address?.landMark}
 										</p>
 									</div>
 								);
@@ -189,21 +185,14 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label>State</label>
+								<label>Land Mark</label>
 								<input
-									value={state}
-									onChange={(e) => setState(e.target.value)}
+									value={landMark}
+									onChange={(e) => setLandMark(e.target.value)}
 									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
 								/>
 							</div>
-							<div className="flex flex-col">
-								<label>Zip Code</label>
-								<input
-									value={zipCode}
-									onChange={(e) => setZipCode(e.target.value)}
-									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
-								/>
-							</div>
+
 							<br />
 
 							<WideButton
@@ -237,34 +226,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 						</p>
 						<br />
 
-						<div>
-							{/* <p className="font-[500]">
-								<span className="mr-[5px]">
-									<input
-										type="checkbox"
-										value={"Pickup Station"}
-										checked={!selectedDelivery}
-										onChange={(e) => {
-											setDeliveryMethod("Pickup Station");
-											setSelectedDelivery(!selectedDelivery);
-											dispatch(
-												OrderDetailsAction({
-													delivery_method: deliveryMethod
-												})
-											);
-										}}
-									/>
-								</span>
-								Pickup station,{" "}
-								<span className="font-light">
-									collect your items at our pickup station (Cheaper option)
-								</span>
-							</p> 
-							<p className=" mt-[5px] ">
-								Items available for pick up from{" "}
-								<span className="font-semibold">3 days time</span>
-							</p>*/}
-						</div>
 						<div className="mt-[10px]">
 							<p className="font-[500]">
 								<span className="mr-[5px]">
@@ -294,24 +255,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 					</div>
 
 					<hr />
-					{/* <div className="pt-[20px] px-[15px]">
-						<p className="font-[500]">
-							<span className="mr-[5px]">
-								<Checkbox
-									value={pickup}
-									onChange={(e) => {
-										setPickup(!pickup);
-									}}
-								/>
-							</span>
-							Home, Office & School Delivery
-						</p>
-						<p className="text-[#00000066] ml-[20px]">
-							Delivery by{" "}
-							<span className="text-black font-semibold">Monday 2 Jan</span> for{" "}
-							<span className="text-app-orange font-semibold">C 15.00</span>
-						</p>
-					</div> */}
 
 					<div className="flex p-[30px] w-full flex-col ">
 						<div className="border rounded-2xl p-[10px] w-full pb-[70px]">
@@ -399,7 +342,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								<p className="text-app-orange mt-[13px]">
 									GHC {product?.product?.price?.toLocaleString()}
 								</p>
-								<p>Quantity: {product?.qty} </p>
+								<p>Qty: {product?.qty} </p>
 							</div>
 						</div>
 					);
