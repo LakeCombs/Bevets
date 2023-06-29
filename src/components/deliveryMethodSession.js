@@ -24,8 +24,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const [editAddress, setEditAddress] = useState(false);
 	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
-	const [state, setState] = useState("");
-	const [zipCode, setZipCode] = useState("");
+	const [landMark, setLandMark] = useState("");
 	const [selectedAddress, setSelectedAddress] = useState("");
 	const [deliveryMethod, setDeliveryMethod] = useState("Door Delivery");
 	const [messageApi, contextHolder] = message.useMessage();
@@ -39,8 +38,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 			AddAddressAction({
 				address,
 				city,
-				state,
-				zipCode
+				landMark
 			})
 		);
 	};
@@ -71,8 +69,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	useEffect(() => {
 		setAddress("");
 		setCity("");
-		setState("");
-		setZipCode("");
+		setLandMark("");
 		setEditAddress(true);
 	}, [Addr, dispatch]);
 
@@ -153,10 +150,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 										</p>
 
 										<p className=" mt-[5px] text-[11px]">
-											State: {address?.state}
-										</p>
-										<p className=" mt-[5px] text-[11px]">
-											ZipCode: {address?.zipCode}
+											Land Mark: {address?.landMark}
 										</p>
 									</div>
 								);
@@ -189,21 +183,14 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label>State</label>
+								<label>Land Mark</label>
 								<input
-									value={state}
-									onChange={(e) => setState(e.target.value)}
+									value={landMark}
+									onChange={(e) => setLandMark(e.target.value)}
 									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
 								/>
 							</div>
-							<div className="flex flex-col">
-								<label>Zip Code</label>
-								<input
-									value={zipCode}
-									onChange={(e) => setZipCode(e.target.value)}
-									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
-								/>
-							</div>
+
 							<br />
 
 							<WideButton
