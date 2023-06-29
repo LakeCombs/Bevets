@@ -237,34 +237,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 						</p>
 						<br />
 
-						<div>
-							{/* <p className="font-[500]">
-								<span className="mr-[5px]">
-									<input
-										type="checkbox"
-										value={"Pickup Station"}
-										checked={!selectedDelivery}
-										onChange={(e) => {
-											setDeliveryMethod("Pickup Station");
-											setSelectedDelivery(!selectedDelivery);
-											dispatch(
-												OrderDetailsAction({
-													delivery_method: deliveryMethod
-												})
-											);
-										}}
-									/>
-								</span>
-								Pickup station,{" "}
-								<span className="font-light">
-									collect your items at our pickup station (Cheaper option)
-								</span>
-							</p> 
-							<p className=" mt-[5px] ">
-								Items available for pick up from{" "}
-								<span className="font-semibold">3 days time</span>
-							</p>*/}
-						</div>
 						<div className="mt-[10px]">
 							<p className="font-[500]">
 								<span className="mr-[5px]">
@@ -294,24 +266,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 					</div>
 
 					<hr />
-					{/* <div className="pt-[20px] px-[15px]">
-						<p className="font-[500]">
-							<span className="mr-[5px]">
-								<Checkbox
-									value={pickup}
-									onChange={(e) => {
-										setPickup(!pickup);
-									}}
-								/>
-							</span>
-							Home, Office & School Delivery
-						</p>
-						<p className="text-[#00000066] ml-[20px]">
-							Delivery by{" "}
-							<span className="text-black font-semibold">Monday 2 Jan</span> for{" "}
-							<span className="text-app-orange font-semibold">C 15.00</span>
-						</p>
-					</div> */}
 
 					<div className="flex p-[30px] w-full flex-col ">
 						<div className="border rounded-2xl p-[10px] w-full pb-[70px]">
@@ -399,7 +353,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								<p className="text-app-orange mt-[13px]">
 									GHC {product?.product?.price?.toLocaleString()}
 								</p>
-								<p>Quantity: {product?.qty} </p>
+								<p>Qty: {product?.qty} </p>
 							</div>
 						</div>
 					);

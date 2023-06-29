@@ -175,21 +175,7 @@ const ProductByIdScreen = () => {
 						{products
 							?.filter((prod) => prod?._id !== product?._id)
 							.map((d) => (
-								<StandardProductCard
-									addToCart={() => {
-										if (d?._id) {
-											dispatch(AddToCartAction(d));
-										}
-									}}
-									addToFav={() => {
-										dispatch(AddToFavAction(d));
-									}}
-									description={""}
-									image={d?.images[0]}
-									name={d?.name}
-									price={d?.price}
-									key={d?._id}
-								/>
+								<StandardProductCard product={d} />
 							))}
 					</div>
 				</div>

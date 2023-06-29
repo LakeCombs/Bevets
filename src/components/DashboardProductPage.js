@@ -90,6 +90,7 @@ const DashboardProductPage = () => {
 	const [reverseProduct, setReverseProduct] = useState([]);
 	const [messageApi, contextHolder] = message.useMessage();
 	const inputRef = useRef(null);
+	const [imageTypeError, setImageTypeError] = useState("");
 
 	const CreateProduct = () => {
 		if (!name) {
@@ -150,7 +151,15 @@ const DashboardProductPage = () => {
 
 	const handleFileChange = async (e) => {
 		const fileObj = e.target.files && e.target.files[0];
+
+		console.log("the fileObj is ", fileObj);
+
 		if (!fileObj) {
+			return;
+		}
+
+		if (fileObj?.name?.split(".").pop() !== ("png" || "jpeg" || "jpg")) {
+			setImageTypeError("The acceptable file format are png, jpeg, and jpg");
 			return;
 		}
 
@@ -190,8 +199,12 @@ const DashboardProductPage = () => {
 					/>
 				</div>
 
-				<p className="font-bold text-[15px] text-black">{data?.name}</p>
-				<p className="text-[10px] text-text-gray">{data?.description}</p>
+				<p className="font-bold text-[15px] text-black mt-[-5px]">
+					{data?.name}
+				</p>
+				<p className="text-[10px] text-text-gray mt-[-13px]">
+					{data?.description}
+				</p>
 			</div>
 		);
 	};
@@ -455,6 +468,7 @@ const DashboardProductPage = () => {
 							{uploadImageLoading && (
 								<Spin size={"small"} className="ml-[3px]" />
 							)}
+							<span className="text-red-400">{imageTypeError}</span>
 						</p>
 						<div>
 							<input
@@ -605,6 +619,7 @@ const DashboardProductPage = () => {
 							{uploadImageLoading && (
 								<Spin size={"small"} className="ml-[3px]" />
 							)}
+							<span className="text-red-400">{imageTypeError}</span>
 						</p>
 						<div>
 							<input
