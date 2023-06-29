@@ -66,12 +66,16 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 		(add) => add?._id === selectedAddress
 	);
 
+	console.log("the check address is ", CheckAddress);
+
 	useEffect(() => {
-		setAddress("");
-		setCity("");
-		setLandMark("");
-		setEditAddress(true);
-	}, [Addr, dispatch]);
+		if (Addr?._id) {
+			setAddress("");
+			setCity("");
+			setLandMark("");
+			setEditAddress(true);
+		}
+	}, [Addr]);
 
 	useEffect(() => {
 		dispatch(
@@ -120,13 +124,11 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 											</p>
 											<div className="flex h-[60px] pt-[10px] flex-col justify-between">
 												<span
-													className={`text-green-500 font-bold  px-[10px] ${
-														CheckAddress ? "bg-green-500" : "bg-none"
-													} cursor-pointer hover:bg-gray-300  ${
+													className={` px-[10px] ${
 														CheckAddress
-															? "text-white py-[3px] font-bold text-[15px]"
-															: "text-green-400 text-[10px]"
-													} `}
+															? "bg-green-500 text-white font-bold text-15px py-[4px]"
+															: "bg-white text-green-400 text-10px"
+													} cursor-pointer hover:bg-gray-300 `}
 													onClick={() => {
 														setSelectedAddress(address?._id);
 														dispatch(

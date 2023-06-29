@@ -163,10 +163,6 @@ export const AddToCartAction = (prod) => (dispatch, getState) => {
 		? JSON.parse(Cookie.get("cartItems"))
 		: [];
 
-	const {
-		userLogin: { userInfo }
-	} = getState();
-
 	const exist = carts?.find((item) => item?.product?._id === prod?._id);
 
 	const items = exist

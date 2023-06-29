@@ -39,6 +39,9 @@ export const userLoginAction =
 	({ email, password }) =>
 	async (dispatch, getState) => {
 		try {
+			const {
+				cart: { cartItems }
+			} = getState();
 			dispatch(loginRequest());
 			const { data } = await api.post("/users/login", { email, password });
 			Cookie.set("userInfo", JSON.stringify(data));
@@ -46,7 +49,7 @@ export const userLoginAction =
 			// Cookie.set("cartItems", JSON.stringify(data?.wishlist));
 			dispatch(
 				setCart({
-					cartItems: data?.cart,
+					cartItems: [...cartItems, data?.cart],
 					favorite: data?.wishlist
 				})
 			);
