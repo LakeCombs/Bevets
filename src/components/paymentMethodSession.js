@@ -204,25 +204,27 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 							</p>
 						</div>
 
-						<div className="ml-[20px] flex flex-row items-center mt-[15px] ">
-							<input
-								type="radio"
-								value={"Cash on delivery"}
-								checked={!checked}
-								onChange={() => {
-									setPaymentMethod("Cash on delivery");
-									setChecked(!checked);
-									dispatch(
-										OrderDetailsAction({
-											payment_method: "Cash on delivery"
-										})
-									);
-								}}
-							/>
 
-							<p className="mx-[10px]"> Pay Cash on Delivery</p>
-							<img alt="pay on delivery" src="/assets/pngwing 1.svg" />
-						</div>
+						{/*Commented out pay on delivary: //TODO: uncomment to enable pay on delivery*/}
+						{/*<div className="ml-[20px] flex flex-row items-center mt-[15px] ">*/}
+						{/*	<input*/}
+						{/*		type="radio"*/}
+						{/*		value={"Cash on delivery"}*/}
+						{/*		checked={!checked}*/}
+						{/*		onChange={() => {*/}
+						{/*			setPaymentMethod("Cash on delivery");*/}
+						{/*			setChecked(!checked);*/}
+						{/*			dispatch(*/}
+						{/*				OrderDetailsAction({*/}
+						{/*					payment_method: "Cash on delivery"*/}
+						{/*				})*/}
+						{/*			);*/}
+						{/*		}}*/}
+						{/*	/>*/}
+
+						{/*	<p className="mx-[10px]"> Pay Cash on Delivery</p>*/}
+						{/*	<img alt="pay on delivery" src="/assets/pngwing 1.svg" />*/}
+						{/*</div>*/}
 
 						<hr className="my-[15px]" />
 

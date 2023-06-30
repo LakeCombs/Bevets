@@ -75,6 +75,16 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 			setLandMark("");
 			setEditAddress(true);
 		}
+
+		if(userInfo?.addresses?.length === 1){
+			setSelectedAddress(userInfo?.addresses[0]?._id)
+			dispatch(
+				OrderDetailsAction({
+					address: userInfo?.addresses[0]?._id
+				})
+			);
+		}
+
 	}, [Addr]);
 
 	useEffect(() => {
@@ -248,8 +258,8 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								</span>
 							</p>
 							<p className=" mt-[5px] ">
-								Items available for pick up from{" "}
-								<span className="font-semibold">3 days time</span>
+								Items will be delivered {" "}
+								<span className="font-semibold">within 24 hours</span>
 							</p>
 						</div>
 					</div>

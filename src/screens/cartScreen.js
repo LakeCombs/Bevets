@@ -154,13 +154,23 @@ const CartScreen = () => {
 												</p> */}
 											</div>
 											<div className="flex justify-end w-auto mt-[20px]">
-												<span
-													className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
-													onClick={() => {
-														dispatch(ReductItemInCartAction(product));
-													}}>
+
+												{
+													qty === 1 ?
+														<span
+															className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-gray hover:cursor-pointer hover:bg-app-orange-pale"
+														>
 													-
-												</span>{" "}
+												</span>:
+														<span
+															className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
+															onClick={() => {
+																dispatch(ReductItemInCartAction(product));
+															}}>
+													-
+												</span>
+												}
+												{" "}
 												<span className="mx-[10px]">{qty}</span>
 												<span
 													className="w-[20px] h-[20px] flex justify-center items-center rounded-md bg-app-orange hover:cursor-pointer hover:bg-app-orange-pale"
