@@ -258,7 +258,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								</span>
 							</p>
 							<p className=" mt-[5px] ">
-								Items will be delivered{" "}
+								Items will be delivered {" "}
 								<span className="font-semibold">within 24 hours</span>
 							</p>
 						</div>
