@@ -75,6 +75,16 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 			setLandMark("");
 			setEditAddress(true);
 		}
+
+		if(userInfo?.addresses?.length === 1){
+			setSelectedAddress(userInfo?.addresses[0]?._id)
+			dispatch(
+				OrderDetailsAction({
+					address: userInfo?.addresses[0]?._id
+				})
+			);
+		}
+
 	}, [Addr]);
 
 	useEffect(() => {
