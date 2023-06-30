@@ -1,4 +1,4 @@
-import { Input, Spin } from "antd";
+import { Form, Input, InputNumber, Spin } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserAction } from "../redux/actions/user.action";
@@ -46,8 +46,9 @@ const AccountSession = () => {
 	const [uploadImageLoading, setUploadImageLoading] = useState(false);
 
 	const [address, setAddress] = useState("");
-	const [city, setCity] = useState("");
+	const [location, setLocation] = useState("");
 	const [landMark, setLandMark] = useState("");
+	const [phone, setPhone] = useState("");
 	const [addressId, setAddressId] = useState("");
 	const inputRef = useRef(null);
 
@@ -88,8 +89,9 @@ const AccountSession = () => {
 		if (addedAddress?._id) {
 			setAddAddress(false);
 			setAddress("");
-			setCity("");
+			setLocation("");
 			setLandMark("");
+			setPhone("");
 		}
 	}, [addedAddress?._id]);
 
@@ -97,9 +99,9 @@ const AccountSession = () => {
 		if (updatedAddress?._id) {
 			setEditAddress(false);
 			setAddress("");
-			setCity("");
+			setLocation("");
 			setLandMark("");
-			setAddressId("");
+			setPhone("");
 		}
 	}, [updatedAddress?._id]);
 
@@ -270,19 +272,28 @@ const AccountSession = () => {
 								className="mb-[5px]"
 							/>
 
-							<p className="text-[10px]">City</p>
+							<p className="text-[10px]">Location</p>
 							<Input
-								value={city}
+								value={location}
 								onChange={(e) => {
-									setCity(e.target.value);
+									setLocation(e.target.value);
 								}}
 								className="mb-[5px]"
 							/>
-							<p className="text-[10px]">Land Mark</p>
+							<p className="text-[10px]">Closest Land Mark</p>
 							<Input
 								value={landMark}
 								onChange={(e) => {
 									setLandMark(e.target.value);
+								}}
+								className="mb-[5px]"
+							/>
+							<p className="text-[10px]">Phone</p>
+							<Input
+								type="phone"
+								value={phone}
+								onChange={(e) => {
+									setPhone(e.target.value);
 								}}
 								className="mb-[5px]"
 							/>
@@ -302,7 +313,9 @@ const AccountSession = () => {
 										dispatch(
 											AddAddressAction({
 												address,
-												city
+												location,
+												landMark,
+												phone
 											})
 										);
 									}}>
@@ -322,9 +335,11 @@ const AccountSession = () => {
 										<br />
 										Address: {add?.address}
 										<br />
-										City: {add?.city}
+										Location: {add?.location}
 										<br />
-										Land Mark: {add?.landMark}
+										Closest Land Mark: {add?.landMark}
+										<br />
+										Phone: {add?.phone}
 									</p>
 
 									<div className="pt-[20px]">
@@ -333,8 +348,9 @@ const AccountSession = () => {
 											onClick={() => {
 												setEditAddress(true);
 												setAddress(add?.address);
-												setCity(add?.city);
+												setLocation(add?.locationy);
 												setLandMark(add?.landMark);
+												setPhone(add?.phone);
 												setAddressId(add?._id);
 											}}>
 											Edit
@@ -362,25 +378,31 @@ const AccountSession = () => {
 									}}
 									className="mb-[5px]"
 								/>
-
-								<p className="text-[10px]">City</p>
+								<p className="text-[10px]">Location</p>
 								<Input
-									value={city}
+									value={location}
 									onChange={(e) => {
-										setCity(e.target.value);
+										setLocation(e.target.value);
 									}}
 									className="mb-[5px]"
 								/>
-
-								<p className="text-[10px]">Land Mark</p>
+								<p className="text-[10px]">Closest Land Mark</p>
 								<Input
 									value={landMark}
 									onChange={(e) => {
 										setLandMark(e.target.value);
 									}}
 									className="mb-[5px]"
+								/>{" "}
+								<p className="text-[10px]">Phone</p>
+								<InputNumber
+									value={phone}
+									type={Number}
+									onChange={(e) => {
+										setPhone(e.target.value);
+									}}
+									className="mb-[5px]"
 								/>
-
 								<div className="mt-[10px] mb-[10px] justify-between w-full flex flex-row">
 									<button
 										className="bg-red-400 text-white px-[15px] py-[8px] rounded-lg"
@@ -396,7 +418,8 @@ const AccountSession = () => {
 											dispatch(
 												UpdateAddressAction(addressId, {
 													address,
-													city,
+													location,
+													phone,
 													landMark
 												})
 											);
