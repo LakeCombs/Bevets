@@ -3,21 +3,21 @@ export const useHome = () => {
 
     const slides = [
         {
-            imageSrc: "/assets/MacBook Pro 14_ - 1bg2.png",
+            imageSrc: "https://res.cloudinary.com/fitrip/image/upload/c_scale,h_300/v1687344986/bevets/23867_2_mohsou.png",
             title: "Slide 1",
             subtitle: "Subtitle 2",
             buttonText: "View Details",
             route: "/slide1-details",
         },
         {
-            imageSrc: "/assets/MacBook Pro 14_ - 1bg.png",
+            imageSrc: "https://res.cloudinary.com/fitrip/image/upload/c_scale,h_300/v1687344986/bevets/23867_2_mohsou.png",
             title: "Slide 2",
             subtitle: "Subtitle 2",
             buttonText: "Learn More",
             route: "/slide2-details",
         },
         {
-            imageSrc: "/assets/MacBook Pro 14_ - 1bg4 (1).png",
+            imageSrc: "https://res.cloudinary.com/fitrip/image/upload/c_scale,h_300/v1687344986/bevets/23867_2_mohsou.png",
             title: "Slide 3",
             subtitle: "Subtitle 2",
             buttonText: "Shop Now",
