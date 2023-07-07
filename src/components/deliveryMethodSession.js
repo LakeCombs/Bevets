@@ -184,41 +184,50 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 						<div className="mx-[15px]">
 							{error && <p className="text-red-400 my-[3px]">{error}</p>}
 							<div className="flex flex-col">
-								<label>Address</label>
-								<input
-									value={address}
-									onChange={(e) => setAddress(e.target.value)}
-									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
-								/>
+								<div className="checkout-field">
+									<label>Address</label>
+									<input
+										type="text"
+										id="email"
+										value={address}
+										onChange={(e) => setAddress(e.target.value)}
+									/>
+								</div>
 							</div>
 							<div className="flex flex-col">
-								<label>Location</label>
-								<input
-									value={location}
-									onChange={(e) => setLocation(e.target.value)}
-									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
-								/>
+								<div className="checkout-field">
+									<label>Location</label>
+									<input
+										type="text"
+										id="location"
+										value={location}
+										onChange={(e) => setLocation(e.target.value)}
+									/>
+								</div>
 							</div>
 							<div className="flex flex-col">
-								<label>Closest Land Mark</label>
-								<input
-									value={landMark}
-									onChange={(e) => setLandMark(e.target.value)}
-									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
-								/>
+								<div className="checkout-field">
+									<label>Closest Land Mark</label>
+									<input
+										type="text"
+										id="landmark"
+										value={landMark}
+										onChange={(e) => setLandMark(e.target.value)}
+									/>
+								</div>
 							</div>
 							<div className="flex flex-col">
-								<label>Phone</label>
-								<input
-									type="number"
-									value={phone}
-									onChange={(e) => setPhone(e.target.value)}
-									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
-								/>
+								<div className="checkout-field">
+									<label>Phone No.</label>
+									<input
+										type="text"
+										id="phone"
+										value={phone}
+										onChange={(e) => setPhone(e.target.value)}
+									/>
+								</div>
 							</div>
-
 							<br />
-
 							<WideButton
 								style="bg-bright-blue "
 								text={"Save Address"}

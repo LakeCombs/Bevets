@@ -223,7 +223,9 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 						{/*	CONFIRM ORDER*/}
 						{/*</button>*/}
 
-						<PayButton amount={amount} email={email} />
+						<div className="mx-[50px]">
+							<PayButton amount={amount} email={email} />
+						</div>
 
 						{createOrderLoading && <Spin size={"large"} />}
 					</div>

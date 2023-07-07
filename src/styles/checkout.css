@@ -58,7 +58,6 @@
 
 .checkout {
     background: #84a17d; /* fallback for old browsers */
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -73,12 +72,11 @@
 .checkout-field {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .checkout-field label {
     text-align: left;
-    color: #e0eafc;
     font-size: 10px;
     margin-bottom: 5px;
     text-transform: uppercase;
@@ -89,7 +87,7 @@
     background-color: transparent;
     border: 1px solid #cecece;
     border-radius: 5px;
-    color: #e0eafc;
+    color: #292929;
     height: 35px;
     padding-left: 10px;
 }
@@ -107,12 +105,14 @@
     text-transform: uppercase;
     background-color: #bfbfbf;
     font-weight: bold;
-    color: #e0eafc;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     width: 100%;
     height: 45px;
-    margin-top: 40px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 .paystack-button:hover {
