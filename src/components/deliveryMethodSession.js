@@ -23,8 +23,9 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const [deliveryPrice, setDeiveryPrice] = useState(0);
 	const [editAddress, setEditAddress] = useState(false);
 	const [address, setAddress] = useState("");
-	const [city, setCity] = useState("");
+	const [location, setLocation] = useState("");
 	const [landMark, setLandMark] = useState("");
+	const [phone, setPhone] = useState("");
 	const [selectedAddress, setSelectedAddress] = useState("");
 	const [deliveryMethod, setDeliveryMethod] = useState("Door Delivery");
 	const [messageApi, contextHolder] = message.useMessage();
@@ -37,8 +38,9 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 		dispatch(
 			AddAddressAction({
 				address,
-				city,
-				landMark
+				location,
+				landMark,
+				phone
 			})
 		);
 	};
@@ -64,27 +66,25 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 
 	const CheckAddress = userInfo?.addresses?.find(
 		(add) => add?._id === selectedAddress
-	);
-
-	console.log("the check address is ", CheckAddress);
+	)?._id;
 
 	useEffect(() => {
 		if (Addr?._id) {
 			setAddress("");
-			setCity("");
+			setLocation("");
 			setLandMark("");
+			setPhone("");
 			setEditAddress(true);
 		}
 
-		if(userInfo?.addresses?.length === 1){
-			setSelectedAddress(userInfo?.addresses[0]?._id)
+		if (userInfo?.addresses?.length === 1) {
+			setSelectedAddress(userInfo?.addresses[0]?._id);
 			dispatch(
 				OrderDetailsAction({
 					address: userInfo?.addresses[0]?._id
 				})
 			);
 		}
-
 	}, [Addr]);
 
 	useEffect(() => {
@@ -135,9 +135,9 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 											<div className="flex h-[60px] pt-[10px] flex-col justify-between">
 												<span
 													className={` px-[10px] ${
-														CheckAddress
+														CheckAddress === address?._id
 															? "bg-green-500 text-white font-bold text-15px py-[4px]"
-															: "bg-white text-green-400 text-10px"
+															: " text-green-600 text-[10px]"
 													} cursor-pointer hover:bg-gray-300 `}
 													onClick={() => {
 														setSelectedAddress(address?._id);
@@ -147,7 +147,9 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 															})
 														);
 													}}>
-													{CheckAddress ? "Selected" : "Select"}
+													{CheckAddress === address?._id
+														? "Selected"
+														: "Select"}
 													{/* SELECT */}
 												</span>
 												<span
@@ -158,11 +160,14 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 											</div>
 										</div>
 										<p className=" mt-[5px] text-[11px]">
-											City: {address?.city}
+											Location: {address?.location}
 										</p>
 
 										<p className=" mt-[5px] text-[11px]">
-											Land Mark: {address?.landMark}
+											Closest Land Mark: {address?.landMark}
+										</p>
+										<p className=" mt-[5px] text-[11px]">
+											Phone: {address?.phone}
 										</p>
 									</div>
 								);
@@ -187,18 +192,27 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label>City</label>
+								<label>Location</label>
 								<input
-									value={city}
-									onChange={(e) => setCity(e.target.value)}
+									value={location}
+									onChange={(e) => setLocation(e.target.value)}
 									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label>Land Mark</label>
+								<label>Closest Land Mark</label>
 								<input
 									value={landMark}
 									onChange={(e) => setLandMark(e.target.value)}
+									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
+								/>
+							</div>
+							<div className="flex flex-col">
+								<label>Phone</label>
+								<input
+									type="number"
+									value={phone}
+									onChange={(e) => setPhone(e.target.value)}
 									className="border px-[5px] outline-0 rounded-md py-[3px] mt-[3px]"
 								/>
 							</div>
@@ -258,7 +272,7 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								</span>
 							</p>
 							<p className=" mt-[5px] ">
-								Items will be delivered {" "}
+								Items will be delivered{" "}
 								<span className="font-semibold">within 24 hours</span>
 							</p>
 						</div>

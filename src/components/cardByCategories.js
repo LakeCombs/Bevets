@@ -22,7 +22,7 @@ const CardByCategories = (cat) => {
 				/>
 				<br />
 
-				<p className="h3 text-black font-poppins ">
+				<p className="h3 text-black font-poppins mt-[-20px]">
 					{" "}
 					{TrimTextWithEllipse(name, 10)}
 				</p>
