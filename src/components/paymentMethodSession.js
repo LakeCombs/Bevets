@@ -9,6 +9,7 @@ import {
 } from "../redux/actions/order.action";
 import { useNavigate } from "react-router-dom";
 import { ResetCartAction } from "../redux/actions/product.action.js";
+import PayButton from "../utils/PayButton";
 
 const PaymentMethodSession = ({ flip, setFlip }) => {
 	const dispatch = useDispatch();
@@ -30,6 +31,9 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 	const [paymentMethod, setPaymentMethod] = useState("Cash on delivery");
 	const [checked, setChecked] = useState(false);
 	const [messageApi, contextHolder] = message.useMessage();
+
+	const amount = 100;
+	const email = 'aximilli1212@gmail.com';
 
 	const orderItems = () => {
 		return cartItems.map((item) => {
@@ -156,43 +160,6 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 							How do you want pay for your order?
 						</p>
 
-						<div className=" ml-[15px] flex flex-row w-full justify-start">
-							<input
-								type="radio"
-								className="mr-[20px]"
-								checked={checked}
-								value={"Pay via bank"}
-								onChange={() => {
-									setPaymentMethod("Pay via bank");
-									setChecked(!checked);
-									dispatch(
-										OrderDetailsAction({
-											payment_method: "Pay via bank"
-										})
-									);
-								}}
-							/>
-
-							<img alt="mtn" src={"/assets/pngegg (11) 2.svg"} />
-
-							<img
-								alt="vodafone"
-								src={"/assets/Vodafone-Cash-587x424 2.svg"}
-								className="mx-[10px]"
-							/>
-							<img
-								alt="airteltigo"
-								src={"/assets/airteltigo-money-logo 2.svg"}
-							/>
-
-							<img
-								alt="visa"
-								src={"/assets/Vector.svg"}
-								className="mx-[10px]"
-							/>
-							<img alt="mastercard" src={"/assets/mastercard.svg"} />
-						</div>
-
 						<div className="ml-[20px] mt-[20px]">
 							<p className="text-text-gray ">
 								1. Your security, our priority. You keep control of every
@@ -203,28 +170,6 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 								your mobile money wallet or bank account linked to your card.
 							</p>
 						</div>
-
-
-						{/*Commented out pay on delivary: //TODO: uncomment to enable pay on delivery*/}
-						{/*<div className="ml-[20px] flex flex-row items-center mt-[15px] ">*/}
-						{/*	<input*/}
-						{/*		type="radio"*/}
-						{/*		value={"Cash on delivery"}*/}
-						{/*		checked={!checked}*/}
-						{/*		onChange={() => {*/}
-						{/*			setPaymentMethod("Cash on delivery");*/}
-						{/*			setChecked(!checked);*/}
-						{/*			dispatch(*/}
-						{/*				OrderDetailsAction({*/}
-						{/*					payment_method: "Cash on delivery"*/}
-						{/*				})*/}
-						{/*			);*/}
-						{/*		}}*/}
-						{/*	/>*/}
-
-						{/*	<p className="mx-[10px]"> Pay Cash on Delivery</p>*/}
-						{/*	<img alt="pay on delivery" src="/assets/pngwing 1.svg" />*/}
-						{/*</div>*/}
 
 						<hr className="my-[15px]" />
 
@@ -271,11 +216,13 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 							</div>
 						</div>
 
-						<button
-							className="w-[55%] text-white bg-bright-blue py-[5px] mt-[15px] self-center rounded-lg hover:shadow-md"
-							onClick={ConfirmOrder}>
-							CONFIRM ORDER
-						</button>
+						{/*<button*/}
+						{/*	className="w-[55%] text-white bg-bright-blue py-[5px] mt-[15px] self-center rounded-lg hover:shadow-md"*/}
+						{/*	onClick={ConfirmOrder}>*/}
+						{/*	CONFIRM ORDER*/}
+						{/*</button>*/}
+
+						<PayButton amount={amount} email={email} />
 
 						{createOrderLoading && <Spin size={"large"} />}
 					</div>
