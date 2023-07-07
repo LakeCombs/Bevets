@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { ResetCartAction } from "../redux/actions/product.action.js";
 import PayButton from "../utils/PayButton";
+import '../styles/checkout.css'
 
 const PaymentMethodSession = ({ flip, setFlip }) => {
 	const dispatch = useDispatch();
