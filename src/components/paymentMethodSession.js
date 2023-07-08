@@ -29,12 +29,27 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 		order: createdOrder
 	} = useSelector((state) => state.createOrder);
 
-	const [paymentMethod, setPaymentMethod] = useState("Cash on delivery");
-	const [checked, setChecked] = useState(false);
+	const paymentMethod = "Payment before delivery.";
 	const [messageApi, contextHolder] = message.useMessage();
 
-	const amount = 100;
-	const email = 'aximilli1212@gmail.com';
+	const amount = cartItems
+		?.reduce((accumulator, currectValue) => {
+			return (
+				accumulator +
+				currectValue?.product?.price * currectValue?.qty
+			);
+		}, 0)
+		?.toFixed(2)*100;
+
+	const [email, setEmail] = useState('');
+	const [name, setName] = useState('');
+	const [phone, setPhone] = useState('');
+
+	const resetForm = () => {
+		setEmail('');
+		setName('');
+		setPhone('');
+	};
 
 	const orderItems = () => {
 		return cartItems.map((item) => {
@@ -109,7 +124,7 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 				<div className="bg-white rounded-2xl shadow-md pb-[15px]">
 					<div className="flex justify-between mx-[15px] items-center">
 						<h2 className="font-bold  text-[12px] md:text-[15px] my-[10px]">
-							SELECTED ADDRESS DETAILS {loading && <Spin />}{" "}
+							SELECTED DELIVERY ADDRESS DETAILS {loading && <Spin />}{" "}
 							{error && <p>{error}</p>}
 						</h2>
 					</div>
@@ -132,37 +147,43 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 				<div className="bg-white rounded-2xl mt-[20px] shadow-md pb-[20px] flex flex-col ">
 					<div className="flex justify-between mx-[15px] items-center">
 						<h2 className="font-bold  text-[12px] md:text-[15px] my-[10px]">
-							DELIVERY METHOD
-						</h2>
-					</div>
-					<hr />
-					<div className="ml-[15px] mb-[10px]">
-						<p className="font-[500] text-[15px] mt-[10px]">
-							{delivery_method}
-						</p>
-
-						{/* <p className="text-gray ml-[20px]">
-							Delivery by{" "}
-							<span className="text-black font-semibold">Monday 2 Jan</span> for{" "}
-							<span className="text-app-orange font-semibold">C 15.00</span>
-						</p> */}
-					</div>
-				</div>
-
-				<div className="bg-white rounded-2xl mt-[20px] shadow-md pb-[20px] flex flex-col ">
-					<div className="flex justify-between mx-[15px] items-center">
-						<h2 className="font-bold  text-[12px] md:text-[15px] my-[10px]">
-							PAYMENT METHOD
+							PAYMENT DETAILS
 						</h2>
 					</div>
 					<hr />
 					<div className=" mb-[10px] flex flex-col">
-						<p className=" ml-[15px] font-[500] text-[15px] mt-[10px]">
-							How do you want pay for your order?
-						</p>
+						<div className="flex flex-col px-5">
+							<div className="checkout-field">
+									<label>Name</label>
+									<input
+										type="text"
+										id="name"
+										value={name}
+										onChange={(e) => setName(e.target.value)}
+									/>
+								</div>
+								<div className="checkout-field">
+									<label>Email</label>
+									<input
+										type="text"
+										id="email"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+									/>
+								</div>
+								<div className="checkout-field">
+									<label>Phone</label>
+									<input
+										type="text"
+										id="phone"
+										value={phone}
+										onChange={(e) => setPhone(e.target.value)}
+									/>
+								</div>
+							</div>
 
 						<div className="ml-[20px] mt-[20px]">
-							<p className="text-text-gray ">
+							<p className="text-text-gray text-sm ">
 								1. Your security, our priority. You keep control of every
 								transaction and are protected against fraud and stealth.
 								<br />

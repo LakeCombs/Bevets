@@ -115,13 +115,13 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 							onClick={() => {
 								setEditAddress(false);
 							}}>
-							{!userInfo?.addressess?.length && editAddress
+							{!userInfo?.addresses?.length && editAddress
 								? "Add Address"
 								: ""}
 						</h2>
 					</div>
 					<hr />
-					{editAddress ? (
+					{(userInfo?.addresses?.length) ? (
 						<>
 							{userInfo?.addresses?.map((address) => {
 								return (
@@ -239,7 +239,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								text={"Save Address"}
 								onClick={SaveAddress}
 							/>
-
 							<br />
 							<WideButton
 								style="bg-red-500 "
@@ -255,39 +254,14 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 				<div className="bg-white rounded-2xl mt-[20px] shadow-md pb-[20px] flex flex-col ">
 					<div className="flex justify-between mx-[15px] items-center">
 						<h2 className="font-bold  text-[12px] md:text-[15px] my-[10px]">
-							DELIVERY METHOD
+							DELIVERY DETAILS
 						</h2>
 					</div>
 					<hr />
 					<div className="ml-[15px] mb-[10px]">
-						<p className="font-[500] text-[15px] mt-[10px]">
-							How do you want your delivery?
-						</p>
-						<br />
-
 						<div className="mt-[10px]">
-							<p className="font-[500]">
-								<span className="mr-[5px]">
-									<input
-										type="checkbox"
-										value={deliveryMethod}
-										checked={true}
-										onChange={(e) => {
-											dispatch(
-												OrderDetailsAction({
-													delivery_method: deliveryMethod
-												})
-											);
-										}}
-									/>
-								</span>
-								Door Delivery,{" "}
-								<span className="font-light">
-									wait for a delivery service to delivery your items
-								</span>
-							</p>
 							<p className=" mt-[5px] ">
-								Items will be delivered{" "}
+								Your items will be delivered{" "}
 								<span className="font-semibold">within 24 hours</span>
 							</p>
 						</div>
@@ -296,13 +270,6 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 					<hr />
 
 					<div className="flex p-[30px] w-full flex-col ">
-						<div className="border rounded-2xl p-[10px] w-full pb-[70px]">
-							<p className="font-bold text-[#F32323]">NOTE:</p>
-							<p className="mt-[15px] text-[#F32323] family-poppins">
-								*Please ensure the correct entry of your delivery details, this
-								aid us in delivering your items to the right location.
-							</p>
-						</div>
 						<div className="flex w-full justify-between mt-[15px]">
 							<p>Subtotal</p>
 							<p>

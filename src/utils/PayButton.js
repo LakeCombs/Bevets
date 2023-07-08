@@ -20,7 +20,7 @@ const PayButton = ({ amount, email }) => {
         onClose: () => alert('Payment canceled by user.'),
     };
 
-    return <PaystackButton className="paystack-button" {...componentProps} />;
+    return <PaystackButton className="paystack-button bg-bright-blue" {...componentProps} />;
 };
 
 export default PayButton;
