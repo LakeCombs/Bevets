@@ -23,9 +23,9 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	const [deliveryPrice, setDeiveryPrice] = useState(0);
 	const [editAddress, setEditAddress] = useState(false);
 	const [address, setAddress] = useState("");
-	const [location, setLocation] = useState("");
-	const [landMark, setLandMark] = useState("");
-	const [phone, setPhone] = useState("");
+	const [city, setCity] = useState("");
+	const [state, setState] = useState("");
+	const [zipCode, setZipCode] = useState("");
 	const [selectedAddress, setSelectedAddress] = useState("");
 	const [deliveryMethod, setDeliveryMethod] = useState("Door Delivery");
 	const [messageApi, contextHolder] = message.useMessage();
@@ -38,9 +38,9 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 		dispatch(
 			AddAddressAction({
 				address,
-				location,
-				landMark,
-				phone
+				city,
+				state,
+				zipCode
 			})
 		);
 	};
@@ -71,9 +71,9 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 	useEffect(() => {
 		if (Addr?._id) {
 			setAddress("");
-			setLocation("");
-			setLandMark("");
-			setPhone("");
+			setCity("");
+			setState("");
+			setZipCode("");
 			setEditAddress(true);
 		}
 
@@ -160,14 +160,17 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 											</div>
 										</div>
 										<p className=" mt-[5px] text-[11px]">
-											Location: {address?.location}
+											Location: {address?.address}
+										</p>
+										<p className=" mt-[5px] text-[11px]">
+											Location: {address?.city}
 										</p>
 
 										<p className=" mt-[5px] text-[11px]">
-											Closest Land Mark: {address?.landMark}
+											Closest Land Mark: {address?.state}
 										</p>
 										<p className=" mt-[5px] text-[11px]">
-											Phone: {address?.phone}
+											Phone: {address?.zipCode}
 										</p>
 									</div>
 								);
@@ -185,10 +188,10 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 							{error && <p className="text-red-400 my-[3px]">{error}</p>}
 							<div className="flex flex-col">
 								<div className="checkout-field">
-									<label>Address</label>
+									<label>Address / Location</label>
 									<input
 										type="text"
-										id="email"
+										id="address"
 										value={address}
 										onChange={(e) => setAddress(e.target.value)}
 									/>
@@ -196,12 +199,13 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 							</div>
 							<div className="flex flex-col">
 								<div className="checkout-field">
-									<label>Location</label>
+									<label>City</label>
 									<input
+										name="city"
 										type="text"
 										id="location"
-										value={location}
-										onChange={(e) => setLocation(e.target.value)}
+										value={city}
+										onChange={(e) => setCity(e.target.value)}
 									/>
 								</div>
 							</div>
@@ -209,10 +213,11 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								<div className="checkout-field">
 									<label>Closest Land Mark</label>
 									<input
+										name="state"
 										type="text"
 										id="landmark"
-										value={landMark}
-										onChange={(e) => setLandMark(e.target.value)}
+										value={state}
+										onChange={(e) => setState(e.target.value)}
 									/>
 								</div>
 							</div>
@@ -220,10 +225,11 @@ const DeliveryMethodSession = ({ flip, setFlip }) => {
 								<div className="checkout-field">
 									<label>Phone No.</label>
 									<input
+										name="zipCode"
 										type="text"
 										id="phone"
-										value={phone}
-										onChange={(e) => setPhone(e.target.value)}
+										value={zipCode}
+										onChange={(e) => setZipCode(e.target.value)}
 									/>
 								</div>
 							</div>
