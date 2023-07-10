@@ -13,7 +13,9 @@ import {
     getAllProductAction
 } from "../../redux/actions/product.action";
 import HomeCarousel from "../../components/homeCarousel";
+import Hero from "./hero";
 import {useHome} from "./useHome";
+import {CategoryList} from "./components/CategoryList";
 
 const HomeScreen = () => {
     const navigate = useNavigate;
@@ -22,16 +24,11 @@ const HomeScreen = () => {
         state: { slides, categoryList },
     } = useHome();
     const {
-        categories,
-        error: categoriesError,
         loading,
-        categoriesLoading
     } = useSelector((state) => state.allCategory);
 
     const {
         products,
-        loading: productLoading,
-        error: productError
     } = useSelector((state) => state.allProduct);
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -42,14 +39,6 @@ const HomeScreen = () => {
     };
 
     const submit = () => {};
-
-    var getMeRandomElements = (prod) => {
-        var result = [];
-        for (var i = 0; i < 4; i++) {
-            result.push(products[Math.floor(Math.random() * prod?.length)]);
-        }
-        return result;
-    };
 
     const ShowCategories = (cat) => {
         let result = [];
@@ -84,40 +73,13 @@ const HomeScreen = () => {
                     </button>
                 </form>
             </div>
-            <div className="md:px-[50px] px-[20px]  min-h-full md:pt-[100px] pt-[40px]">
+            <div className="md:px-[50px] px-[20px]  min-h-full pt-[40px]">
                 {/* Carousel session */}
-                <HomeCarousel slides={slides} />
+                {/*<HomeCarousel slides={slides} />*/}
+                <Hero />
 
-                {/* Shop by categories */}
-                <div className="w-full md:flex hidden justify-between mt-[130px] mb-[20px]  session-header">
-                    <h2 className=" ">
-                        Shop{" "}
-                        <span className="text-app-orange session-header">
-							by Categories
-						</span>
-                        {categoriesLoading && <Spin />}
-                    </h2>
-
-                    <Link className="text-app-orange session-header" to="/categories">
-                        See all
-                    </Link>
-                </div>
-
-                {/* Horizontal list of items */}
-                <div className=" flex flex-row md:mt-[0px] mt-[10px] w-full scroll-m-8 scroll-auto snap-x overflow-x-auto whitespace-no-wrap">
-                    {categoriesLoading && <Spin size="25px" />}
-                    {categories &&
-                        [...categories]
-                            ?.reverse()
-                            ?.slice(0, 6)
-                            ?.map((cat) => <CardByCategories cat={cat} />)}
-
-                    {categoriesError && (
-                        <p className="text-red-400 text-[10px]">
-                            An Error while loading the categories
-                        </p>
-                    )}
-                </div>
+                {/* Categories session */}
+                <CategoryList />
 
                 {/* Basic essentials */}
                 <div className="w-full flex justify-between mt-[20px] mb-[30px]">
