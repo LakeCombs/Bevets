@@ -3,11 +3,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "../css/slider.css";
-import CameraImg from "../imgs/camera.png";
+import Slider1 from "../imgs/slider1.png";
+import Slider2 from "../imgs/slider2.png";
+import Slider3 from "../imgs/slider3.png";
 
 const sliderData = [
   {
-    img: CameraImg,
+    img: Slider3,
     pretittle: "Special Offer",
     titlePart1: "Save 20%",
     titlePart2: "On your",
@@ -15,7 +17,7 @@ const sliderData = [
     btnText: "Shop now!",
   },
   {
-    img: CameraImg,
+    img: Slider2,
     pretittle: "Special Offer",
     titlePart1: "Save 20%",
     titlePart2: "On your",
@@ -23,7 +25,7 @@ const sliderData = [
     btnText: "Shop now!",
   },
   {
-    img: CameraImg,
+    img: Slider1,
     pretittle: "Special Offer",
     titlePart1: "Save 20%",
     titlePart2: "On your",
