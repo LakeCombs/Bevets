@@ -3,8 +3,8 @@ import React from "react";
 import CategoryNav from "components/CategoryNav";
 import MainSlider from "components/MainSlider";
 
-import PromoImg1 from "../img/promo_img1.png";
-import PromoImg2 from "../img/promo_img2.png";
+import PromoImg1 from "imgs/promo_img1.png";
+import PromoImg2 from "imgs/promo_img2.png";
 
 const Hero = () => {
     return (

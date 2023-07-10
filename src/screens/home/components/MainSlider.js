@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "../slider.css";
 import { Pagination } from "swiper";
-import CameraImg from "../img/camera.png";
+import CameraImg from "../imgs/camera.png";
 
 const sliderData = [
   {
@@ -38,9 +38,7 @@ const MainSlider = () => {
     <Swiper
       modules={[Pagination]}
       loop={true}
-      pagination={{
-        clickable: true,
-      }}
+      pagination={{clickable: true,}}
       className="mainSlider h-full bg-primary xl:bg-mainSlider xl:bg-no-repeat max-w-lg lg:max-w-none rounded-[8px] overflow-hidden drop-shadow-2xl"
     >
       <>
