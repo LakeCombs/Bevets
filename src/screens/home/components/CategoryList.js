@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "../css/slider.css";
 import { Pagination, Navigation } from "swiper";
+import CategoryCard from "./CategoryCard";
 
 export const CategoryList = () =>{
 
@@ -43,11 +44,11 @@ export const CategoryList = () =>{
             navigation={true}
             breakpoints={{
                 320: {
-                    slidesPerView: 2,
+                    slidesPerView: 1,
                     spaceBetween: 30,
                 },
                 768: {
-                    slidesPerView: 5,
+                    slidesPerView: 3,
                     spaceBetween: 30,
                 },
                 1024: {
@@ -68,8 +69,8 @@ export const CategoryList = () =>{
                 {categories?.map((cat) => {
                     return (
                         <SwiperSlide key={Math.random()}>
-                            {/*<Product product={product} />*/}
-                            <CardByCategories cat={cat} />
+                            {/*<CardByCategories cat={cat} />*/}
+                            <CategoryCard cat={cat}/>
                         </SwiperSlide>
                     );
                 })}

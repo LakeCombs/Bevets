@@ -54,7 +54,7 @@ const HomeScreen = () => {
     }, [dispatch]);
 
     return (
-        <div className="min-h-screen md:bg-background bg-primary-blue">
+        <div className="min-h-screen bg-primary-blue">
             <Header />
             <div className="w-full md:hidden flex bg-app-orange h-[100px] mt-[50px] justify-center items-center">
                 <form

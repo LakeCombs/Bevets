@@ -4,10 +4,12 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				"primary-blue": "#D9EAEF",
+				"primary-blue": "#F5FDFF",
+				"secondary-blue": "#D9EAEF",
 				background: "#F5F5F5",
-				"bright-blue": "#458ED6",
+				"bright-blue": "#D2E6F7",
 				"dark-blue": "#151E44",
+				"button-blue": "#48A2DE",
 				"app-white": "#FFFFFF",
 				"app-orange": "#FF8A00",
 				"app-orange-pale": "#FF8A0033",
