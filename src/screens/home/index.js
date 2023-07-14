@@ -54,7 +54,7 @@ const HomeScreen = () => {
     }, [dispatch]);
 
     return (
-        <div className="min-h-screen bg-primary-blue">
+        <div className="min-h-screen bg-tertiary-blue">
             <Header />
             <div className="w-full md:hidden flex bg-app-orange h-[100px] mt-[50px] justify-center items-center">
                 <form
@@ -97,7 +97,7 @@ const HomeScreen = () => {
                     ))}
                 </div>
 
-                <div className="rounded-2xl mt-[30px] w-full bg-bright-blue px-[10px]  py-[20px]">
+                <div className="rounded-2xl mt-[30px] w-full bg-primary-blue px-[10px]  py-[20px]">
                     <div className="w-full flex flex-col justify-center items-center ">
                         <h2 className="h1 text-white mr-0 md:mr-[200px]  family-poppins font-bold">
                             Stay home and get your{" "}

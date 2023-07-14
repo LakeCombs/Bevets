@@ -18,25 +18,27 @@ const sliderData = [
   },
   {
     img: Slider6,
-    pretittle: "Special Offer",
-    titlePart1: "Save 20%",
-    titlePart2: "On your",
-    titlePart3: "first order",
+    pretittle: "We Deliver",
+    titlePart1: "Same Day",
+    titlePart2: "Delivery",
+    titlePart3: "",
+    caption: "On all orders within Accra",
     btnText: "Shop now!",
   },
   {
     img: Slider6,
-    pretittle: "Special Offer",
-    titlePart1: "Save 20%",
-    titlePart2: "On your",
-    titlePart3: "first order",
+    pretittle: "Shop Now",
+    titlePart1: "Get all ",
+    titlePart2: "Essentials from",
+    titlePart3: "Bevets",
     btnText: "Shop now!",
   },
 ];
 
 const MainSlider = () => {
   return (
-    <Swiper
+  <div className="w-full max-w-lg lg:max-w-[834px] mx-auto">
+      <Swiper
       loop={true}
       className="mainSlider h-full bg-primary xl:bg-mainSlider xl:bg-no-repeat max-w-lg lg:max-w-none rounded-[8px] overflow-hidden drop-shadow-2xl"
     >
@@ -47,7 +49,7 @@ const MainSlider = () => {
               <div className="flex flex-col lg:flex-row h-full p-[20px] md:p-[60px]">
                 <div className="w-full lg:flex-1">
                   <div className="uppercase mb-1 text-center lg:text-left">{slide.pretittle}</div>
-                  <div className="text-3xl md:text-[46px] font-semibold uppercase leading-none text-center lg:text-left mb-8 xl:mb-20">
+                  <div className="text-3xl md:text-[46px] font-semibold  font-mont uppercase leading-none text-center lg:text-left mb-8 xl:mb-20">
                     {slide.titlePart1} <br />
                     {slide.titlePart2} <br />
                     {slide.titlePart3}
@@ -68,6 +70,7 @@ const MainSlider = () => {
         })}
       </>
     </Swiper>
+  </div>
   );
 };
 

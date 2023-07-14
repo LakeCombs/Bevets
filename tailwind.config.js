@@ -4,8 +4,9 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				"primary-blue": "#F5FDFF",
+				"primary-blue": "#408BD5",
 				"secondary-blue": "#D9EAEF",
+				"tertiary-blue": "#F5FDFF",
 				background: "#F5F5F5",
 				"bright-blue": "#D2E6F7",
 				"dark-blue": "#151E44",
@@ -16,6 +17,7 @@ module.exports = {
 				"app-dark": "#565656",
 				"app-gray": "#D9D9D9",
 				"text-gray": "#00000066",
+				"my-gray": "#e3e3e3",
 				"footer-bg": "#06222D"
 			},
 			screens: {
