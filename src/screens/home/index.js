@@ -13,7 +13,9 @@ import {
     getAllProductAction
 } from "../../redux/actions/product.action";
 import HomeCarousel from "../../components/homeCarousel";
+import Hero from "./hero";
 import {useHome} from "./useHome";
+import {CategoryList} from "./components/CategoryList";
 
 const HomeScreen = () => {
     const navigate = useNavigate;
@@ -22,16 +24,11 @@ const HomeScreen = () => {
         state: { slides, categoryList },
     } = useHome();
     const {
-        categories,
-        error: categoriesError,
         loading,
-        categoriesLoading
     } = useSelector((state) => state.allCategory);
 
     const {
         products,
-        loading: productLoading,
-        error: productError
     } = useSelector((state) => state.allProduct);
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -42,14 +39,6 @@ const HomeScreen = () => {
     };
 
     const submit = () => {};
-
-    var getMeRandomElements = (prod) => {
-        var result = [];
-        for (var i = 0; i < 4; i++) {
-            result.push(products[Math.floor(Math.random() * prod?.length)]);
-        }
-        return result;
-    };
 
     const ShowCategories = (cat) => {
         let result = [];
@@ -65,7 +54,7 @@ const HomeScreen = () => {
     }, [dispatch]);
 
     return (
-        <div className="min-h-screen md:bg-background bg-primary-blue">
+        <div className="min-h-screen bg-tertiary-blue">
             <Header />
             <div className="w-full md:hidden flex bg-app-orange h-[100px] mt-[50px] justify-center items-center">
                 <form
@@ -84,40 +73,13 @@ const HomeScreen = () => {
                     </button>
                 </form>
             </div>
-            <div className="md:px-[50px] px-[20px]  min-h-full md:pt-[100px] pt-[40px]">
+            <div className="md:px-[50px] px-[20px]  min-h-full pt-[40px]">
                 {/* Carousel session */}
-                <HomeCarousel slides={slides} />
+                {/*<HomeCarousel slides={slides} />*/}
+                <Hero />
 
-                {/* Shop by categories */}
-                <div className="w-full md:flex hidden justify-between mt-[130px] mb-[20px]  session-header">
-                    <h2 className=" ">
-                        Shop{" "}
-                        <span className="text-app-orange session-header">
-							by Categories
-						</span>
-                        {categoriesLoading && <Spin />}
-                    </h2>
-
-                    <Link className="text-app-orange session-header" to="/categories">
-                        See all
-                    </Link>
-                </div>
-
-                {/* Horizontal list of items */}
-                <div className=" flex flex-row md:mt-[0px] mt-[10px] w-full scroll-m-8 scroll-auto snap-x overflow-x-auto whitespace-no-wrap">
-                    {categoriesLoading && <Spin size="25px" />}
-                    {categories &&
-                        [...categories]
-                            ?.reverse()
-                            ?.slice(0, 6)
-                            ?.map((cat) => <CardByCategories cat={cat} />)}
-
-                    {categoriesError && (
-                        <p className="text-red-400 text-[10px]">
-                            An Error while loading the categories
-                        </p>
-                    )}
-                </div>
+                {/* Categories session */}
+                <CategoryList />
 
                 {/* Basic essentials */}
                 <div className="w-full flex justify-between mt-[20px] mb-[30px]">
@@ -135,7 +97,7 @@ const HomeScreen = () => {
                     ))}
                 </div>
 
-                <div className="rounded-2xl mt-[30px] w-full bg-bright-blue px-[10px]  py-[20px]">
+                <div className="rounded-2xl mt-[30px] w-full bg-primary-blue px-[10px]  py-[20px]">
                     <div className="w-full flex flex-col justify-center items-center ">
                         <h2 className="h1 text-white mr-0 md:mr-[200px]  family-poppins font-bold">
                             Stay home and get your{" "}
@@ -200,25 +162,6 @@ const HomeScreen = () => {
                         navigate("/");
                     }}
                 />
-
-                {/*<div className=" w-full ml-0 md:ml-[50px]">*/}
-                {/*    <h2 className="text-white text-[20px] font-bold md:text-[30px] family-poppins">*/}
-                {/*        GET LATEST UPDATES FROM US*/}
-                {/*    </h2>*/}
-                {/*    <h3 className="text-white text-[15px] family-poppins">*/}
-                {/*        Subscribe to our newsletter to get updated on latest offers!*/}
-                {/*    </h3>*/}
-
-                {/*    <div className="flex flex-row mt-[30px]">*/}
-                {/*        <Input*/}
-                {/*            className="md:w-[40%] w-[75%] mr-[10px] rounded-3xl"*/}
-                {/*            placeholder="Enter your email address"*/}
-                {/*        />{" "}*/}
-                {/*        <button className="shadow-md hover:cursor-pointer rounded-3xl bg-bright-blue outline-none border-none py-[5px] px-[15px] text-[15px] md:text-[20px] text-white">*/}
-                {/*            Subscribe*/}
-                {/*        </button>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </div>
             <Footer />
         </div>

@@ -9,6 +9,8 @@ import {
 } from "../redux/actions/order.action";
 import { useNavigate } from "react-router-dom";
 import { ResetCartAction } from "../redux/actions/product.action.js";
+import PayButton from "../utils/PayButton";
+import '../styles/checkout.css'
 
 const PaymentMethodSession = ({ flip, setFlip }) => {
 	const dispatch = useDispatch();
@@ -27,9 +29,27 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 		order: createdOrder
 	} = useSelector((state) => state.createOrder);
 
-	const [paymentMethod, setPaymentMethod] = useState("Cash on delivery");
-	const [checked, setChecked] = useState(false);
+	const paymentMethod = "Payment before delivery.";
 	const [messageApi, contextHolder] = message.useMessage();
+
+	const amount = cartItems
+		?.reduce((accumulator, currectValue) => {
+			return (
+				accumulator +
+				currectValue?.product?.price * currectValue?.qty
+			);
+		}, 0)
+		?.toFixed(2)*100;
+
+	const [email, setEmail] = useState('');
+	const [name, setName] = useState('');
+	const [phone, setPhone] = useState('');
+
+	const resetForm = () => {
+		setEmail('');
+		setName('');
+		setPhone('');
+	};
 
 	const orderItems = () => {
 		return cartItems.map((item) => {
@@ -104,7 +124,7 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 				<div className="bg-white rounded-2xl shadow-md pb-[15px]">
 					<div className="flex justify-between mx-[15px] items-center">
 						<h2 className="font-bold  text-[12px] md:text-[15px] my-[10px]">
-							SELECTED ADDRESS DETAILS {loading && <Spin />}{" "}
+							SELECTED DELIVERY ADDRESS DETAILS {loading && <Spin />}{" "}
 							{error && <p>{error}</p>}
 						</h2>
 					</div>
@@ -127,74 +147,43 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 				<div className="bg-white rounded-2xl mt-[20px] shadow-md pb-[20px] flex flex-col ">
 					<div className="flex justify-between mx-[15px] items-center">
 						<h2 className="font-bold  text-[12px] md:text-[15px] my-[10px]">
-							DELIVERY METHOD
-						</h2>
-					</div>
-					<hr />
-					<div className="ml-[15px] mb-[10px]">
-						<p className="font-[500] text-[15px] mt-[10px]">
-							{delivery_method}
-						</p>
-
-						{/* <p className="text-gray ml-[20px]">
-							Delivery by{" "}
-							<span className="text-black font-semibold">Monday 2 Jan</span> for{" "}
-							<span className="text-app-orange font-semibold">C 15.00</span>
-						</p> */}
-					</div>
-				</div>
-
-				<div className="bg-white rounded-2xl mt-[20px] shadow-md pb-[20px] flex flex-col ">
-					<div className="flex justify-between mx-[15px] items-center">
-						<h2 className="font-bold  text-[12px] md:text-[15px] my-[10px]">
-							PAYMENT METHOD
+							PAYMENT DETAILS
 						</h2>
 					</div>
 					<hr />
 					<div className=" mb-[10px] flex flex-col">
-						<p className=" ml-[15px] font-[500] text-[15px] mt-[10px]">
-							How do you want pay for your order?
-						</p>
-
-						<div className=" ml-[15px] flex flex-row w-full justify-start">
-							<input
-								type="radio"
-								className="mr-[20px]"
-								checked={checked}
-								value={"Pay via bank"}
-								onChange={() => {
-									setPaymentMethod("Pay via bank");
-									setChecked(!checked);
-									dispatch(
-										OrderDetailsAction({
-											payment_method: "Pay via bank"
-										})
-									);
-								}}
-							/>
-
-							<img alt="mtn" src={"/assets/pngegg (11) 2.svg"} />
-
-							<img
-								alt="vodafone"
-								src={"/assets/Vodafone-Cash-587x424 2.svg"}
-								className="mx-[10px]"
-							/>
-							<img
-								alt="airteltigo"
-								src={"/assets/airteltigo-money-logo 2.svg"}
-							/>
-
-							<img
-								alt="visa"
-								src={"/assets/Vector.svg"}
-								className="mx-[10px]"
-							/>
-							<img alt="mastercard" src={"/assets/mastercard.svg"} />
-						</div>
+						<div className="flex flex-col px-5">
+							<div className="checkout-field">
+									<label>Name</label>
+									<input
+										type="text"
+										id="name"
+										value={name}
+										onChange={(e) => setName(e.target.value)}
+									/>
+								</div>
+								<div className="checkout-field">
+									<label>Email</label>
+									<input
+										type="text"
+										id="email"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+									/>
+								</div>
+								<div className="checkout-field">
+									<label>Phone</label>
+									<input
+										type="text"
+										id="phone"
+										value={phone}
+										onChange={(e) => setPhone(e.target.value)}
+									/>
+								</div>
+							</div>
 
 						<div className="ml-[20px] mt-[20px]">
-							<p className="text-text-gray ">
+							<p className="text-text-gray text-sm ">
 								1. Your security, our priority. You keep control of every
 								transaction and are protected against fraud and stealth.
 								<br />
@@ -203,28 +192,6 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 								your mobile money wallet or bank account linked to your card.
 							</p>
 						</div>
-
-
-						{/*Commented out pay on delivary: //TODO: uncomment to enable pay on delivery*/}
-						{/*<div className="ml-[20px] flex flex-row items-center mt-[15px] ">*/}
-						{/*	<input*/}
-						{/*		type="radio"*/}
-						{/*		value={"Cash on delivery"}*/}
-						{/*		checked={!checked}*/}
-						{/*		onChange={() => {*/}
-						{/*			setPaymentMethod("Cash on delivery");*/}
-						{/*			setChecked(!checked);*/}
-						{/*			dispatch(*/}
-						{/*				OrderDetailsAction({*/}
-						{/*					payment_method: "Cash on delivery"*/}
-						{/*				})*/}
-						{/*			);*/}
-						{/*		}}*/}
-						{/*	/>*/}
-
-						{/*	<p className="mx-[10px]"> Pay Cash on Delivery</p>*/}
-						{/*	<img alt="pay on delivery" src="/assets/pngwing 1.svg" />*/}
-						{/*</div>*/}
 
 						<hr className="my-[15px]" />
 
@@ -271,11 +238,15 @@ const PaymentMethodSession = ({ flip, setFlip }) => {
 							</div>
 						</div>
 
-						<button
-							className="w-[55%] text-white bg-bright-blue py-[5px] mt-[15px] self-center rounded-lg hover:shadow-md"
-							onClick={ConfirmOrder}>
-							CONFIRM ORDER
-						</button>
+						{/*<button*/}
+						{/*	className="w-[55%] text-white bg-bright-blue py-[5px] mt-[15px] self-center rounded-lg hover:shadow-md"*/}
+						{/*	onClick={ConfirmOrder}>*/}
+						{/*	CONFIRM ORDER*/}
+						{/*</button>*/}
+
+						<div className="mx-[50px]">
+							<PayButton amount={amount} email={email} />
+						</div>
 
 						{createOrderLoading && <Spin size={"large"} />}
 					</div>
